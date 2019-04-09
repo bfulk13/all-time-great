@@ -1,2 +1,3 @@
 SELECT *
-FROM 
+FROM questions questions
+JOIN 

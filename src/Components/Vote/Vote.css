@@ -1,0 +1,23 @@
+
+
+.VotingDiv{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.SingleAnswerDiv{
+  display: flex;
+  border: solid black 1px;
+  width: 80%;
+  margin: 10px;
+  justify-content: space-between;
+}
+.SingleAnswerDiv:Hover{
+  background-color: yellow;
+}
+.AnswerImg{
+  height: 100px;
+  width: 100px;
+}

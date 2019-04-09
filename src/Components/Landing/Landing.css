@@ -1,0 +1,34 @@
+.Landing{
+
+}
+.TrendingDiv{
+background-color: gray;
+height: 55vh;
+width: 100%;
+overflow: auto;
+display: flex;
+justify-content: space-around;
+flex-wrap: wrap;
+
+}
+
+.SingleTrendingQuestionDiv{
+  display: flex;
+  margin: 10%;
+}
+.QuestionImg{
+  height: 100px;
+  width: 100px;
+}
+.PopularProfilesDiv{
+  background-color: aquamarine;
+  min-height: 45vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.ProfilePic{
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+}

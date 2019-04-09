@@ -1,0 +1,30 @@
+.Questions{
+
+}
+.QuestionsDiv{
+background-color: gray;
+min-height: 100vh;
+width: 100%;
+overflow: auto;
+display: flex;
+justify-content: space-around;
+flex-wrap: wrap;
+
+}
+
+.SingleQuestionDiv{
+  display: flex;
+  margin: 10%;
+}
+.QuestionImg{
+  height: 100px;
+  width: 100px;
+}
+.PlusSignDiv{
+  background-color: white;
+  border-radius: 10px;
+}
+.PlusSign{
+  height: 100px;
+  width: 100px;
+}

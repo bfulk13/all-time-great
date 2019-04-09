@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import routes from './routes'
 import './App.css';
-
+import Login from './Components/Login'
 class App extends Component {
   render() {
     return (
@@ -9,7 +9,7 @@ class App extends Component {
       {/* Need to import Nav Barnpm */}
        {routes}
       </div>
-    );
+    )
   }
 }
 

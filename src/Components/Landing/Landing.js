@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './Landing.css'
+import {Link} from 'react-router-dom'
 
 class Landing extends Component{
   constructor(){
@@ -47,23 +48,25 @@ class Landing extends Component{
   render(){
     const trendingQuestions = this.state.trendingQuestionsArr.map( obj => {
       return(
-        <div className='SingleTrendingQuestionDiv'>
+        <Link to='/Vote'><div className='SingleTrendingQuestionDiv'>
           <h4>{obj.question}</h4>
           <img src={obj.img} alt="" className="QuestionImg"/>
-        </div>
+          </div>
+        </Link>
       )
     })
     const popularProfiles = this.state.popularProfilesArr.map( obj => {
       return(
-        <div>
+        <Link to="/Profile"><div>
           <img src={obj.img} alt=""className='ProfilePic'/>
           <h5>{obj.name}</h5>
-        </div>
+          </div>
+        </Link>  
       )
     })
     return(
      <div className='Landing'> 
-          <h1>Trending Questions</h1>
+          <Link to="/Questions"><h1>Trending Questions</h1></Link>
         <div className='TrendingDiv'>
           {trendingQuestions}
         </div>

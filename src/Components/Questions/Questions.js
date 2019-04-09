@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Questions.css'
+import {Link} from 'react-router-dom'
 
 class Questions extends Component {
   constructor() {
@@ -30,10 +31,11 @@ class Questions extends Component {
   render() {
     const trendingQuestions = this.state.trendingQuestionsArr.map(obj => {
       return (
-        <div className='SingleQuestionDiv'>
+        <Link to="Vote"><div className='SingleQuestionDiv'>
           <h4>{obj.question}</h4>
           <img src={obj.img} alt="" className="QuestionImg" />
-        </div>
+          </div>
+        </Link>
       )
     })
 

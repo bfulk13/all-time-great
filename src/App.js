@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import routes from './routes'
 import './App.css';
-import Login from './Components/Login'
+// import Login from './Components/Login'
 class App extends Component {
   render() {
     return (

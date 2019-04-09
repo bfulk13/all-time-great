@@ -1,0 +1,28 @@
+
+
+
+.TopHalfDiv{
+  display: flex;
+  justify-content: space-around;
+}
+.ChartJsStuff{
+  background-color: aqua;
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+.QuestionImg{
+  border-radius: 50%;
+  
+}
+.AnswersDiv{
+  background-color: bisque;
+  height: 200px;
+  width: 150px;
+}
+/* .ResponsesDiv{
+  boder
+} */

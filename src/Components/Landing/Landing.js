@@ -44,24 +44,27 @@ class Landing extends Component{
       ]
     }
   }
-
   render(){
     const trendingQuestions = this.state.trendingQuestionsArr.map( obj => {
       return(
+        <div className='SingleTrendingQuestionDiv'>
         <Link to='/Vote'><div className='SingleTrendingQuestionDiv'>
           <h4>{obj.question}</h4>
           <img src={obj.img} alt="" className="QuestionImg"/>
-          </div>
+        </div>
         </Link>
+          </div>
       )
     })
     const popularProfiles = this.state.popularProfilesArr.map( obj => {
       return(
+        <div>
         <Link to="/Profile"><div>
           <img src={obj.img} alt=""className='ProfilePic'/>
           <h5>{obj.name}</h5>
-          </div>
+        </div>
         </Link>  
+          </div>
       )
     })
     return(
@@ -78,5 +81,4 @@ class Landing extends Component{
     )
   }
 } 
-
 export default Landing;

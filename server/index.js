@@ -10,7 +10,7 @@ const aws = require('aws-sdk');
 
 //// CONTROLLERS ////
 const ac = require('./controllers/auth_controller');
-
+const qc = require('./controllers/questions/question_controller');
 
 //// ENV ////
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING } = process.env;
@@ -54,3 +54,15 @@ app.get('/api/current', ac.getUser);
 app.post('/auth/register', ac.register);
 app.post('/auth/login', ac.login);
 app.post('/auth/logout', ac.logout);
+
+
+//// QUESTIONS ENDPOINTS ////
+app.get('/api/questions', qc.getQsByVotes);
+app.get('/api/getallquestions', qc.getAllQs);
+
+
+//// PROFILES ENDPOINTS ////
+app.get('api/profiles', );
+
+
+//// ANSWERS ENDPOINTS ////

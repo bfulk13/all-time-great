@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
-import {updateUser, clearUser} from '../../redux/reducer'
+import {updateUser, clearUser} from '../redux/reducer'
+// import { threadId } from 'worker_threads';
 
 class Login extends Component {
     constructor(props) {

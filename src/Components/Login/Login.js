@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
-import {updateUser, clearUser} from '../redux/reducer'
+import {updateUser, clearUser} from '../../redux/reducer'
 // import { threadId } from 'worker_threads';
 
 class Login extends Component {
@@ -72,8 +72,8 @@ class Login extends Component {
 
     register = async () => {
        try {
-           const {username, password, img} = this.state
-           let res = await axios.post(`/auth/register`, {username, password, img})
+           const {username, password, avatar} = this.state
+           let res = await axios.post(`/auth/register`, {username, password, avatar})
            this.props.updateUser(res.data)
        } catch(err) {
            console.log(err)

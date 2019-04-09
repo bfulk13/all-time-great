@@ -11,6 +11,7 @@ const aws = require('aws-sdk');
 //// CONTROLLERS ////
 const ac = require('./controllers/auth_controller');
 const qc = require('./controllers/questions/question_controller');
+const pc = require('./controllers/profiles/profile_controller');
 
 //// ENV ////
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING } = process.env;
@@ -62,7 +63,7 @@ app.get('/api/getallquestions', qc.getAllQs);
 
 
 //// PROFILES ENDPOINTS ////
-app.get('api/profiles', );
+app.get('api/profiles', pc.getPsByLikes);
 
 
 //// ANSWERS ENDPOINTS ////

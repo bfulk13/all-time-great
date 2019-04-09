@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Vote.css'
+import {Link} from 'react-router-dom'
 
 class Vote extends Component {
   constructor() {
@@ -29,6 +30,9 @@ class Vote extends Component {
         
     }
   }
+  Vote(){
+
+  }
 
   render() {
     const answers = this.state.answers.map(ans => {
@@ -47,7 +51,7 @@ class Vote extends Component {
           <h2>{this.state.question}</h2>
           {answers}
           <div>
-           <button>Submit Vote</button>
+           <Link to='/Results'><button on>Submit Vote</button></Link>
           </div>
 
         </div>

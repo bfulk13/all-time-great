@@ -27,8 +27,8 @@ class Login extends Component {
     }
     
     componentDidMount() {
-       this.getUser();
-       this.checkUser();
+    //    this.getUser();
+    //    this.checkUser();
     }
 
     getUser = async () => {
@@ -75,6 +75,7 @@ class Login extends Component {
            const {username, password, avatar} = this.state
            let res = await axios.post(`/auth/register`, {username, password, avatar})
            this.props.updateUser(res.data)
+           console.log('hitting front end')
        } catch(err) {
            console.log(err)
        }

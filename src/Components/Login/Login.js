@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
-import {updateUser, clearUser} from '../redux/reducer'
+import {updateUser, clearUser} from '../../redux/reducer'
 // import { threadId } from 'worker_threads';
 
 class Login extends Component {
@@ -10,7 +10,7 @@ class Login extends Component {
 
         this.state = {
             username: '',
-            password: ''
+            password: '',
         }
     }
 
@@ -58,7 +58,7 @@ class Login extends Component {
     login = async () => {
        const {username, password} = this.state
        try {
-           let res = await axios.post(`/api/login`, {username, password})
+           let res = await axios.post(`/auth/login`, {username, password})
            this.props.updateUser(res.data)
        } catch(err) {
            console.log(err)
@@ -66,14 +66,14 @@ class Login extends Component {
     }
 
     logout = () => {
-       axios.post(`/api/logout`)
+       axios.post(`/auth/logout`)
        this.props.clearUser()
     }
 
     register = async () => {
        try {
-           const {username, password} = this.state
-           let res = await axios.post(`/api/register`, {username, password})
+           const {username, password, avatar} = this.state
+           let res = await axios.post(`/auth/register`, {username, password, avatar})
            this.props.updateUser(res.data)
        } catch(err) {
            console.log(err)
@@ -100,7 +100,7 @@ class Login extends Component {
              value={this.state.password}
              type='password'/>
            <button className='login-btn' onClick={this.login}>Login</button>
-           <button className='register-btn' onclick={this.register}>Register</button>
+           <button className='register-btn' onClick={this.register}>Register</button>
           </div>
       )
   }

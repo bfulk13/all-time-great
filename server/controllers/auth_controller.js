@@ -37,7 +37,7 @@ module.exports = {
         if(authenticated){
             delete user.password;
             session.user = user;
-            // console.log({session})
+            console.log({session})
             res.status(200).send(session.user);
         } else {
             res.sendStatus(401);
@@ -55,7 +55,7 @@ module.exports = {
 
     logout: (req, res) => {
         req.session.destroy(function(){
-            res.sendstatus(200);
+            res.sendStatus(200);
         })
     }
 }

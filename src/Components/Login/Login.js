@@ -89,8 +89,15 @@ class Login extends Component {
 
 
   render() {
-      if(!this.props.id) {
+      console.log(this.props)
       return (
+          
+          
+        this.props.reduxState.uid ? <div>
+        <p>Get Voting, {this.props.reduxState.username}!</p>
+        <button className='logout-btn' onClick={this.logout}>Logout</button>
+
+        </div> :
           <div className='login-wrapper'>
            <input 
              className='username' 
@@ -105,15 +112,8 @@ class Login extends Component {
              placeholder='Password'/>
            <button className='login-btn' onClick={this.login}>Login</button>
            <button className='register-btn' onClick={this.register}>Register</button>
-           
-          </div>
-      )} else {
-          return(
-              <div>
-                  <button className='logout-btn' onClick={this.logout}>Logout</button>
-              </div>
-          )
-      }
+           </div>
+      )
   }
 
 }

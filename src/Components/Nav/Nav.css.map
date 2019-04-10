@@ -1,5 +1,1 @@
-<<<<<<< HEAD
 {"version":3,"sourceRoot":"","sources":["inputNav.scss","../Sass/_colors.scss"],"names":[],"mappings":"AAEA;EACI,kBCHU;EDIV;EACA;;AACA;EACI;EACA;EACA;EACA;;AAIJ;EACI;;AAEJ;EACI;;AACA;EACI;EACA;;AACA;EACI,OCpBF","file":"Nav.css"}
-=======
-{"version":3,"sourceRoot":"","sources":[],"names":[],"mappings":"","file":"Nav.css"}
->>>>>>> master

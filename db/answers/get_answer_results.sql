@@ -1,5 +1,5 @@
 select vote, aid, answer
-from Answers 
+from Answers
 where q_id = ${qid};
 
 select a.aid

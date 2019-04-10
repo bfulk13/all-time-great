@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import './Vote.css'
 import {Link} from 'react-router-dom'
 import Axios from 'axios'
 import {connect} from 'react-redux'
+import {updateQuestion} from '../../redux/reducer'
 
 class Vote extends Component {
   constructor() {
@@ -12,7 +13,8 @@ class Vote extends Component {
           question: {},
           img: '',
           answers: [],
-          anwser: ''
+          anwser: '',
+          qid: 0
 
         
         
@@ -20,31 +22,35 @@ class Vote extends Component {
   }
   componentDidMount(){
     this.getQuestionAndAnswers()
-   
+    
+    
   }
   getQuestionAndAnswers = async () => {
     let quest = await Axios.get(`/api/question/${this.props.match.params.id}`)
-   console.log(quest)
+    // console.log(quest)
     let res = await Axios.get(`/api/getanswersforquestion/${this.props.match.params.id}`)
+    console.log(434354356, res.data)
     this.setState({
       question: quest.data[0],
-      answers: res.data
+      answers: res.data,
+      qid: res.data[0].q_id
     })
-    console.log(this.state.answers)
+    this.props.updateQuestion(this.state.qid)
+    console.log(this.state, 2121212)
   }
-
+  
   Vote = async () => {
-    let aid = this.state.answer
-    let qid = this.state.question.qid
+    let qid = this.state.qid
     let uid = this.props.uid
-    let body = {aid, qid, uid}
+    let body = {qid: qid, uid: uid}
+    this.props.updateQuestion(qid)
     await Axios.post('/api/sendselectedanswer', body)
   }
   updateAnswer= (val) => {
     this.setState({
       answer: val
     })
-    console.log(this.state.answer)
+    // console.log(this.state.answer)
   }
 
   render() {
@@ -83,4 +89,8 @@ const mapStateToProps = (reduxState) => {
   }
 }
 
-export default (connect(mapStateToProps)(Vote))
+const mapDispatchToProps = {
+  updateQuestion
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Vote)

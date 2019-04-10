@@ -67,7 +67,7 @@ app.post('/api/addnewquestion', qc.addNewQ);
 
 //// PROFILES ENDPOINTS ////
 app.get('/api/profiles', pc.getPsByLikes);
-// app.get('/api/profile', pc.getProfile)
+app.get('/api/profile', pc.getProfile)
 
 
 //// ANSWERS ENDPOINTS ////

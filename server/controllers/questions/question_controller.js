@@ -1,9 +1,8 @@
 module.exports = {
     getQsByVotes: (req, res) => {
         const db = req.app.get('db');
-        const { id } = req.session.user;
-
-        db.questions.get_qs_by_votes({ id }).then(resp => {
+        db.questions.get_qs_by_votes().then(resp => {
+          console.log(1111, resp)
             //console.log(resp)
             res.status(200).send(resp)
         }).catch(err => {
@@ -13,7 +12,7 @@ module.exports = {
     },
     //------------Questions page--------------//
     getAllQs: (req, res) => {
-      try{console.log('hit')
+      try{
       const db = req.app.get('db')
       db.questions.get_all_questions().then(response => {
         console.log(response)
@@ -25,8 +24,6 @@ module.exports = {
     
     addNewQ: (req, res) => {
       const db = req.app.get('db')
-      console.log('hit')
-      console.log(req.body)
       const {question, q_img, owner_id} = req.body
       db.questions.add_new_question({question, q_img, owner_id}).then(response => {
         res.status(200).send(response)

@@ -1,9 +1,8 @@
 module.exports = {
     getPsByLikes: async (req, res) => {
         const db = req.app.get('db');
-        const { id } = req.session.user;
-
-        let psByLikes = await db.profiles.get_ps_by_likes({ id }).then(resp => {
+        
+        db.profiles.get_ps_by_likes().then(resp => {
             //console.log(resp)
             res.status(200).send(resp)
         }).catch(err => {

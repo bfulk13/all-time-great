@@ -1,8 +1,21 @@
 module.exports = {
-    getPsByLikes: (req, res) => {
+    getPsByLikes: async (req, res) => {
         const db = req.app.get('db');
+        
         db.profiles.get_ps_by_likes().then(resp => {
             //console.log(resp)
+            res.status(200).send(resp)
+        }).catch(err => {
+            console.log(err)
+            res.status(500).send(err)
+        })
+    },
+
+    getProfile: async (req, res) => {
+        const db = req.app.get('db');
+        const { id } = req.session.user;
+
+        let profile = await db.profiles.get_profile({ id }).then(resp => {
             res.status(200).send(resp)
         }).catch(err => {
             console.log(err)
@@ -11,3 +24,5 @@ module.exports = {
     }
     
 }
+
+/* #026670, #9FEDD7, #FEF9C7, #FCE181, #EDEAE5 */

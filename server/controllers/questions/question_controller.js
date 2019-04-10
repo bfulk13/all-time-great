@@ -1,8 +1,8 @@
 module.exports = {
     getQsByVotes: (req, res) => {
         const db = req.app.get('db');
+
         db.questions.get_qs_by_votes().then(resp => {
-          console.log(1111, resp)
             //console.log(resp)
             res.status(200).send(resp)
         }).catch(err => {

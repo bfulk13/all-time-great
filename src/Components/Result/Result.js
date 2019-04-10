@@ -35,6 +35,7 @@ class Results extends Component {
       return (
         <div>
           <span>{ans.answer} {ans.vote}</span>
+          <img src={ans.ans_img} alt="" className='ResultImg'/>
         </div>
       )
     })

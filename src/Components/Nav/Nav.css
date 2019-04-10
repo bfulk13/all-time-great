@@ -4,16 +4,29 @@
   display: flex;
 }
 .nav-wrapper img {
-  width: 60px;
+  width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: white;
+  background-color: #66FCF1;
+  border: 2px solid #C5C6C7;
+  margin-left: 5px;
+}
+.nav-wrapper p {
+  color: #66FCF1;
+  font-size: 30px;
+  font-family: "Permanent Marker", cursive;
+  margin-left: 10px;
 }
 .nav-wrapper .user-icon {
-  font-size: 30px;
+  font-size: 20px;
+}
+.nav-wrapper .search-icon {
+  font-size: 20px;
+  margin-left: 10px;
 }
 .nav-wrapper nav {
   display: flex;
+  align-items: center;
 }
 .nav-wrapper nav ul {
   list-style-type: none;
@@ -21,6 +34,9 @@
 }
 .nav-wrapper nav ul li {
   color: #66FCF1;
+}
+.nav-wrapper .login-modal {
+  background-color: #45A29E;
 }
 
 /*# sourceMappingURL=Nav.css.map */

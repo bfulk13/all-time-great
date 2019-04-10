@@ -46,7 +46,8 @@ class Landing extends Component{
     }
   }
   componentDidMount(){
-
+    this.getTrendingQuestions()
+    this.getPopularProfiles()
   }
   getTrendingQuestions = async () => {
     let res = await Axios.get('/api/questions')
@@ -66,7 +67,7 @@ class Landing extends Component{
         <div className='SingleTrendingQuestionDiv' key={obj.qid}>
         <Link to={`/Vote/${obj.qid}`}><div className='SingleTrendingQuestionDiv'>
           <h4>{obj.question}</h4>
-          <img src={obj.img} alt="" className="QuestionImg"/>
+          <img src={obj.q_img} alt="" className="QuestionImg"/>
         </div>
         </Link>
           </div>
@@ -76,7 +77,7 @@ class Landing extends Component{
       return(
         <div key={obj.userid}>
         <Link to="/Profile"><div>
-          <img src={obj.img} alt=""className='ProfilePic'/>
+          <img src={obj.q_img} alt=""className='ProfilePic'/>
           <h5>{obj.name}</h5>
         </div>
         </Link>  

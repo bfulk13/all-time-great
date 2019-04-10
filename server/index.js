@@ -73,4 +73,4 @@ app.get('/api/profile', pc.getProfile)
 //// ANSWERS ENDPOINTS ////
 app.get('/api/getanswersforquestion/:id', ansc.getAnswers);
 app.post('/api/sendselectedanswer', ansc.incrementAnswer);
-app.get('/api/getanswerresults', ansc.getAnswerResults);
+app.post('/api/getanswerresults', ansc.getAnswerResults);

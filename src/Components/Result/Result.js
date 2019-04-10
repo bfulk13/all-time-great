@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './Result.css'
+import {connect} from 'react-redux'
+import axios from 'axios';
 
 class Results extends Component {
   constructor() {
@@ -12,9 +14,17 @@ class Results extends Component {
     }
   }
  componentDidMount(){
+  this.getResults()
+ } 
+
+ getResults = async () => {
+  let body = {
+    qid: this.props.qid,
+    uid: this.props.uid
+  }
+  let res = await axios.post('/api/getanswerresults', body)
 
  }
- get 
 
   render() {
 
@@ -44,4 +54,11 @@ class Results extends Component {
   }
 }
 
-export default Results; 
+const mapStateToProps = (reduxState) => {
+  return{
+    qid: reduxState.qid,
+    uid: reduxState.uid
+  }
+} 
+
+export default connect(mapStateToProps)(Results); 

@@ -1,3 +1,26 @@
-
+.nav-wrapper {
+  background-color: #0B0C10;
+  height: 60px;
+  display: flex;
+}
+.nav-wrapper img {
+  width: 60px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: white;
+}
+.nav-wrapper .user-icon {
+  font-size: 30px;
+}
+.nav-wrapper nav {
+  display: flex;
+}
+.nav-wrapper nav ul {
+  list-style-type: none;
+  display: flex;
+}
+.nav-wrapper nav ul li {
+  color: #66FCF1;
+}
 
 /*# sourceMappingURL=Nav.css.map */

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Result.css'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import axios from 'axios';
 
 class Results extends Component {
@@ -8,43 +8,51 @@ class Results extends Component {
     super()
     this.state = {
 
-          question: "What kind of bear is best?",
-          img: 'https://upload.wikimedia.org/wikipedia/en/c/cd/Dwight_Schrute.jpg',
-          answer: 'none of them'
+      question: "What kind of bear is best?",
+      img: 'https://upload.wikimedia.org/wikipedia/en/c/cd/Dwight_Schrute.jpg',
+      answersArr: []
     }
   }
- componentDidMount(){
-  this.getResults()
- } 
-
- getResults = async () => {
-  let body = {
-    qid: this.props.qid,
-    uid: this.props.uid
+  componentDidMount() {
+    this.getResults()
   }
-  let res = await axios.post('/api/getanswerresults', body)
 
- }
+  getResults = async () => {
+    let body = {
+      qid: this.props.qid,
+      uid: this.props.uid
+    }
+    let res = await axios.post('/api/getanswerresults', body)
+    console.log(1234, res)
+    await this.setState({
+      answersArr: res.data
+    })
+
+  }
 
   render() {
-
-
-
-
+    const answers = this.state.answersArr.map(ans => {
+      return (
+        <div>
+          <span>{ans.answer} {ans.vote}</span>
+        </div>
+      )
+    })
     return (
+
       <div className='Results'>
         <h1>{this.state.question}</h1>
         <div className='TopHalfDiv'>
           <div className='ChartJsStuff'>
-            <img className='QuestionImg' src={this.state.img} alt=""/>
+            <img className='QuestionImg' src={this.state.img} alt="" />
           </div>
           <div className='AnswersDiv'>
-
+          {answers}
           </div>
 
 
 
-          </div>
+        </div>
 
         <div className='ResponsesDiv'>
 
@@ -55,10 +63,10 @@ class Results extends Component {
 }
 
 const mapStateToProps = (reduxState) => {
-  return{
+  return {
     qid: reduxState.qid,
     uid: reduxState.uid
   }
-} 
+}
 
 export default connect(mapStateToProps)(Results); 

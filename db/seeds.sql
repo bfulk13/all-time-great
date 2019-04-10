@@ -10,10 +10,11 @@ CREATE TABLE Questions (
     QID Serial primary key,
     Question VARCHAR(254),
     Q_img text,
-    Owner_id int 
+    Owner_id int,
+    likes int 
 );
 
-CREATE TABLE Answer (
+CREATE TABLE Answers (
     AID Serial primary key,
     q_id int,
     Answer VARCHAR(200),

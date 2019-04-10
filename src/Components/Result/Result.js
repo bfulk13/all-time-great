@@ -11,9 +11,10 @@ class Results extends Component {
           answer: 'none of them'
     }
   }
-  Vote(){
+ componentDidMount(){
 
-  }
+ }
+ get 
 
   render() {
 

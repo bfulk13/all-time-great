@@ -27,8 +27,8 @@ class Login extends Component {
     }
     
     componentDidMount() {
-    //    this.getUser();
-    //    this.checkUser();
+       this.getUser();
+       this.checkUser();
     }
 
     getUser = async () => {
@@ -89,21 +89,31 @@ class Login extends Component {
 
 
   render() {
+      if(!this.props.id) {
       return (
           <div className='login-wrapper'>
            <input 
              className='username' 
              onChange={this.handleUsername}
-             value={this.state.username}/>
+             value={this.state.username}
+             placeholder='Username'/>
            <input 
              className='password' 
              onChange={this.handlePassword}
              value={this.state.password}
-             type='password'/>
+             type='password'
+             placeholder='Password'/>
            <button className='login-btn' onClick={this.login}>Login</button>
            <button className='register-btn' onClick={this.register}>Register</button>
+           
           </div>
-      )
+      )} else {
+          return(
+              <div>
+                  <button className='logout-btn' onClick={this.logout}>Logout</button>
+              </div>
+          )
+      }
   }
 
 }

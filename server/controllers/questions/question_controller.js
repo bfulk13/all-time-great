@@ -1,9 +1,8 @@
 module.exports = {
     getQsByVotes: (req, res) => {
         const db = req.app.get('db');
-        const { id } = req.session.user;
 
-        db.questions.get_qs_by_votes({ id }).then(resp => {
+        db.questions.get_qs_by_votes().then(resp => {
             //console.log(resp)
             res.status(200).send(resp)
         }).catch(err => {

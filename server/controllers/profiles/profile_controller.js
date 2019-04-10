@@ -14,9 +14,9 @@ module.exports = {
 
     getProfile: async (req, res) => {
         const db = req.app.get('db');
-        const { id } = req.session.user;
+        const { uid } = req.session.user;
 
-        let profile = await db.profiles.get_profile({ id }).then(resp => {
+        let profile = await db.profiles.get_profile({ uid }).then(resp => {
             res.status(200).send(resp)
         }).catch(err => {
             console.log(err)

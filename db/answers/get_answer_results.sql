@@ -1,8 +1,6 @@
-select vote, aid, answer
-from Answers 
+select a.vote, a.aid, a.answer, a.ans_img
+from Answers a
+join questions q 
+on a.q_id = q.qid
 where q_id = ${qid};
 
-select a.aid
-from Answers a
-join Voted v on a.q_id = v.Vquestion_id
-where v.Vquestion_id = ${qid} and v.Vuser_id = ${uid};

@@ -15,7 +15,18 @@ module.exports = {
       try{
       const db = req.app.get('db')
       db.questions.get_all_questions().then(response => {
-        console.log(response)
+        // console.log(response)
+        res.status(200).send(response)
+      })}catch(err){
+        console.log(err)
+  }
+    },
+    getQ: (req, res) => {
+      try{
+        const {id} = req.params
+      const db = req.app.get('db')
+      db.questions.get_question({id}).then(response => {
+        // console.log(response)
         res.status(200).send(response)
       })}catch(err){
         console.log(err)

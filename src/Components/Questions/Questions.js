@@ -20,11 +20,9 @@ class Questions extends Component {
 
    getAllQuestions = async () => {
      let res = await Axios.get('/api/getallquestions')
-     console.log(22222222, res)
    this.setState({
      trendingQuestionsArr: res.data
    })
-   console.log(this.state.trendingQuestionsArr,333333333)
   }
 
   createNewQuestion = async () => {
@@ -36,7 +34,6 @@ class Questions extends Component {
   }
 
   render() {
-    console.log(111, this.state)
     const trendingQuestions = this.state.trendingQuestionsArr.map(obj => {
       return (
          <div className='SingleQuestionDiv'>

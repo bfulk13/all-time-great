@@ -60,6 +60,7 @@ app.post('/auth/logout', ac.logout);
 
 //// QUESTIONS ENDPOINTS ////
 app.get('/api/questions', qc.getQsByVotes);
+app.get('/api/question/:id', qc.getQ);
 app.get('/api/getallquestions', qc.getAllQs);
 app.post('/api/addnewquestion', qc.addNewQ);
 
@@ -72,4 +73,4 @@ app.get('/api/profile', pc.getProfile)
 //// ANSWERS ENDPOINTS ////
 app.get('/api/getanswersforquestion/:id', ansc.getAnswers);
 app.post('/api/sendselectedanswer', ansc.incrementAnswer);
-app.get('/api/getanswerresults', ansc.getAnswerResults);
+app.post('/api/getanswerresults', ansc.getAnswerResults);

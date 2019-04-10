@@ -9,7 +9,7 @@ class Landing extends Component{
       trendingQuestionsArr: [
         {
         question: "What kind of bear is best?",
-        img: 'https://upload.wikimedia.org/wikipedia/en/c/cd/Dwight_Schrute.jpg'
+        img: 'https://upload.wikimedia.org/wikipedia/en/c/cd/Dwight_Schrute.jpg',
        },
         {
         question: "What kind of bear is best?",
@@ -48,7 +48,7 @@ class Landing extends Component{
     const trendingQuestions = this.state.trendingQuestionsArr.map( obj => {
       return(
         <div className='SingleTrendingQuestionDiv'>
-        <Link to='/Vote'><div className='SingleTrendingQuestionDiv'>
+        <Link to={`/Vote/${obj.qid}`}><div className='SingleTrendingQuestionDiv'>
           <h4>{obj.question}</h4>
           <img src={obj.img} alt="" className="QuestionImg"/>
         </div>

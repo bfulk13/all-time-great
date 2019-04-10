@@ -14,6 +14,7 @@ class Vote extends Component {
           img: '',
           answers: [],
           anwser: '',
+          aid: 0,
           qid: 0
 
         
@@ -22,41 +23,43 @@ class Vote extends Component {
   }
   componentDidMount(){
     this.getQuestionAndAnswers()
-    
+    console.log(this.props)
+    console.log(this.state)
     
   }
   getQuestionAndAnswers = async () => {
     let quest = await Axios.get(`/api/question/${this.props.match.params.id}`)
-    // console.log(quest)
     let res = await Axios.get(`/api/getanswersforquestion/${this.props.match.params.id}`)
-    console.log(434354356, res.data)
+    console.log('quest', quest)
+    console.log('res', res)
     this.setState({
-      question: quest.data[0],
+      question: quest.data[0].question,
       answers: res.data,
-      qid: res.data[0].q_id
+      qid: quest.data[0].q_id
     })
-    this.props.updateQuestion(this.state.qid)
-    console.log(this.state, 2121212)
   }
   
   Vote = async () => {
     let qid = this.state.qid
     let uid = this.props.uid
     let body = {qid: qid, uid: uid}
-    this.props.updateQuestion(qid)
     await Axios.post('/api/sendselectedanswer', body)
   }
-  updateAnswer= (val) => {
-    this.setState({
-      answer: val
+  updateQid= async (val) => {
+    console.log(11111111, val)
+    await this.setState({
+      qid: val,
     })
-    // console.log(this.state.answer)
+    console.log(2222222, this.state.qid)
+    // this.props.updateQuestion(this.state.qid)
+    this.props.updateQuestion({qid: this.state.qid})  
   }
 
   render() {
     const answers = this.state.answers.map(ans => {
+      console.log({ans})
       return (
-        <div className='SingleAnswerDiv' onClick={ () => this.updateAnswer(ans.aid)} key={ans.aid}>
+        <div className='SingleAnswerDiv' onClick={ () => this.updateQid(ans.q_id)} key={ans.aid}>
           <h4>{ans.answer}</h4>
           <img src={ans.ans_img} alt="" className="AnswerImg" />
         </div>
@@ -85,7 +88,8 @@ class Vote extends Component {
 
 const mapStateToProps = (reduxState) => {
   return{
-   uid: reduxState.id
+   uid: reduxState.id,
+   qid: reduxState.qid
   }
 }
 

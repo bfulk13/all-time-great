@@ -27,11 +27,11 @@ module.exports = {
     // -----------Result Page--------------//
     getAnswerResults: (req, res) => {
       const db = req.app.get('db')
-      console.log("xxxx", req.body)
-      const {qid, uid} = req.body
-      db.answers.get_answer_results({qid, uid}).then(response => {
+      const {qid} = req.body
+      console.log(qid)
+      db.answers.get_answer_results({qid}).then(response => {
         console.log(22222, response)
-        res.send(200).send(response)
+        res.status(200).send(response)
       }).catch(err => {
         console.log(err)
         res.status(500).send(err)

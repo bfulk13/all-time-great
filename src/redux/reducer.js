@@ -26,7 +26,7 @@ export function updateUser(user) {
 }
 
 export function updateQuestion(qid) {
-    console.log(qid)
+    console.log(232323, qid)
     return {
         type: UPDATE_QUESTION,
         payload: qid

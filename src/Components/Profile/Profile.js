@@ -8,6 +8,7 @@ class Profile extends Component{
       following: [],
       avatar: '',
       username: '',
+      about: '',
       likedQs: 0
     }
   }
@@ -18,11 +19,12 @@ class Profile extends Component{
 
   viewProfile = async (uid) => {
     let res = await axios.get(`/api/viewprofile/${this.props.match.params.uid}`)
-    // console.log(res.data)
+    console.log(res.data)
     this.setState({
-      avatar: res.data.avatar,
-      username: res.data.username,
-      likedQs: res.data.likes
+      avatar: res.data[0].avatar,
+      username: res.data[0].username,
+      about: res.data[0].about,
+      likedQs: res.data[0].sum
     })
   }
 
@@ -31,10 +33,14 @@ class Profile extends Component{
   }
 
   render(){
+    const {username, avatar, about, likedQs} = this.state
     return(
      <div className='Profile'> 
         <div >
-          Profile
+          <h3>{username}</h3>
+          <h3>{likedQs}</h3>
+          <img src={avatar} alt="avatar"/>
+          <p>{about}</p>
         </div>
         
       </div>

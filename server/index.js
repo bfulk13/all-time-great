@@ -25,7 +25,7 @@ aws.config.update({
 //// MIDDLEWARE ////
 const app = express();
 
-const S3 = new AWS.S3();
+// const S3 = new AWS.S3();
 
 const pgPool = new pg.Pool({
     connectionString: CONNECTION_STRING
@@ -98,7 +98,7 @@ app.post('/api/addnewquestion', qc.addNewQ);
 //// PROFILES ENDPOINTS ////
 app.get('/api/profiles', pc.getPsByLikes);
 app.get('/api/profile', pc.getProfile)
-// app.get('/api/viewprofile/:id', pc.ViewProfile)
+app.get('/api/viewprofile/:id', pc.viewProfile)
 
 
 //// ANSWERS ENDPOINTS ////

@@ -6,7 +6,7 @@ const massive = require('massive');
 
 const pg = require('pg');
 const pgSession = require('connect-pg-simple')(session)
-const aws = require('aws-sdk');
+const AWS = require('aws-sdk');
 
 //// CONTROLLERS ////
 const ac = require('./controllers/auth_controller');
@@ -15,8 +15,9 @@ const pc = require('./controllers/profiles/profile_controller');
 const ansc = require('./controllers/answers/answers_controller');
 
 //// ENV ////
-const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING } = process.env;
-aws.config.update({
+const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING} = process.env;
+
+AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secrectAccessKey: process.env.AWS_SECRECT_ACCES_KEY,
     region: process.env.AWS_REGION

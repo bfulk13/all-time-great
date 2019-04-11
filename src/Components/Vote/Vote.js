@@ -21,19 +21,14 @@ class Vote extends Component {
         
     }
   }
-  componentDidMount(){
-    this.getQuestionAndAnswers()
-    console.log(this.props)
-    console.log(this.state)
-    
+  componentDidMount = async () => {
+    await this.getQuestionAndAnswers()
   }
   getQuestionAndAnswers = async () => {
     let quest = await Axios.get(`/api/question/${this.props.match.params.id}`)
     let res = await Axios.get(`/api/getanswersforquestion/${this.props.match.params.id}`)
-    console.log('quest', quest)
-    console.log('res', res)
     this.setState({
-      question: quest.data[0].question,
+      question: quest.data[0],
       answers: res.data,
       qid: quest.data[0].q_id
     })
@@ -41,25 +36,23 @@ class Vote extends Component {
   
   Vote = async () => {
     let qid = this.state.qid
+    let aid = this.state.aid
     let uid = this.props.uid
-    let body = {qid: qid, uid: uid}
+    let body = {qid: qid, uid: uid, aid: aid}
     await Axios.post('/api/sendselectedanswer', body)
   }
-  updateQid= async (val) => {
-    console.log(11111111, val)
+  updateQidAid= async (val, val2) => {
     await this.setState({
       qid: val,
+      aid: val2
     })
-    console.log(2222222, this.state.qid)
-    // this.props.updateQuestion(this.state.qid)
-    this.props.updateQuestion({qid: this.state.qid})  
+    this.props.updateQuestion({qid: this.state.qid, question: this.state.question.question})  
   }
 
   render() {
     const answers = this.state.answers.map(ans => {
-      console.log({ans})
       return (
-        <div className='SingleAnswerDiv' onClick={ () => this.updateQid(ans.q_id)} key={ans.aid}>
+        <div className='SingleAnswerDiv' onClick={ () => this.updateQidAid(ans.q_id, ans.aid)} key={ans.aid}>
           <h4>{ans.answer}</h4>
           <img src={ans.ans_img} alt="" className="AnswerImg" />
         </div>
@@ -88,7 +81,7 @@ class Vote extends Component {
 
 const mapStateToProps = (reduxState) => {
   return{
-   uid: reduxState.id,
+   uid: reduxState.uid,
    qid: reduxState.qid
   }
 }

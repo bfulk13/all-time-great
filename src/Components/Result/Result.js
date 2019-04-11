@@ -8,7 +8,7 @@ class Results extends Component {
     super()
     this.state = {
 
-      question: "What kind of bear is best?",
+      question: "",
       img: 'https://upload.wikimedia.org/wikipedia/en/c/cd/Dwight_Schrute.jpg',
       answersArr: []
     }
@@ -23,15 +23,18 @@ class Results extends Component {
       uid: this.props.uid
     }
     let res = await axios.post('/api/getanswerresults', body)
-    console.log(1234, res)
+    
     await this.setState({
-      answersArr: res.data
+      answersArr: res.data,
+      question: this.props.question
     })
-
+    console.log(this.state.answersArr[0].ans_img)
   }
 
   render() {
+    const winningansimg = this.state.answersArr[0] ? this.state.answersArr[0].ans_img : null
     const answers = this.state.answersArr.map(ans => {
+    
       return (
         <div>
           <span>{ans.answer} {ans.vote}</span>
@@ -42,10 +45,10 @@ class Results extends Component {
     return (
 
       <div className='Results'>
-        <h1>{this.state.question}</h1>
+        <h1>{this.props.question}</h1>
         <div className='TopHalfDiv'>
           <div className='ChartJsStuff'>
-            <img className='QuestionImg' src={this.state.img} alt="" />
+            <img className='QuestionImg' src={winningansimg} alt="" />
           </div>
           <div className='AnswersDiv'>
           {answers}
@@ -66,7 +69,8 @@ class Results extends Component {
 const mapStateToProps = (reduxState) => {
   return {
     qid: reduxState.qid,
-    uid: reduxState.uid
+    uid: reduxState.uid,
+    question: reduxState.question
   }
 }
 

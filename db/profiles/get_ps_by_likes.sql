@@ -1,5 +1,5 @@
-select u.username, q.owner_id, u.avatar, sum(likes)
+select u.username, u.avatar, q.owner_id, sum(likes)
 from Questions q 
 join Users u on u.uid = q.owner_id
-group by u.username, q.owner_id, u.avatar
+group by u.username, u.avatar, q.owner_id
 order by sum desc

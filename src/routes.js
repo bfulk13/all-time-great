@@ -10,8 +10,9 @@ import {Switch, Route} from 'react-router-dom'
 export default(
   <Switch>
     <Route path='/Questions' component={Questions}/>
-    <Route path='/Vote/:id' component={Vote}/>    
-    <Route path='/Profile' component={Profile}/>
+    <Route path='/Vote/:id' component={Vote}/> 
+    <Route exact path='/Profile/:id' component={Profile}/> 
+    <Route exact path='/Profile' component={Profile}/>
     <Route path='/Result' component={Result}/>
     <Route excact path='/' component={Landing}/>
   </Switch>

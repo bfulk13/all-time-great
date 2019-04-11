@@ -2,6 +2,10 @@ import React, {Component} from 'react'
 import Modal from 'react-responsive-modal';
 import Login from '../Login/Login'
 import './Nav.css'
+import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
+import {clearUser} from '../../redux/reducer'
+import axios from 'axios'
 
 class Nav extends Component {
      constructor(props) {
@@ -25,6 +29,10 @@ class Nav extends Component {
         })
      }
 
+     logout = () => {
+        axios.post(`/auth/logout`)
+        this.props.clearUser()
+     }
 
 
     render() {
@@ -32,12 +40,21 @@ class Nav extends Component {
         return (
         <div className='nav-wrapper'>
           <nav>
-              <img src='https://files.slack.com/files-pri/T039C2PUY-FHHBAQ5EV/goat.png' alt='dabbing-goat'/>
+              <Link to={'/'}>
+                <img src='https://files.slack.com/files-pri/T039C2PUY-FHHBAQ5EV/goat.png' alt='dabbing-goat'/>
+              </Link>
               <p className='logo'>G.O.A.T.</p>
               <ul>
-                  <li><i onClick={this.openModal}className="far fa-user user-icon"></i></li>
+                  <Link to={'/profile'} style={{textDecoration:'none'}}>
+                  <li><i className="far fa-user user-icon"></i></li>
+                  </Link>
                   <li><i className="fas fa-search search-icon"></i></li>
-                  <li></li>
+                  <li>
+                      {this.props.reduxState.uid ? 
+                      <button onClick={this.logout} className='logout-nav'>Logout</button>: 
+                      <button onClick={this.openModal} className='login-nav'>Login</button> 
+                      }
+                  </li>
               </ul>
           </nav>
          <div className='login-modal'>
@@ -52,4 +69,13 @@ class Nav extends Component {
     }
 }
 
-export default Nav
+const mappedStateToProps = (reduxState) => {
+    return {
+        reduxState: reduxState.uid,
+        reduxState
+    }
+}
+
+
+
+export default connect(mappedStateToProps, {clearUser})(Nav)

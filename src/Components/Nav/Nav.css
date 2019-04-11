@@ -1,28 +1,37 @@
+body {
+  background: #45A29E;
+}
+
 .nav-wrapper {
   background-color: #0B0C10;
   height: 60px;
   display: flex;
+  align-items: center;
 }
 .nav-wrapper img {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: #66FCF1;
   border: 2px solid #C5C6C7;
   margin-left: 5px;
+  cursor: pointer;
 }
 .nav-wrapper p {
   color: #66FCF1;
-  font-size: 30px;
+  font-size: 25px;
   font-family: "Permanent Marker", cursive;
   margin-left: 10px;
 }
 .nav-wrapper .user-icon {
-  font-size: 20px;
+  font-size: 22px;
+  cursor: pointer;
+  margin-top: 5px;
 }
 .nav-wrapper .search-icon {
-  font-size: 20px;
+  font-size: 22px;
   margin-left: 10px;
+  cursor: pointer;
 }
 .nav-wrapper nav {
   display: flex;
@@ -34,6 +43,38 @@
 }
 .nav-wrapper nav ul li {
   color: #66FCF1;
+  display: flex;
+  align-items: center;
+}
+.nav-wrapper nav ul li .login-nav {
+  display: flex;
+  justify-content: center;
+  border: 3px solid #66FCF1;
+  border-radius: 50%;
+  height: 30px;
+  width: 54px;
+  font-size: 10px;
+  background-color: #0B0C10;
+  color: #66FCF1;
+  font-family: "Permanent Marker", cursive;
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.nav-wrapper nav ul li .logout-nav {
+  display: flex;
+  justify-content: center;
+  border: 3px solid #66FCF1;
+  border-radius: 50%;
+  height: 30px;
+  width: 54px;
+  font-size: 10px;
+  background-color: #0B0C10;
+  color: #66FCF1;
+  font-family: "Permanent Marker", cursive;
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
 }
 .nav-wrapper .login-modal {
   background-color: #45A29E;

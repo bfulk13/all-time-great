@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
-import {updateUser, clearUser} from '../../redux/reducer'
+import {updateUser} from '../../redux/reducer'
 import './Login.css'
-// import { threadId } from 'worker_threads';
+import {Link} from 'react-router-dom'
+
 
 class Login extends Component {
     constructor(props) {
@@ -39,7 +40,7 @@ class Login extends Component {
              let res = await axios.get(`/api/current`)
              this.props.updateUser(res.data)
          } catch(err) {
-             console.log('Error getting user ID')
+             console.log(err)
          }
      }
     }
@@ -66,10 +67,7 @@ class Login extends Component {
        }
     }
 
-    logout = () => {
-       axios.post(`/auth/logout`)
-       this.props.clearUser()
-    }
+    
 
     register = async () => {
        try {
@@ -91,9 +89,13 @@ class Login extends Component {
   render() {
       return (
           
-        this.props.reduxState.uid ? <div>
+        this.props.reduxState.uid ? <div className='logout-wrapper'>
+        <div>
         <p>Get Voting, {this.props.reduxState.username}!</p>
-        <button className='logout-btn' onClick={this.logout}>Logout</button>
+          <Link to={'/Questions'} style={{textDecoration: 'none'}}>
+           <div>Start Voting Now!</div>
+          </Link>
+        </div>
 
         </div> :
           <div className='login-wrapper'>
@@ -120,14 +122,13 @@ class Login extends Component {
 
 const mapStateToProps = (reduxState) => {
     return {
-        id: reduxState.id,
+        uid: reduxState.uid,
         reduxState
     }
 }
 
 const mapDispatchStateToProps = {
     updateUser,
-    clearUser
 }
 
 export default connect(mapStateToProps, mapDispatchStateToProps)(Login)

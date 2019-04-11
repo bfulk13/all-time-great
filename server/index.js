@@ -12,6 +12,7 @@ const aws = require('aws-sdk');
 const ac = require('./controllers/auth_controller');
 const qc = require('./controllers/questions/question_controller');
 const pc = require('./controllers/profiles/profile_controller');
+const ansc = require('./controllers/answers/answers_controller');
 
 //// ENV ////
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING } = process.env;
@@ -89,11 +90,17 @@ app.post('/auth/logout', ac.logout);
 
 //// QUESTIONS ENDPOINTS ////
 app.get('/api/questions', qc.getQsByVotes);
+app.get('/api/question/:id', qc.getQ);
 app.get('/api/getallquestions', qc.getAllQs);
+app.post('/api/addnewquestion', qc.addNewQ);
 
 
 //// PROFILES ENDPOINTS ////
-app.get('api/profiles', pc.getPsByLikes);
+app.get('/api/profiles', pc.getPsByLikes);
+app.get('/api/profile', pc.getProfile)
 
 
 //// ANSWERS ENDPOINTS ////
+app.get('/api/getanswersforquestion/:id', ansc.getAnswers);
+app.post('/api/sendselectedanswer', ansc.incrementAnswer);
+app.post('/api/getanswerresults', ansc.getAnswerResults);

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
 import {updateUser, clearUser} from '../../redux/reducer'
+import './Login.css'
 // import { threadId } from 'worker_threads';
 
 class Login extends Component {
@@ -27,8 +28,8 @@ class Login extends Component {
     }
     
     componentDidMount() {
-    //    this.getUser();
-    //    this.checkUser();
+       this.getUser();
+       this.checkUser();
     }
 
     getUser = async () => {
@@ -75,7 +76,6 @@ class Login extends Component {
            const {username, password, avatar} = this.state
            let res = await axios.post(`/auth/register`, {username, password, avatar})
            this.props.updateUser(res.data)
-           console.log('hitting front end')
        } catch(err) {
            console.log(err)
        }
@@ -90,19 +90,29 @@ class Login extends Component {
 
   render() {
       return (
+          
+        this.props.reduxState.uid ? <div>
+        <p>Get Voting, {this.props.reduxState.username}!</p>
+        <button className='logout-btn' onClick={this.logout}>Logout</button>
+
+        </div> :
           <div className='login-wrapper'>
            <input 
              className='username' 
              onChange={this.handleUsername}
-             value={this.state.username}/>
+             value={this.state.username}
+             placeholder='Username'/>
            <input 
              className='password' 
              onChange={this.handlePassword}
              value={this.state.password}
-             type='password'/>
+             type='password'
+             placeholder='Password'/>
+             <div className='btn-wrapper'>
            <button className='login-btn' onClick={this.login}>Login</button>
            <button className='register-btn' onClick={this.register}>Register</button>
-          </div>
+           </div>
+           </div>
       )
   }
 

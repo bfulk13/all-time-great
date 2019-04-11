@@ -40,10 +40,11 @@ class Landing extends Component{
       )
     })
     const popularProfiles = this.state.popularProfilesArr.map( obj => {
+      console.log(obj)
       return(
-        <Link to={`/Profile/${obj.uid}`}>
+        <Link to={`/viewprofile/${obj.owner_id}`}>
           <div>
-            <div key={obj.uid}>
+            <div key={obj.owner_id}>
               <img src={obj.avatar} alt="" className='ProfilePic'/>
               <h5>{obj.username}</h5>
             </div>

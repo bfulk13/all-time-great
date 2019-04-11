@@ -40,7 +40,7 @@ class Landing extends Component{
       )
     })
     const popularProfiles = this.state.popularProfilesArr.map( obj => {
-      console.log(obj)
+      // console.log(obj)
       return(
         <Link to={`/viewprofile/${obj.owner_id}`}>
           <div>

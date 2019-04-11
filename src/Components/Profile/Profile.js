@@ -5,11 +5,7 @@ class Profile extends Component{
   constructor(){
     super()
     this.state = {
-      following: [],
-      avatar: '',
-      username: '',
-      about: '',
-      likedQs: 0
+      user: {}
     }
   }
 
@@ -17,14 +13,12 @@ class Profile extends Component{
     this.viewProfile()
   }
 
-  viewProfile = async (uid) => {
-    let res = await axios.get(`/api/viewprofile/${this.props.match.params.uid}`)
-    console.log(res.data)
+  viewProfile = async () => {
+    console.log(this.props.match.params)
+    let res = await axios.get(`/api/viewprofile/${this.props.match.params.owner_id}`)
+    console.log(res)
     this.setState({
-      avatar: res.data[0].avatar,
-      username: res.data[0].username,
-      about: res.data[0].about,
-      likedQs: res.data[0].sum
+      user: res.data[0]
     })
   }
 
@@ -33,14 +27,15 @@ class Profile extends Component{
   }
 
   render(){
-    const {username, avatar, about, likedQs} = this.state
+    const {user} = this.state
+    console.log(user)
     return(
      <div className='Profile'> 
         <div >
-          <h3>{username}</h3>
-          <h3>{likedQs}</h3>
-          <img src={avatar} alt="avatar"/>
-          <p>{about}</p>
+          <h3>{user.username}</h3>
+          <h3>{user.sum}</h3>
+          <img src={user.avatar} alt="avatar"/>
+          <p>{user.about}</p>
         </div>
         
       </div>

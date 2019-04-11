@@ -3,7 +3,8 @@ const initialState = {
     uid: 0,
     username: '',
     avatar: '',
-    qid: 0
+    qid: 0,
+    question: ''
 }
 
 const UPDATE_USER = 'UPDATE_USER';
@@ -26,7 +27,6 @@ export function updateUser(user) {
 }
 
 export function updateQuestion(qid) {
-    console.log(232323, qid)
     return {
         type: UPDATE_QUESTION,
         payload: qid
@@ -42,8 +42,8 @@ export default function reducer(state = initialState, action) {
         case CLEAR_USER:
           return {...state, uid: 0, username: '', avatar: ''}
         case UPDATE_QUESTION:
-            const {qid} = payload
-            return {...state, qid}
+            const {qid, question} = payload
+            return {...state, qid, question}
         default:
         return state
     }

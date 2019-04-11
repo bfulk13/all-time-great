@@ -16,9 +16,16 @@ const ansc = require('./controllers/answers/answers_controller');
 
 //// ENV ////
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING } = process.env;
+aws.config.update({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secrectAccessKey: process.env.AWS_SECRECT_ACCES_KEY,
+    region: process.env.AWS_REGION
+})
 
 //// MIDDLEWARE ////
 const app = express();
+
+const S3 = new AWS.S3();
 
 const pgPool = new pg.Pool({
     connectionString: CONNECTION_STRING
@@ -45,11 +52,34 @@ massive(CONNECTION_STRING).then(db => {
     })
 })
 
+app.use(express.json({ limit: '50mb'}))
+app.use(express.urlencoded({ limit: '50mb', extended: true}))
+
 //// AMAZON S3 ENDPOINT ////
-app.get('/api/signs3', (req, res) => {
+app.post('/api/s3', (req, res) => {
+    const photo = req.body
+    const buf = new Buffer(photo.file.replace(/^data:image\/\w+;base64,/, ''), 'base64')
+    const params = {
+        Bucket: process.env.AWS_BUCKET,
+        Body: buf,
+        Key: photo.filename,
+        ConentType: photo.filetype,
+        ACL: 'public-read'
+    }
 
-})
-
+    S3.upload(params, (err, data) => {
+        let response, code;
+        if (err) {
+            response = err;
+            code = 500;
+        } else {
+            response = data;
+            code = 200
+        }
+        res.status(code).send(response)
+    })
+},
+)
 
 //// AUTH ENDPOINTS ////
 app.get('/api/current', ac.getUser);
@@ -68,6 +98,7 @@ app.post('/api/addnewquestion', qc.addNewQ);
 //// PROFILES ENDPOINTS ////
 app.get('/api/profiles', pc.getPsByLikes);
 app.get('/api/profile', pc.getProfile)
+// app.get('/api/viewprofile/:id', pc.ViewProfile)
 
 
 //// ANSWERS ENDPOINTS ////

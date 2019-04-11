@@ -4,10 +4,7 @@ const initialState = {
     username: '',
     avatar: '',
     qid: 0,
-<<<<<<< HEAD
-=======
     question: ''
->>>>>>> master
 }
 
 const UPDATE_USER = 'UPDATE_USER';

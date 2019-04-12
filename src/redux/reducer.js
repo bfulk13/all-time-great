@@ -4,10 +4,7 @@ const initialState = {
     username: '',
     avatar: '',
     qid: 0,
-<<<<<<< HEAD
-=======
     question: ''
->>>>>>> master
 }
 
 const UPDATE_USER = 'UPDATE_USER';
@@ -19,7 +16,7 @@ export function clearUser(user) {
         type: CLEAR_USER,
         payload: user
     }
-}
+} 
 
 export function updateUser(user) {
     return {

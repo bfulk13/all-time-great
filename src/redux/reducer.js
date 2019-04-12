@@ -16,7 +16,7 @@ export function clearUser(user) {
         type: CLEAR_USER,
         payload: user
     }
-}
+} 
 
 export function updateUser(user) {
     return {

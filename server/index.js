@@ -26,7 +26,7 @@ AWS.config.update({
 //// MIDDLEWARE ////
 const app = express();
 
-// const S3 = new AWS.S3();
+const S3 = new AWS.S3();
 
 const pgPool = new pg.Pool({
     connectionString: CONNECTION_STRING
@@ -59,7 +59,8 @@ app.use(express.urlencoded({ limit: '50mb', extended: true}))
 //// AMAZON S3 ENDPOINT ////
 app.post('/api/s3', (req, res) => {
     const photo = req.body
-    const buf = new Buffer(photo.file.replace(/^data:image\/\w+;base64,/, ''), 'base64')
+    const file = photo.file.replace(/^data:image\/\w+;base64,/,'')
+    const buf = new Buffer.from(file, 'base64')
     const params = {
         Bucket: process.env.AWS_BUCKET,
         Body: buf,

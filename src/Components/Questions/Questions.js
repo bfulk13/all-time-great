@@ -8,19 +8,20 @@ class Questions extends Component {
   constructor() {
     super()
     this.state = {
-      trendingQuestionsArr: [ ],
+      trendingQuestionsArr: [],
       question: '',
       q_img: '',
       open: false,
-      question: '',
       answers: [
         {
           answerName: 'answer1',
-          text: ''
+          text: '',
+          ans_img: ''
         },
         {
           answerName: 'answer2',
-          text: ''
+          text: '',
+          ans_img: ''
         }
       ]
     }
@@ -70,8 +71,8 @@ class Questions extends Component {
   createNewQuestion = async () => {
     // add in IF redundancy if q or qimg is blank
     const {owner_id} = this.props
-    const {question, q_img} = this.state
-    let body = {question: question, q_img: q_img, owner_id: owner_id}
+    const {question, q_img, answers} = this.state
+    let body = {question, q_img, owner_id, answers}
     let res = await Axios.post('/api/addnewquestion', body)
   }
 

@@ -1,0 +1,74 @@
+@import '../Sass/colors';
+
+body {
+    background: $main-color5;
+}
+
+.Landing {
+    justify-content: center;
+}
+
+h1 {
+    font-family: 'Permanent Marker', cursive;
+    color: white;
+    letter-spacing: 1px;
+    font-size: 25px;
+    text-decoration: none;
+}
+
+.questions-wrapper {
+    background-color: $main-color5;
+    height: 460px;
+    margin-left: 0px auto;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+.question {
+    background-color: $main-color1;
+    border: 2px solid $main-color3;
+    border-radius: 5px;
+    display: flex;
+    width: 85%;
+    height: 100px;
+    padding: 5px;
+    margin: 20px auto;
+    align-items: center;
+    box-shadow: 0px 0px 10px 10px $main-color4;
+    
+    img {
+       width: 75px;
+       height: 75px;
+       border: 2px solid $main-color3;
+       border-radius: 100%;
+       margin-left: 5px
+    }
+
+    p {
+       font-size: 20px;
+       margin-left: 20px;
+       text-decoration: none;
+       color: white;
+       font-family: 'Permanent Marker', cursive;
+    }
+}
+
+
+.pop-profiles-wrapper {
+   
+}
+
+.pop-profile-wrapper {
+    img {
+       width: 50px;
+       height:50px;
+    }
+
+    p {
+
+    }
+}
+
+
+

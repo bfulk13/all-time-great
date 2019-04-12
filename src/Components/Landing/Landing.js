@@ -30,36 +30,33 @@ class Landing extends Component{
   render(){
     const trendingQuestions = this.state.trendingQuestionsArr.map( obj => {
       return(
-        <div className='SingleTrendingQuestionDiv' key={obj.qid}>
-        <Link to={`/Vote/${obj.qid}`}><div className='SingleTrendingQuestionDiv'>
-          <h4>{obj.question}</h4>
-          <img src={obj.q_img} alt="" className="QuestionImg"/>
-        </div>
-        </Link>
+        <Link to={`/Vote/${obj.qid}`} style={{textDecoration:'none'}}>
+        <div key={obj.qid} className='question'>
+          <img src={obj.q_img} alt=""/>
+          <p>{obj.question}</p>
           </div>
+        </Link>
       )
     })
     const popularProfiles = this.state.popularProfilesArr.map( obj => {
       // console.log(obj)
       return(
-        <Link to={`/viewprofile/${obj.owner_id}`}>
-          <div>
-            <div key={obj.owner_id}>
-              <img src={obj.avatar} alt="" className='ProfilePic'/>
-              <h5>{obj.username}</h5>
-            </div>
-          </div>
+            <div key={obj.owner_id} className='pop-profile-wrapper'>
+        <Link to={`/viewprofile/${obj.owner_id}`} style={{textDecoration:'none'}}>
+              <img src={obj.avatar} alt="" className='profile-pic'/>
+              <p>{obj.username}</p>
         </Link>  
+            </div>
       )
     })
     return(
      <div className='Landing'> 
           <Link to="/Questions"><h1>Trending Questions</h1></Link>
-        <div className='TrendingDiv'>
+        <div className='questions-wrapper'>
           {trendingQuestions}
         </div>
-        <div className='PopularProfilesDiv'>
-          <h1 style={{marginTop: '0'}}>Popular Profiles</h1>
+        <div className='pop-profiles-wrapper'>
+          <h1>Popular Profiles</h1>
           {popularProfiles}
         </div>
       </div>

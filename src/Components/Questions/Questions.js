@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import './Questions.css'
-import Axios from 'axios';
-import {Link} from 'react-router-dom'
+import axios from 'axios';
+import { Link } from 'react-router-dom'
 import Modal from 'react-responsive-modal'
+
 
 class Questions extends Component {
   constructor() {
     super()
     this.state = {
-      trendingQuestionsArr: [ ],
+      trendingQuestionsArr: [],
       question: '',
       q_img: '',
       open: false,
-      question: '',
       answers: [
         {
           answerName: 'answer1',
@@ -22,9 +22,14 @@ class Questions extends Component {
           answerName: 'answer2',
           text: ''
         }
-      ]
+      ],
+      file: '',
+      filename: '',
+      filetype: '',
+      img: ''
     }
   }
+
   onOpenModal = () => {
     this.setState({
       open: true
@@ -37,15 +42,15 @@ class Questions extends Component {
     })
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getAllQuestions()
   }
 
-   getAllQuestions = async () => {
-     let res = await Axios.get('/api/getallquestions')
-   this.setState({
-     trendingQuestionsArr: res.data
-   })
+  getAllQuestions = async () => {
+    let res = await axios.get('/api/getallquestions')
+    this.setState({
+      trendingQuestionsArr: res.data
+    })
   }
 
   updateAnswer = (val, str) => {
@@ -69,38 +74,69 @@ class Questions extends Component {
 
   createNewQuestion = async () => {
     // add in IF redundancy if q or qimg is blank
-    const {owner_id} = this.props
-    const {question, q_img} = this.state
-    let body = {question: question, q_img: q_img, owner_id: owner_id}
-    let res = await Axios.post('/api/addnewquestion', body)
+    const { owner_id } = this.props
+    const { question, q_img, answers } = this.state
+    let body = { question, q_img, owner_id, answers,  }
+    let res = await axios.post('/api/addnewquestion', body)
   }
 
   buildAnswersJSX = () => {
-    if(this.state.answers.length < 4){
-    const newAnswer= {
-      answerName: `answer${this.state.answers.length + 1}`,
-      text: ''
-    }
-    this.setState(prevState => ({
+    if (this.state.answers.length < 4) {
+      const newAnswer = {
+        answerName: `answer${this.state.answers.length + 1}`,
+        text: ''
+      }
+      this.setState(prevState => ({
         answers: [...prevState.answers, newAnswer]
-    }))
-  } else {
-    alert('Only four answers please!')
+      }))
+    } else {
+      alert('Only four answers please!')
+    }
   }
+
+  // event handler for file input (s3)
+  handlePhoto = (event) => {
+    // this makes a generic file reader that an convert files into strings that allows us to upload it to a server.
+    const reader = new FileReader();
+    // the file itself is located here
+    const file = event.target.files[0];
+
+    // this is an event handler and will not actually run until the code on line 39 finishes running
+    reader.onload = photo => {
+      // the photo param here is the processed image from the reader.
+      this.setState({
+        file: photo.target.result,
+        filename: file.name,
+        filetype: file.type,
+        img: '',
+      });
+    };
+    // take the file from the input field and process it at a DataURL (a special way to interpret files)
+    reader.readAsDataURL(file);
   }
+
+  // when clicked it upload
+  sendPhoto = (event) => {
+    return axios.post('/api/s3', this.state).then(response => {
+      this.setState({ img: response.data.Location });
+    });
+  }
+
+
+  
 
   render() {
     const inputBoxes = this.state.answers.map((answer) => {
-      return(
-        <input type="text" placeholder={answer.answerName} onChange={(e) => this.updateAnswer(e.target.value, answer.answerName)}/>
+      return (
+        <input type="text" placeholder={answer.answerName} onChange={(e) => this.updateAnswer(e.target.value, answer.answerName)} />
       )
     })
     const { open } = this.state
     const trendingQuestions = this.state.trendingQuestionsArr.map(obj => {
       return (
-         <div className='SingleQuestionDiv' key={obj.qid}>
-         {/* Need to have redux update the question id on click so the render on /vote can pull the right question */}
-          <Link to={`/Vote/${obj.qid}`} id={obj.id}><h4>{obj.question}</h4></Link> 
+        <div className='SingleQuestionDiv' key={obj.qid}>
+          {/* Need to have redux update the question id on click so the render on /vote can pull the right question */}
+          <Link to={`/Vote/${obj.qid}`} id={obj.id}><h4>{obj.question}</h4></Link>
           <img src={obj.q_img} alt="" className="QuestionImg" />
         </div>
       )
@@ -110,23 +146,29 @@ class Questions extends Component {
       <div className='Questions'>
         <h1>Trending Questions</h1>
         <div className='QuestionsDiv'>
-          {trendingQuestions}
           <div>
             <div className="PlusSignDiv" onClick={this.onOpenModal} >
               <img className="PlusSign" src="http://pngimg.com/uploads/plus/plus_PNG122.png" alt="plus sign" />
             </div>
             <p>Add a new Question</p>
+          {trendingQuestions}
           </div>
 
         </div>
-            <Modal open={open} onClose={this.onCloseModal} center >
-            <div style={{width: "80vw", height: "80vh"}}>
-              <h2>I AM MODAL MAN</h2>
-              <input placeholder="Question" type="text" onChange={(e) => {this.updateQuestion(e.target.value)}} />
-              {inputBoxes}
-              <button onClick={this.buildAnswersJSX}>I am an add button</button>
-            </div>
-            </Modal>
+        <Modal open={open} onClose={this.onCloseModal} center >
+          <div style={{ width: "80vw", height: "80vh" }}>
+            <h2>Add Your Question and Answers</h2>
+            <input placeholder="Question" type="text" onChange={(e) => { this.updateQuestion(e.target.value) }} />
+            Image:<input type="file" id="real" onChange={this.handlePhoto}/>
+        {/* <button onClick={this.sendPhoto}>upload</button> */}
+        {/* <div>
+          <img src={this.state.img} alt="none" />
+        </div> */}
+            {inputBoxes}
+            <i class="fas fa-plus-circle fa-2x" onClick={this.buildAnswersJSX}></i>
+          </div>
+          <button type="submit">Submit</button>
+        </Modal>
         <div className=''>
 
         </div>

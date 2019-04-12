@@ -32,7 +32,7 @@ module.exports = {
     
     addNewQ: (req, res) => {
       const db = req.app.get('db')
-      const {question, q_img, owner_id} = req.body
+      const {question, q_img, owner_id, q_id, answer, ans_img} = req.body
       db.questions.add_new_question({question, q_img, owner_id}).then(response => {
         res.status(200).send(response)
       }).catch(err => {

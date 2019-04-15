@@ -51,12 +51,12 @@ class Landing extends Component{
     })
     return(
      <div className='Landing'> 
-          <Link to="/Questions"><h1>Trending Questions</h1></Link>
+          <Link to="/Questions" style={{textDecoration:'none'}}><p className='landing-title'>Trending Questions ?</p></Link>
         <div className='questions-wrapper'>
           {trendingQuestions}
         </div>
         <div className='pop-profiles-wrapper'>
-          <h1>Popular Profiles</h1>
+          <p className='landing-title'>Popular Profiles</p>
           {popularProfiles}
         </div>
       </div>

@@ -3,6 +3,7 @@ import './Questions.css'
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import Modal from 'react-responsive-modal'
+import {getAllQuestionsFromDb} from '../../Logic/LogicRiley'
 
 
 class Questions extends Component {
@@ -49,9 +50,9 @@ class Questions extends Component {
   }
 
   getAllQuestions = async () => {
-    let res = await axios.get('/api/getallquestions')
+    let res = getAllQuestionsFromDb()
     this.setState({
-      trendingQuestionsArr: res.data
+      trendingQuestionsArr: res
     })
   }
 
@@ -69,7 +70,8 @@ class Questions extends Component {
     console.log(val, str)
   }
 
-  updateQuestion = (val) => {
+  updateQuestion = async (val) => {
+
     this.setState({
       question: val
     })

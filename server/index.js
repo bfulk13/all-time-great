@@ -23,11 +23,6 @@ AWS.config.update({
     secretAccessKey: process.env.AWS_SECRECT_ACCES_KEY,
     region: process.env.AWS_REGION
 })
-console.log({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secrectAccessKey: process.env.AWS_SECRECT_ACCES_KEY,
-    region: process.env.AWS_REGION
-})
 
 //// MIDDLEWARE ////
 const app = express();

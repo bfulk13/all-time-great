@@ -85,6 +85,7 @@ class Results extends Component {
       ans3: this.state.answersArr[2].answer,
       ans4: this.state.answersArr[3].answer
      })
+    // console.log(this.state.answersArr[0].ans_img)
   }
 
   

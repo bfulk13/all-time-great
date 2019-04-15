@@ -32,9 +32,14 @@ module.exports = {
     
     addNewQ: (req, res) => {
       const db = req.app.get('db')
-      const {question, q_img, owner_id} = req.body
-      db.questions.add_new_question({question, q_img, owner_id}).then(response => {
-        res.status(200).send(response)
+      const { body } = req.body
+      console.log(body)
+      db.questions.add_new_question(body.question, body.q_img, req.session.user.uid).then(questionInsert => {
+        for(let i=0; i < body.answers.length; i++){
+          // console.log(questionInsert)
+          db.answers.add_new_answer(body.answers[i].text , body.answers.ans_img, questionInsert[0].qid )
+        }
+        res.sendStatus(200)
       }).catch(err => {
         console.log(err)
         res.status(500).send(err)

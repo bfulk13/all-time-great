@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const massive = require('massive');
+const bodyParser = require('body-parser')
 
 const pg = require('pg');
 const pgSession = require('connect-pg-simple')(session)
@@ -19,6 +20,11 @@ const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING} = process.env;
 
 AWS.config.update({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRECT_ACCES_KEY,
+    region: process.env.AWS_REGION
+})
+console.log({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secrectAccessKey: process.env.AWS_SECRECT_ACCES_KEY,
     region: process.env.AWS_REGION
 })
@@ -26,13 +32,13 @@ AWS.config.update({
 //// MIDDLEWARE ////
 const app = express();
 
-// const S3 = new AWS.S3();
+const S3 = new AWS.S3();
 
 const pgPool = new pg.Pool({
     connectionString: CONNECTION_STRING
 })
 
-app.use(express.json());
+// app.use(express.json());
 
 app.use(session({
     store: new pgSession({
@@ -58,8 +64,10 @@ app.use(express.urlencoded({ limit: '50mb', extended: true}))
 
 //// AMAZON S3 ENDPOINT ////
 app.post('/api/s3', (req, res) => {
+    console.log('hjgffhgjhfgdsgjyhg')
     const photo = req.body
-    const buf = new Buffer(photo.file.replace(/^data:image\/\w+;base64,/, ''), 'base64')
+    const file = photo.file.replace(/^data:image\/\w+;base64,/,'')
+    const buf = new Buffer.from(file, 'base64')
     const params = {
         Bucket: process.env.AWS_BUCKET,
         Body: buf,
@@ -68,7 +76,10 @@ app.post('/api/s3', (req, res) => {
         ACL: 'public-read'
     }
 
+    console.log(params)
+
     S3.upload(params, (err, data) => {
+        console.log(err, data)
         let response, code;
         if (err) {
             response = err;

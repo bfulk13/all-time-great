@@ -1,28 +1,42 @@
 @import '../Sass/colors';
+@import '../Sass/fonts';
 
 body {
-    background: $main-color5;
+    background: $main-color4;
+   
 }
 
 .Landing {
     justify-content: center;
+    .landing-title {
+        display: flex;
+        justify-content: center;
+        margin: 20px auto;
+        padding: 20px;
+        font-family: $main-font;
+        border: 3px solid $main-color3;
+        border-radius: 50%;
+        background: $main-color1;
+        width: 80%;
+        color: white;
+        letter-spacing: 1px;
+        font-size: 30px;
+        text-decoration: none;
+        box-shadow: 0px 0px 4px 4px $main-color1;
+        text-shadow: 2px 2px 10px $main-color4;
+   }
 }
 
-h1 {
-    font-family: 'Permanent Marker', cursive;
-    color: white;
-    letter-spacing: 1px;
-    font-size: 25px;
-    text-decoration: none;
-}
+
 
 .questions-wrapper {
-    background-color: $main-color5;
-    height: 460px;
+    background-color: $main-color1;
+    border-top: 4px ridge $main-color3;
+    border-bottom: 4px ridge $main-color3;
+    height: 220px;
     margin-left: 0px auto;
     display: flex;
-    flex-direction: column;
-    overflow: scroll;
+    overflow-x: scroll;
 }
 
 .question {
@@ -30,43 +44,59 @@ h1 {
     border: 2px solid $main-color3;
     border-radius: 5px;
     display: flex;
-    width: 85%;
-    height: 100px;
-    padding: 5px;
-    margin: 20px auto;
+    width: 250px;
+    height: 130px;
+    padding: 10px;
+    margin: 25px;
     align-items: center;
-    box-shadow: 0px 0px 10px 10px $main-color4;
+    box-shadow: 0px 0px 8px 8px $main-color4;
     
     img {
-       width: 75px;
-       height: 75px;
+       width: 80px;
+       height: 80px;
        border: 2px solid $main-color3;
        border-radius: 100%;
        margin-left: 5px
     }
 
     p {
-       font-size: 20px;
+       font-size: 18px;
        margin-left: 20px;
        text-decoration: none;
        color: white;
-       font-family: 'Permanent Marker', cursive;
+       font-family: $main-font;
+       letter-spacing: 1px;
     }
 }
 
 
-.pop-profiles-wrapper {
-   
-}
 
 .pop-profile-wrapper {
+    border: 3px solid $main-color3;
+    border-radius: 10px;
+    width: 80%;
+    height: 250px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: $main-color1;
+    margin: 20px;
+    box-shadow: 0px 0px 5px 5px $main-color1;
     img {
-       width: 50px;
-       height:50px;
+       margin-top: 10px; 
+       width: 100px;
+       height:100px;
+       border: 3px solid $main-color3;
+       border-radius: 100%;
+       background-color: $main-color4;
     }
 
     p {
-
+      font-family: $main-font;
+      color: white;
+      font-size: 30px;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 5px $main-color4;
     }
 }
 

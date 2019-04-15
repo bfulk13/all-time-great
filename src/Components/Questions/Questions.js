@@ -3,7 +3,6 @@ import './Questions.css'
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import Modal from 'react-responsive-modal'
-import {getAllQuestionsFromDb} from '../../Logic/LogicRiley'
 
 
 class Questions extends Component {
@@ -50,9 +49,10 @@ class Questions extends Component {
   }
 
   getAllQuestions = async () => {
-    let res = getAllQuestionsFromDb()
+    let res = await axios.get('/api/getallquestions')
+    console.log(res)
     this.setState({
-      trendingQuestionsArr: res
+      trendingQuestionsArr: res.data
     })
   }
 
@@ -172,7 +172,7 @@ class Questions extends Component {
   render() {
     const inputBoxes = this.state.answers.map((answer, i) => {
       return (
-        <div>
+        <div key={i}>
           <input type="text" placeholder={answer.answerName} onChange={(e) => this.updateAnswer(e.target.value, answer.answerName, answer.ans_img)} />
           <input type="file" id="real" onChange={(e) => this.handlePhoto(e, i)}/>
         </div>
@@ -183,7 +183,8 @@ class Questions extends Component {
       return (
         <div className='SingleQuestionDiv' key={obj.qid}>
           {/* Need to have redux update the question id on click so the render on /vote can pull the right question */}
-          <Link to={`/Vote/${obj.qid}`} id={obj.id}><h4>{obj.question}</h4></Link>
+          { 
+          <Link to={`/Vote/${obj.qid}`} id={obj.id}><h4>{obj.question}</h4></Link>}
           <img src={obj.q_img} alt="" className="QuestionImg" />
         </div>
       )

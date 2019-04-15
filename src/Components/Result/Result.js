@@ -28,7 +28,7 @@ class Results extends Component {
       answersArr: res.data,
       question: this.props.question
     })
-    console.log(this.state.answersArr[0].ans_img)
+    // console.log(this.state.answersArr[0].ans_img)
   }
 
   render() {

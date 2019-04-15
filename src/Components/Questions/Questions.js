@@ -16,11 +16,13 @@ class Questions extends Component {
       answers: [
         {
           answerName: 'answer1',
-          text: ''
+          text: '',
+          ans_img: ''
         },
         {
           answerName: 'answer2',
-          text: ''
+          text: '',
+          ans_img: ''
         }
       ],
       file: '',
@@ -53,13 +55,14 @@ class Questions extends Component {
     })
   }
 
-  updateAnswer = (val, str) => {
+  updateAnswer = (val, str, img) => {
     // const {answerName} = this.state.answer
     let foundIndex = this.state.answers.findIndex((answer) => {
       return answer.answerName === str
     })
     const newAnswers = this.state.answers.slice()
     newAnswers[foundIndex].text = val
+    newAnswers[foundIndex].ans_img = img
     this.setState(prevState => ({
       answers: newAnswers
     }))
@@ -76,15 +79,17 @@ class Questions extends Component {
     // add in IF redundancy if q or qimg is blank
     const { owner_id } = this.props
     const { question, q_img, answers } = this.state
-    let body = { question, q_img, owner_id, answers,  }
-    let res = await axios.post('/api/addnewquestion', body)
+    let body = { question, q_img, owner_id, answers }
+    let res = await axios.post('/api/addnewquestion', {body})
+    this.sendPhoto()
   }
 
   buildAnswersJSX = () => {
     if (this.state.answers.length < 4) {
       const newAnswer = {
         answerName: `answer${this.state.answers.length + 1}`,
-        text: ''
+        text: '',
+        ans_img: ''
       }
       this.setState(prevState => ({
         answers: [...prevState.answers, newAnswer]
@@ -95,40 +100,80 @@ class Questions extends Component {
   }
 
   // event handler for file input (s3)
-  handlePhoto = (event) => {
-    // this makes a generic file reader that an convert files into strings that allows us to upload it to a server.
+  handlePhoto = async (event, i) => {
     const reader = new FileReader();
-    // the file itself is located here
     const file = event.target.files[0];
+    reader.onload = async photo => {
+      await this.setState({
+        file: photo.target.result,
+        filename: file.name,
+        filetype: file.type,
+        img: '',
+      }, this.updateAnswerImg(i, file ));
+    };
+    console.log(1234, this.state, i)
+    reader.readAsDataURL(file);
+  }
 
-    // this is an event handler and will not actually run until the code on line 39 finishes running
-    reader.onload = photo => {
-      // the photo param here is the processed image from the reader.
-      this.setState({
+  handlePhoto1 = async (event) => {
+    const reader = new FileReader();
+    const file = event.target.files[0];
+    reader.onload = async photo => {
+      await this.setState({
         file: photo.target.result,
         filename: file.name,
         filetype: file.type,
         img: '',
       });
     };
-    // take the file from the input field and process it at a DataURL (a special way to interpret files)
     reader.readAsDataURL(file);
+    console.log(file)
+  }
+
+  updateAnswerImg(index, filename){
+    let newans = [...this.state.answers]
+    newans[index].ans_img = filename
+    console.log(123412341, filename)
+    this.setState({
+      answers: newans
+    })
   }
 
   // when clicked it upload
   sendPhoto = (event) => {
-    return axios.post('/api/s3', this.state).then(response => {
-      this.setState({ img: response.data.Location });
+    console.log(this.state)
+    return axios.post('/api/s3', {
+      file: this.state.file, 
+      filename: this.state.filename,
+      filetype: this.state.filetype
+    }).then(response => {
+      this.setState({ 
+        q_img: response.data.Location,
+
+      });
     });
   }
 
-
+  updatePhotoOnState = (img, i) => {
+    let newStateCopy = Object.assign({}, this.state)
+    return axios.post('/api/s3', this.state).then(response => {
+      newStateCopy.answers[i].ans_img = img
+      this.setState({ 
+       answers: newStateCopy.answers
+      });
+    });
+  }
+  
+  
   
 
   render() {
-    const inputBoxes = this.state.answers.map((answer) => {
+    const inputBoxes = this.state.answers.map((answer, i) => {
       return (
-        <input type="text" placeholder={answer.answerName} onChange={(e) => this.updateAnswer(e.target.value, answer.answerName)} />
+        <div>
+          <input type="text" placeholder={answer.answerName} onChange={(e) => this.updateAnswer(e.target.value, answer.answerName, answer.ans_img)} />
+          <input type="file" id="real" onChange={(e) => this.handlePhoto(e, i)}/>
+        </div>
       )
     })
     const { open } = this.state
@@ -159,15 +204,14 @@ class Questions extends Component {
           <div style={{ width: "80vw", height: "80vh" }}>
             <h2>Add Your Question and Answers</h2>
             <input placeholder="Question" type="text" onChange={(e) => { this.updateQuestion(e.target.value) }} />
-            Image:<input type="file" id="real" onChange={this.handlePhoto}/>
-        {/* <button onClick={this.sendPhoto}>upload</button> */}
+            Image:<input type="file" id="real" onChange={this.handlePhoto1}/>
         {/* <div>
           <img src={this.state.img} alt="none" />
         </div> */}
             {inputBoxes}
             <i class="fas fa-plus-circle fa-2x" onClick={this.buildAnswersJSX}></i>
           </div>
-          <button type="submit">Submit</button>
+          <button type="submit" onClick={this.createNewQuestion}>Submit</button>
         </Modal>
         <div className=''>
 

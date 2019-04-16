@@ -15,11 +15,12 @@ module.exports = {
     const db = req.app.get('db')
     const {aid, uid, qid} = req.body
     let already_answered = await db.answers.already_answered({uid, qid})
-    console.log(already_answered)
+    // console.log(already_answered)
     if(already_answered[0].count > 0){
       res.status(409).send(err)
+
     } else {
-      await db.answers.increment_vote({aid})
+      await db.answers.increment_vote({aid, uid, qid})
       res.sendStatus(200)
     }
   },

@@ -10,6 +10,7 @@ class Questions extends Component {
     super()
     this.state = {
       trendingQuestionsArr: [],
+      getUservotes:[],
       question: '',
       q_img: '',
       open: false,
@@ -46,6 +47,18 @@ class Questions extends Component {
 
   componentDidMount() {
     this.getAllQuestions()
+    this.getUserVotes()
+  }
+  getUserVotes = () => {
+  axios.get('/api/getuservotes').then(res => {
+    this.setState({
+      getUserVotes: res.data
+    })
+  })
+}
+
+  getVotedValues = async () => {
+    let res = await axios.get('/api/get')
   }
 
   getAllQuestions = async () => {

@@ -1,3 +1,3 @@
 SELECT *
 FROM Questions q
-ORDER BY likes DESC
+ORDER BY likes DESC LIMIT 10

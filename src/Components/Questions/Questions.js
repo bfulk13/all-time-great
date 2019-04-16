@@ -95,7 +95,7 @@ class Questions extends Component {
     const { owner_id } = this.props
     const { question, q_img, answers } = this.state
     let body = { question, q_img, owner_id, answers }
-    let res = await axios.post('/api/addnewquestion', {body})
+    await axios.post('/api/addnewquestion', {body})
     this.sendPhoto()
   }
 

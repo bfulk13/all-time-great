@@ -7,24 +7,45 @@ import {updateQuestion, updateAnsArray} from '../../redux/reducer'
 class Search extends Component {
   constructor() {
     super()
-    this.state = {
-      
+    this.state = {  
+      searchbar: '',
+      questions: []
     }
   }
-  searchForStuff = () => {
-    let res = axios.post('/searchforquestions')
+  searchForStuff = async () => {
+    let body = {
+      string: this.state.searchbar
+    }
+    let res = await axios.post('/api/searchforquestions', body)
+    console.log(res)
+    this.setState({
+      questions: res.data
+    })
   }
 
-  
+  updateSearchBar(val){
+    this.setState({
+      searchbar: val
+    })
+  }
 
   render() {
-    
+    const questions = this.state.questions ? this.state.questions.map( question => {
+      return(
+        <div>
+          {question.question}
+        </div>
+      ) 
+    }) : <div>'no results :('</div>
 
     return (
       <div className='Search'>
        <form action="">
-       <input type="text" placeholder="na"/></form>
-       <button onClick={this.searchForStuff()}>Seacrch</button>
+       <input type="text" placeholder="Search For Me" onChange={(e) => this.updateSearchBar(e.target.value)}/></form>
+       <button onClick={() => this.searchForStuff(this.state.searchbar)}>Search</button>
+       <div>
+        {questions}
+       </div>
       </div>
     )
   }

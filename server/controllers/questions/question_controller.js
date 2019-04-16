@@ -48,6 +48,16 @@ module.exports = {
       const db = req.app.get('db')
       db.questions.get_user_votes().then(response => {
         res.status(200).send(response)
-      })
-    }
+      }).catch(err => 
+        console.log(err))
+  },
+    searchBarQuestions: (req, res) => {
+      const db = req.app.get('db')
+      const {string} = req.body
+      db.questions.get_search_bar_questions(string).then(response => {
+        console.log(response)
+        res.status(200).send(response)
+      }).catch(err => 
+        console.log(err))
+    },
 }

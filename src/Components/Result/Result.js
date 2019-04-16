@@ -9,9 +9,6 @@ class Results extends Component {
     super()
     this.state = {
 
-      question: "",
-      img: '',
-      answersArr: [],
       ans1votes: 0,
       ans2votes: 0,
       ans3votes: 0,
@@ -22,6 +19,10 @@ class Results extends Component {
       ans4: '',
       data: {
         labels: ['', '', '', ''],
+        options: [
+          {legend: {display: true, position: 'left'}},  
+
+        ],
         datasets: [
           {
             label: 'Videos Made',
@@ -40,7 +41,8 @@ class Results extends Component {
   }
   componentDidMount = async () => {
     await this.getResults()
-    this.buildChartData()
+    console.log(this.props)
+    // this.buildChartData()
   }
 
   buildChartData() {
@@ -73,30 +75,29 @@ class Results extends Component {
       uid: this.props.uid
     }
     let res = await axios.post('/api/getanswerresults', body)
-
     await this.setState({
       answersArr: res.data,
       question: this.props.question
     })
     this.setState({
-      ans1votes: this.state.answersArr[0].vote,
-      ans2votes: this.state.answersArr[1].vote,
-      ans3votes: this.state.answersArr[2] ? this.state.answersArr[2].vote : null,
-      ans4votes: this.state.answersArr[3] ? this.state.answersArr[3].vote : null,
-      ans1: this.state.answersArr[0].answer,
-      ans2: this.state.answersArr[1].answer,
-      ans3: this.state.answersArr[2] ? this.state.answersArr[2].answer : null,
-      ans4: this.state.answersArr[3] ? this.state.answersArr[3].answer : null
-    })
+      ans1votes: this.props.answersArr[0].vote,
+      ans2votes: this.props.answersArr[1].vote,
+      ans3votes: this.props.answersArr[2] ? this.props.answersArr[2].vote: null ,
+      ans4votes: this.props.answersArr[3] ? this.props.answersArr[3].vote: null,
+      ans1: this.props.answersArr[0].answer,
+      ans2: this.props.answersArr[1].answer,
+      ans3: this.props.answersArr[2] ? this.props.answersArr[2].answer : null,
+      ans4: this.props.answersArr[3] ? this.props.answersArr[3].answer : null
+     })
     // console.log(this.state.answersArr[0].ans_img)
   }
 
 
 
   render() {
-    const winningansimg = this.state.answersArr[0] ? this.state.answersArr[0].ans_img : null
-    const answers = this.state.answersArr.map(ans => {
-
+    const winningansimg = this.props.answersArr[0] ? this.props.answersArr[0].ans_img : null
+    const answers = this.props.answersArr.map(ans => {
+    
       return (
         <div className='Answers'>
           <img src={ans.ans_img} alt="" className='ResultImg' />
@@ -140,7 +141,9 @@ const mapStateToProps = (reduxState) => {
   return {
     qid: reduxState.qid,
     uid: reduxState.uid,
-    question: reduxState.question
+    q_img: reduxState.q_img,
+    question: reduxState.question,
+    answersArr: reduxState.ansArr
   }
 }
 

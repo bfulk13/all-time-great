@@ -4,12 +4,15 @@ const initialState = {
     username: '',
     avatar: '',
     qid: 0,
-    question: ''
+    question: '',
+    q_img: '',
+    ansArr: []
 }
 
 const UPDATE_USER = 'UPDATE_USER';
 const CLEAR_USER = 'CLEAR_USER';
 const UPDATE_QUESTION = 'UPDATE_QUESTION'
+const UPDATE_ANS_ARRAY = 'UPDATE_ANS_ARRAY'
 
 export function clearUser(user) {
     return {
@@ -25,10 +28,16 @@ export function updateUser(user) {
     }
 }
 
-export function updateQuestion(qid) {
+export function updateQuestion(question) {
     return {
         type: UPDATE_QUESTION,
-        payload: qid
+        payload: question
+    }
+}
+export function updateAnsArray(ansArr) {
+    return {
+        type: UPDATE_ANS_ARRAY,
+        payload: ansArr
     }
 }
 
@@ -42,8 +51,10 @@ export default function reducer(state = initialState, action) {
         case CLEAR_USER:
           return {...state, uid: 0, username: '', avatar: ''}
         case UPDATE_QUESTION:
-            const {qid, question} = payload
-            return {...state, qid, question}
+            const {qid, question, q_img} = payload
+            return {...state, qid, question, q_img}
+        case UPDATE_ANS_ARRAY:        
+            return {...state, ansArr: payload}
         default:
         return state
     }

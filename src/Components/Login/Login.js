@@ -13,6 +13,7 @@ class Login extends Component {
         this.state = {
             username: '',
             password: '',
+            avatar: ''
         }
     }
 
@@ -71,9 +72,14 @@ class Login extends Component {
 
     register = async () => {
         try {
-            const { username, password, avatar } = this.state
-            let res = await axios.post(`/auth/register`, { username, password, avatar })
-            this.props.updateUser(res.data)
+            const { username, password } = this.state
+            if(username){
+                const avatar = this.state.avatar ? this.state.avatar : `https://robohash.org/${username}`
+                let res = await axios.post(`/auth/register`, { username, password, avatar })
+                this.props.updateUser(res.data)
+            } else {
+                alert('Please enter a username and password.')
+            } 
         } catch (err) {
             console.log(err)
         }

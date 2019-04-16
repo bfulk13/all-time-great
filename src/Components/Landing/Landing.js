@@ -3,8 +3,9 @@ import './Landing.css'
 import { Link } from 'react-router-dom'
 import Axios from 'axios';
 
-class Landing extends Component {
-  constructor() {
+
+class Landing extends Component{
+  constructor(){
     super()
     this.state = {
       trendingQuestionsArr: [],
@@ -49,9 +50,16 @@ class Landing extends Component {
         </div>
       )
     })
-    return (
-      <div className='Landing'>
-        <Link to="/Questions" style={{ textDecoration: 'none' }}><p className='landing-title'>Trending Questions ?</p></Link>
+    return(
+     <div className='Landing'> 
+          <div className='landing-intro'>
+            <div className='thought-wrapper'>
+            <img src={require('./images/thought.png')} alt='thought bubble'className='thought-bubble'/>
+            <p>Goat?</p>
+            </div>
+            <img src={require('./images/landingGoat.png')} alt='curious goat' className='goat-image'/>
+          </div>
+          <Link to="/Questions" style={{textDecoration:'none'}}><p className='landing-title'>Trending Questions ?</p></Link>
         <div className='questions-wrapper'>
           {trendingQuestions}
         </div>

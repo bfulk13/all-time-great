@@ -3,6 +3,7 @@ import './Landing.css'
 import {Link} from 'react-router-dom'
 import Axios from 'axios';
 
+
 class Landing extends Component{
   constructor(){
     super()
@@ -51,6 +52,13 @@ class Landing extends Component{
     })
     return(
      <div className='Landing'> 
+          <div className='landing-intro'>
+            <div className='thought-wrapper'>
+            <img src={require('./images/thought.png')} alt='thought bubble'className='thought-bubble'/>
+            <p>Who Is The Greatest?</p>
+            </div>
+            <img src={require('./images/landingGoat.png')} alt='curious goat' className='goat-image'/>
+          </div>
           <Link to="/Questions" style={{textDecoration:'none'}}><p className='landing-title'>Trending Questions ?</p></Link>
         <div className='questions-wrapper'>
           {trendingQuestions}

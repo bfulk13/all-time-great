@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import './Result.css'
 import { connect } from 'react-redux'
 import axios from 'axios';
-import {Doughnut} from 'react-chartjs-2'
-import { async } from 'q';
+import { Doughnut } from 'react-chartjs-2'
 
 class Results extends Component {
   constructor() {
@@ -26,21 +25,25 @@ class Results extends Component {
         datasets: [
           {
             label: 'Videos Made',
-            backgroundColor: 'aqua',
+            backgroundColor: ['#f4425c', '#2e6ba0', '#258c61', '#f9d61d'],
+            borderColor: '#000',
+            borderWidth: .5,
+            hoverBackgroundColor: ['#ff6d83', '#65aeed', '#2fb77e', '#ffe566'],
+            hoverBorderColor: '#444444',
             data: [1, 2, 3, 4]
           },
-        
+
         ]
       }
-    
+
     }
   }
   componentDidMount = async () => {
     await this.getResults()
     this.buildChartData()
   }
-  
-  buildChartData(){
+
+  buildChartData() {
     // let data = this.state.data
     // let innerData = data.datasets[0].data
     // innerData[0] = this.state.ans1votes
@@ -58,10 +61,10 @@ class Results extends Component {
     stateslice.data.labels[1] = this.state.ans3
     stateslice.data.labels[2] = this.state.ans2
     stateslice.data.labels[3] = this.state.ans1
-   
+
     this.setState({
       data: stateslice.data
-    })  
+    })
   }
 
   getResults = async () => {
@@ -70,7 +73,7 @@ class Results extends Component {
       uid: this.props.uid
     }
     let res = await axios.post('/api/getanswerresults', body)
-    
+
     await this.setState({
       answersArr: res.data,
       question: this.props.question
@@ -78,26 +81,29 @@ class Results extends Component {
     this.setState({
       ans1votes: this.state.answersArr[0].vote,
       ans2votes: this.state.answersArr[1].vote,
-      ans3votes: this.state.answersArr[2] ? this.state.answersArr[2].vote: null ,
-      ans4votes: this.state.answersArr[3] ? this.state.answersArr[3].vote: null,
+      ans3votes: this.state.answersArr[2] ? this.state.answersArr[2].vote : null,
+      ans4votes: this.state.answersArr[3] ? this.state.answersArr[3].vote : null,
       ans1: this.state.answersArr[0].answer,
       ans2: this.state.answersArr[1].answer,
       ans3: this.state.answersArr[2] ? this.state.answersArr[2].answer : null,
       ans4: this.state.answersArr[3] ? this.state.answersArr[3].answer : null
-     })
+    })
     // console.log(this.state.answersArr[0].ans_img)
   }
 
-  
+
 
   render() {
     const winningansimg = this.state.answersArr[0] ? this.state.answersArr[0].ans_img : null
     const answers = this.state.answersArr.map(ans => {
-    
+
       return (
-        <div>
-          <span>{ans.answer} {ans.vote}</span>
-          <img src={ans.ans_img} alt="" className='ResultImg'/>
+        <div className='Answers'>
+          <img src={ans.ans_img} alt="" className='ResultImg' />
+          <div className='paragraph'>
+            <p>{ans.vote}</p>
+            <p>{ans.answer}</p>
+          </div>
         </div>
       )
     })
@@ -107,11 +113,15 @@ class Results extends Component {
         <h1>{this.props.question}</h1>
         <div className='TopHalfDiv'>
           <div className='ChartJsStuff'>
-            <img className='QuestionImg' src={winningansimg} alt="" />
-            <Doughnut data={this.state.data}/>
+            <img className='QuestionImage' src={winningansimg} alt="" />
+            <Doughnut
+              className='Chart'
+              data={this.state.data}
+              options={{ legend: false }}
+            />
           </div>
           <div className='AnswersDiv'>
-          {answers}
+            {answers}
           </div>
 
 

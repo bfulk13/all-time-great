@@ -12,16 +12,27 @@ module.exports = {
   })
   },
   incrementAnswer: async (req, res) => {
+    console.log(req.body)
+    try{
     const db = req.app.get('db')
-    const {aid, uid, qid} = req.body
-    let already_answered = await db.answers.already_answered({uid, qid})
-    console.log(already_answered)
-    if(already_answered[0].count > 0){
-      res.status(409).send(err)
-    } else {
-      await db.answers.increment_vote({aid})
-      res.sendStatus(200)
-    }
+    const {aid, qid, uid} = req.body
+    await db.answers.increment_vote({aid})
+    // db.answers.add_to_voted_table({qid, uid})
+    res.sendStatus(200)
+  } catch(err){
+    console.log(err)
+  }
+},
+
+  canVote: async (req, res) => {
+    const db = req.app.get('db')
+    const {uid, qid} = req.body
+    let canVote = await db.answers.already_answered({uid, qid})
+      if(canVote[0].count > 0){
+        res.status(200).send(false)
+      } else {
+        res.status(200).send(true)
+      }
   },
 
     // -----------Result Page--------------//

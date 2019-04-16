@@ -1,17 +1,17 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './Landing.css'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Axios from 'axios';
 
-class Landing extends Component{
-  constructor(){
+class Landing extends Component {
+  constructor() {
     super()
     this.state = {
       trendingQuestionsArr: [],
       popularProfilesArr: []
     }
   }
-  componentDidMount(){
+  componentDidMount() {
     this.getTrendingQuestions()
     this.getPopularProfiles()
   }
@@ -24,34 +24,34 @@ class Landing extends Component{
   getPopularProfiles = async () => {
     let res = await Axios.get('/api/profiles')
     this.setState({
-     popularProfilesArr: res.data
+      popularProfilesArr: res.data
     })
   }
-  render(){
-    const trendingQuestions = this.state.trendingQuestionsArr.map( obj => {
-      return(
-        <Link to={`/Vote/${obj.qid}`} style={{textDecoration:'none'}}>
-        <div key={obj.qid} className='question'>
-          <img src={obj.q_img} alt=""/>
-          <p>{obj.question}</p>
+  render() {
+    const trendingQuestions = this.state.trendingQuestionsArr.map(obj => {
+      return (
+        <Link to={`/Vote/${obj.qid}`} style={{ textDecoration: 'none' }}>
+          <div key={obj.qid} className='question'>
+            <img src={obj.q_img} alt="" />
+            <p>{obj.question}</p>
           </div>
         </Link>
       )
     })
-    const popularProfiles = this.state.popularProfilesArr.map( obj => {
+    const popularProfiles = this.state.popularProfilesArr.map(obj => {
       // console.log(obj)
-      return(
-            <div key={obj.owner_id} className='pop-profile-wrapper'>
-        <Link to={`/viewprofile/${obj.owner_id}`} style={{textDecoration:'none'}}>
-              <img src={obj.avatar} alt="" className='profile-pic'/>
-              <p>{obj.username}</p>
-        </Link>  
-            </div>
+      return (
+        <div key={obj.owner_id} className='pop-profile-wrapper'>
+          <Link to={`/viewprofile/${obj.owner_id}`} style={{ textDecoration: 'none' }}>
+            <img src={obj.avatar} alt="" className='profile-pic' />
+            <p>{obj.username}</p>
+          </Link>
+        </div>
       )
     })
-    return(
-     <div className='Landing'> 
-          <Link to="/Questions" style={{textDecoration:'none'}}><p className='landing-title'>Trending Questions ?</p></Link>
+    return (
+      <div className='Landing'>
+        <Link to="/Questions" style={{ textDecoration: 'none' }}><p className='landing-title'>Trending Questions ?</p></Link>
         <div className='questions-wrapper'>
           {trendingQuestions}
         </div>
@@ -62,5 +62,5 @@ class Landing extends Component{
       </div>
     )
   }
-} 
+}
 export default Landing;

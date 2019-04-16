@@ -117,3 +117,4 @@ app.get('/api/viewprofile/:id', pc.viewProfile)
 app.get('/api/getanswersforquestion/:id', ansc.getAnswers);
 app.post('/api/sendselectedanswer', ansc.incrementAnswer);
 app.post('/api/getanswerresults', ansc.getAnswerResults);
+app.post('/api/ifVoted', ansc.canVote)

@@ -1,33 +1,62 @@
 
-
-
-.TopHalfDiv{
+.Results{
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center
 }
-/* .ChartJsStuff{
-  background-color: aqua;
-  height: 150px;
-  width: 150px;
-  border-radius: 50%;
+
+.ChartJsStuff{
+  position: relative;
   display: flex;
   justify-content: center;
-  align-items: center
-} */
-.QuestionImg{
-  border-radius: 50%;
-
+  align-items: center;
 }
+.Chart{
+  box-shadow: 1px 1px 5px black;
+}
+.QuestionImage{
+  z-index: -1;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.Answers{
+  background: grey;
+  box-shadow: 1px 1px 5px black;
+  border-radius: 21px;
+  color: white;
+  border: 1px black solid;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  margin: 10px 0px;
+}
+
+.paragraph{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center
+}
+
 .AnswersDiv{
-  background-color: bisque;
-  height: 150px;
-  width: 150px;
+  height: 400px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 .ResultImg{
   height: 100px;
   width: 100px;
-  margin: 15px
+  margin: 15px 0px 15px 0px;
+  border-radius: 20%;
 }
-/* .ResponsesDiv{
-  boder
-} */ 

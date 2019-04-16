@@ -71,4 +71,6 @@ class Landing extends Component{
     )
   }
 } 
+
+//hope this works
 export default Landing;

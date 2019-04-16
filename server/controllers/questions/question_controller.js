@@ -17,7 +17,7 @@ module.exports = {
         res.status(200).send(response)
       })}catch(err){
         console.log(err)
-        }
+  }
     },
     getQ: (req, res) => {
       try{
@@ -27,13 +27,13 @@ module.exports = {
         res.status(200).send(response)
       })}catch(err){
         console.log(err)
-        }
+  }
     },
     
     addNewQ: (req, res) => {
       const db = req.app.get('db')
       const { body } = req.body
-      console.log(body)
+      // console.log(body)
       db.questions.add_new_question(body.question, body.q_img, req.session.user.uid).then(questionInsert => {
         for(let i=0; i < body.answers.length; i++){
           // console.log(questionInsert)
@@ -42,12 +42,14 @@ module.exports = {
         res.sendStatus(200)
       }).catch(err => {
         console.log(err)
-        res.status(500).send(err)
+        res.status(500).send({err: 'Please register or login first.'})
     })
     },
-    searchBarQuestions: (req, res) => {
-      const db = req.
+    
+    getUserVotes: (req, res) => {
+      const db = req.app.get('db')
+      db.questions.get_user_votes().then(response => {
+        res.status(200).send(response)
+      })
     }
-    
-    
 }

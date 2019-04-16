@@ -23,11 +23,11 @@ AWS.config.update({
     secretAccessKey: process.env.AWS_SECRECT_ACCES_KEY,
     region: process.env.AWS_REGION
 })
-console.log({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secrectAccessKey: process.env.AWS_SECRECT_ACCES_KEY,
-    region: process.env.AWS_REGION
-})
+// console.log({
+//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//     secrectAccessKey: process.env.AWS_SECRECT_ACCES_KEY,
+//     region: process.env.AWS_REGION
+// })
 
 //// MIDDLEWARE ////
 const app = express();
@@ -64,7 +64,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true}))
 
 //// AMAZON S3 ENDPOINT ////
 app.post('/api/s3', (req, res) => {
-    console.log('hjgffhgjhfgdsgjyhg')
+    // console.log('hjgffhgjhfgdsgjyhg')
     const photo = req.body
     const file = photo.file.replace(/^data:image\/\w+;base64,/,'')
     const buf = new Buffer.from(file, 'base64')
@@ -79,7 +79,7 @@ app.post('/api/s3', (req, res) => {
     console.log(params)
 
     S3.upload(params, (err, data) => {
-        console.log(err, data)
+        // console.log(err, data)
         let response, code;
         if (err) {
             response = err;
@@ -104,6 +104,7 @@ app.post('/auth/logout', ac.logout);
 app.get('/api/questions', qc.getQsByVotes);
 app.get('/api/question/:id', qc.getQ);
 app.get('/api/getallquestions', qc.getAllQs);
+app.get('/api/getuservotes', qc.getUserVotes);
 app.post('/api/addnewquestion', qc.addNewQ);
 app.post('/api/searchforquestions', qc.searchBarQuestions);
 

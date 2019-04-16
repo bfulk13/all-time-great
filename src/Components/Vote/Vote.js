@@ -10,13 +10,12 @@ class Vote extends Component {
     super()
     this.state = {
       
-          question: {},
-          anwser: '',
-          aid: 0,
-         
-
-        
-        
+      question: {},
+      img: '',
+      answers: [],
+      anwser: '',
+      aid: 0,
+      qid: 0
     }
   }
   componentDidMount = async () => {
@@ -40,7 +39,7 @@ class Vote extends Component {
     let qid = this.state.qid
     let aid = this.state.aid
     let uid = this.props.uid
-    let body = {qid: qid, uid: uid, aid: aid}
+    let body = {qid, uid, aid}
     await Axios.post('/api/sendselectedanswer', body)
   }
   updateQidAid= async (val, val2) => {

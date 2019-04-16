@@ -1,4 +1,4 @@
 
 select count(*)
 from voted
-where Vuser_id= ${uid} and Vquestion_id = ${qid}
+where vuser_id= ${uid} and vquestion_id = ${qid}

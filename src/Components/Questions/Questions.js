@@ -63,7 +63,7 @@ class Questions extends Component {
 
   getAllQuestions = async () => {
     let res = await axios.get('/api/getallquestions')
-    console.log(res)
+    // console.log(res)
     this.setState({
       trendingQuestionsArr: res.data
     })
@@ -80,7 +80,7 @@ class Questions extends Component {
     this.setState(prevState => ({
       answers: newAnswers
     }))
-    console.log(val, str)
+    // console.log(val, str)
   }
 
   updateQuestion = async (val) => {
@@ -95,8 +95,12 @@ class Questions extends Component {
     const { owner_id } = this.props
     const { question, q_img, answers } = this.state
     let body = { question, q_img, owner_id, answers }
-    await axios.post('/api/addnewquestion', {body})
-    this.sendPhoto()
+    if(this.props.owner_id){
+      let res = await axios.post('/api/addnewquestion', {body})
+      this.sendPhoto()
+    } else {
+      alert('Please register or login to post a question.')
+    }
   }
 
   buildAnswersJSX = () => {

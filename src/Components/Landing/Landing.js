@@ -55,7 +55,7 @@ class Landing extends Component{
           <div className='landing-intro'>
             <div className='thought-wrapper'>
             <img src={require('./images/thought.png')} alt='thought bubble'className='thought-bubble'/>
-            <p>Who Is The Greatest?</p>
+            <p>Goat?</p>
             </div>
             <img src={require('./images/landingGoat.png')} alt='curious goat' className='goat-image'/>
           </div>

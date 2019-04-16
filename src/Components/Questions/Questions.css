@@ -19,6 +19,7 @@ flex-wrap: wrap;
 .QuestionImg{
   height: 100px;
   width: 100px;
+  border-radius: 50%;
 }
 .PlusSignDiv{
   background-color: white;

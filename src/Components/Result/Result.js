@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import './Result.css'
 import { connect } from 'react-redux'
 import axios from 'axios';
-import {Doughnut} from 'react-chartjs-2'
-import { async } from 'q';
+import { Doughnut } from 'react-chartjs-2'
 
 class Results extends Component {
   constructor() {
@@ -26,14 +25,18 @@ class Results extends Component {
         ],
         datasets: [
           {
-            label: '',
-            backgroundColor: ['red', 'pink', 'purple', 'green'],
+            label: 'Videos Made',
+            backgroundColor: ['#f4425c', '#2e6ba0', '#258c61', '#f9d61d'],
+            borderColor: '#000',
+            borderWidth: .5,
+            hoverBackgroundColor: ['#ff6d83', '#65aeed', '#2fb77e', '#ffe566'],
+            hoverBorderColor: '#444444',
             data: [1, 2, 3, 4]
           },
-        
+
         ]
       }
-    
+
     }
   }
   componentDidMount = async () => {
@@ -42,30 +45,29 @@ class Results extends Component {
     // this.buildChartData()
   }
 
-  
-  // buildChartData(){
-  //   // let data = this.state.data
-  //   // let innerData = data.datasets[0].data
-  //   // innerData[0] = this.state.ans1votes
-  //   // innerData[1] = this.state.ans2votes
-  //   // innerData[2] = this.state.ans3votes
-  //   // innerData[3] = this.state.ans4votes
-  //   // console.log(data)
-  //   // return data   
-  //   let stateslice = Object.assign({}, this.state)
-  //   stateslice.data.datasets[0].data[0] = this.state.ans4votes
-  //   stateslice.data.datasets[0].data[1] = this.state.ans3votes
-  //   stateslice.data.datasets[0].data[2] = this.state.ans2votes
-  //   stateslice.data.datasets[0].data[3] = this.state.ans1votes
-  //   stateslice.data.labels[0] = this.state.ans4
-  //   stateslice.data.labels[1] = this.state.ans3
-  //   stateslice.data.labels[2] = this.state.ans2
-  //   stateslice.data.labels[3] = this.state.ans1
-   
-  //   this.setState({
-  //     data: stateslice.data
-  //   })  
-  // }
+  buildChartData() {
+    // let data = this.state.data
+    // let innerData = data.datasets[0].data
+    // innerData[0] = this.state.ans1votes
+    // innerData[1] = this.state.ans2votes
+    // innerData[2] = this.state.ans3votes
+    // innerData[3] = this.state.ans4votes
+    // console.log(data)
+    // return data   
+    let stateslice = Object.assign({}, this.state)
+    stateslice.data.datasets[0].data[0] = this.state.ans4votes
+    stateslice.data.datasets[0].data[1] = this.state.ans3votes
+    stateslice.data.datasets[0].data[2] = this.state.ans2votes
+    stateslice.data.datasets[0].data[3] = this.state.ans1votes
+    stateslice.data.labels[0] = this.state.ans4
+    stateslice.data.labels[1] = this.state.ans3
+    stateslice.data.labels[2] = this.state.ans2
+    stateslice.data.labels[3] = this.state.ans1
+
+    this.setState({
+      data: stateslice.data
+    })
+  }
 
   getResults = async () => {
     let body = {
@@ -73,8 +75,6 @@ class Results extends Component {
       uid: this.props.uid
     }
     let res = await axios.post('/api/getanswerresults', body)
-    await
-    
     await this.setState({
       answersArr: res.data,
       question: this.props.question
@@ -92,16 +92,19 @@ class Results extends Component {
     // console.log(this.state.answersArr[0].ans_img)
   }
 
-  
+
 
   render() {
     const winningansimg = this.props.answersArr[0] ? this.props.answersArr[0].ans_img : null
     const answers = this.props.answersArr.map(ans => {
     
       return (
-        <div>
-          <span>{ans.answer} {ans.vote}</span>
-          <img src={ans.ans_img} alt="" className='ResultImg'/>
+        <div className='Answers'>
+          <img src={ans.ans_img} alt="" className='ResultImg' />
+          <div className='paragraph'>
+            <p>{ans.vote}</p>
+            <p>{ans.answer}</p>
+          </div>
         </div>
       )
     })
@@ -111,11 +114,15 @@ class Results extends Component {
         <h1>{this.props.question}</h1>
         <div className='TopHalfDiv'>
           <div className='ChartJsStuff'>
-            <img className='QuestionImg' src={winningansimg} alt="" />          
-            <Doughnut data={this.state.data} options={{legend: {display: true, position: 'left'}}}/>            
+            <img className='QuestionImage' src={winningansimg} alt="" />
+            <Doughnut
+              className='Chart'
+              data={this.state.data}
+              options={{ legend: false }}
+            />
           </div>
           <div className='AnswersDiv'>
-          {answers}
+            {answers}
           </div>
 
 

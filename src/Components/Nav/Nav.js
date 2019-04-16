@@ -48,7 +48,7 @@ class Nav extends Component {
                   <Link to={'/profile'} style={{textDecoration:'none'}}>
                   <li><i className="far fa-user user-icon"></i></li>
                   </Link>
-                  <li><i className="fas fa-search search-icon"></i></li>
+                  <li><Link to={'/Search'} style={{textDecoration:'none'}}><i className="fas fa-search search-icon"></i></Link></li>
                   <li>
                       {this.props.reduxState.uid ? 
                       <button onClick={this.logout} className='logout-nav'>Logout</button>: 

@@ -33,16 +33,14 @@ module.exports = {
     addNewQ: (req, res) => {
       const db = req.app.get('db')
       const { body } = req.body
-      // console.log(body)
-      db.questions.add_new_question(body.question, body.q_img, req.session.user.uid).then(questionInsert => {
+      db.questions.add_new_question(body.question, body.q_img, body.uid).then(questionInsert => {
         for(let i=0; i < body.answers.length; i++){
-          // console.log(questionInsert)
           db.answers.add_new_answer(body.answers[i].text , body.answers.ans_img, questionInsert[0].qid )
         }
         res.sendStatus(200)
       }).catch(err => {
         console.log(err)
-        res.status(500).send({err: 'Please register or login first.'})
+        res.status(500).send(err)
     })
     },
     

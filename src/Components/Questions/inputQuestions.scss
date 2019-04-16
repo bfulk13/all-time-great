@@ -1,0 +1,81 @@
+@import "../Sass/colors2";
+
+@mixin imageInput(){
+    width: 80%;
+
+}
+
+@mixin textInput(){
+    width: 80%;
+    margin-top: 20px;
+}
+
+.question-Modal-Wrapper {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 0px 0px 80px 80px  $main-color4;
+    background-color: $main-color2;
+    border: 2px solid $main-color3;
+    border-radius: 65px;
+
+    h2{
+
+    }
+
+    .question-input{
+       @include textInput();
+    }
+
+    .file-input{
+        @include imageInput();
+    }
+
+    .answer-text{
+        @include textInput();
+    }
+
+    .answer-image-file{
+        @include imageInput();
+    }
+
+    i{
+
+    }
+
+    button{
+
+    }
+}
+
+.QuestionsDiv{
+    background-color: gray;
+    min-height: 100vh;
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    
+}
+    
+.SingleQuestionDiv{
+    display: flex;
+    margin: 10%;
+}
+.QuestionImg{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+.PlusSignDiv{
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+}
+.PlusSign{
+    height: 80px;
+    width: 80px;
+}

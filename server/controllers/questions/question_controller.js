@@ -33,7 +33,7 @@ module.exports = {
     addNewQ: (req, res) => {
       const db = req.app.get('db')
       const { body } = req.body
-      console.log(body)
+      // console.log(body)
       db.questions.add_new_question(body.question, body.q_img, req.session.user.uid).then(questionInsert => {
         for(let i=0; i < body.answers.length; i++){
           // console.log(questionInsert)
@@ -46,5 +46,10 @@ module.exports = {
     })
     },
     
-  
+    getUserVotes: (req, res) => {
+      const db = req.app.get('db')
+      db.questions.get_user_votes().then(response => {
+        res.status(200).send(response)
+      })
+    }
 }

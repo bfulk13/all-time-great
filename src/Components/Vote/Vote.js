@@ -3,42 +3,43 @@ import './Vote.css'
 import {Link} from 'react-router-dom'
 import Axios from 'axios'
 import {connect} from 'react-redux'
-import {updateQuestion} from '../../redux/reducer'
+import {updateQuestion, updateAnsArray} from '../../redux/reducer'
 
 class Vote extends Component {
   constructor() {
     super()
     this.state = {
       
-          question: {},
-          img: '',
-          answers: [],
-          anwser: '',
-          aid: 0,
-          qid: 0
-
-        
-        
+      question: {},
+      img: '',
+      answers: [],
+      anwser: '',
+      aid: 0,
+      qid: 0
     }
   }
   componentDidMount = async () => {
     await this.getQuestionAndAnswers()
+    this.props.updateQuestion(this.state.question)
   }
   getQuestionAndAnswers = async () => {
     let quest = await Axios.get(`/api/question/${this.props.match.params.id}`)
     let res = await Axios.get(`/api/getanswersforquestion/${this.props.match.params.id}`)
+    this.props.updateAnsArray(res.data)
+    console.log(1234, this.props)
     this.setState({
       question: quest.data[0],
       answers: res.data,
-      qid: quest.data[0].q_id
+      qid: quest.data[0].qid
     })
+    console.log(22222, this.state)
   }
   
   Vote = async () => {
     let qid = this.state.qid
     let aid = this.state.aid
     let uid = this.props.uid
-    let body = {qid: qid, uid: uid, aid: aid}
+    let body = {qid, uid, aid}
     await Axios.post('/api/sendselectedanswer', body)
   }
   updateQidAid= async (val, val2) => {
@@ -50,7 +51,7 @@ class Vote extends Component {
   }
 
   render() {
-    const answers = this.state.answers.map(ans => {
+    const answers = this.props.ansArr.map(ans => {
       return (
         <div className='SingleAnswerDiv' onClick={ () => this.updateQidAid(ans.q_id, ans.aid)} key={ans.aid}>
           <h4>{ans.answer}</h4>
@@ -63,8 +64,8 @@ class Vote extends Component {
       <div className='Vote'>
         <h1>Cast Your Vote</h1>
         <div className='VotingDiv'>
-        <img src={this.state.question.q_img} alt="question pic"/>
-          <h2>{this.state.question.question}</h2>
+        <img src={this.props.q_img} alt="question pic"/>
+          <h2>{this.props.question}</h2>
           {answers}
           <div>
            <Link to='/Result'><button onClick={() => this.Vote(this.state.anwser) }>Submit Vote</button></Link>
@@ -82,12 +83,16 @@ class Vote extends Component {
 const mapStateToProps = (reduxState) => {
   return{
    uid: reduxState.uid,
-   qid: reduxState.qid
+   qid: reduxState.qid,
+   q_img: reduxState.q_img,
+   question: reduxState.question,
+   ansArr: reduxState.ansArr
   }
 }
 
 const mapDispatchToProps = {
-  updateQuestion
+  updateQuestion,
+  updateAnsArray
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Vote)

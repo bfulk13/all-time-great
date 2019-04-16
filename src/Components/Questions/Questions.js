@@ -10,6 +10,7 @@ class Questions extends Component {
     super()
     this.state = {
       trendingQuestionsArr: [],
+      getUservotes:[],
       question: '',
       q_img: '',
       open: false,
@@ -46,11 +47,23 @@ class Questions extends Component {
 
   componentDidMount() {
     this.getAllQuestions()
+    this.getUserVotes()
+  }
+  getUserVotes = () => {
+  axios.get('/api/getuservotes').then(res => {
+    this.setState({
+      getUserVotes: res.data
+    })
+  })
+}
+
+  getVotedValues = async () => {
+    let res = await axios.get('/api/get')
   }
 
   getAllQuestions = async () => {
     let res = await axios.get('/api/getallquestions')
-    console.log(res)
+    // console.log(res)
     this.setState({
       trendingQuestionsArr: res.data
     })
@@ -67,7 +80,7 @@ class Questions extends Component {
     this.setState(prevState => ({
       answers: newAnswers
     }))
-    console.log(val, str)
+    // console.log(val, str)
   }
 
   updateQuestion = async (val) => {
@@ -82,8 +95,12 @@ class Questions extends Component {
     const { owner_id } = this.props
     const { question, q_img, answers } = this.state
     let body = { question, q_img, owner_id, answers }
-    let res = await axios.post('/api/addnewquestion', {body})
-    this.sendPhoto()
+    if(this.props.owner_id){
+      let res = await axios.post('/api/addnewquestion', {body})
+      this.sendPhoto()
+    } else {
+      alert('Please register or login to post a question.')
+    }
   }
 
   buildAnswersJSX = () => {

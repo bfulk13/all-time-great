@@ -58,8 +58,10 @@ class Nav extends Component {
                     </ul>
                 </nav>
                 <div className='login-modal'>
-                    <Modal open={open} onClose={this.closeModal} center>
-                        <Login />
+                    <Modal open={open} center>
+                        <Login 
+                            onClose={this.closeModal}
+                        />
                     </Modal>
                 </div>
 

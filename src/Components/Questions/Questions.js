@@ -51,7 +51,7 @@ class Questions extends Component {
   componentDidMount() {
     this.getAllQuestions()
     this.getUserVotes()
-    console.log(this.props)
+    // console.log(this.props)
   }
   getUserVotes = () => {
     axios.get('/api/getuservotes').then(res => {
@@ -98,10 +98,11 @@ class Questions extends Component {
     // add in IF redundancy if q or qimg is blank
     const { uid} = this.props.reduxState
     const { question, q_img, answers } = this.state
+    console.log(this.state)
     let body = { question, q_img, uid, answers }
     if (uid && question && answers) {
-      let res = await axios.post('/api/addnewquestion', { body })
       this.sendPhoto()
+      let res = await axios.post('/api/addnewquestion', { body })
     } else {
       alert('Please login and post a question.')
     }
@@ -134,7 +135,7 @@ class Questions extends Component {
         img: '',
       }, this.updateAnswerImg(i, file));
     };
-    console.log(1234, this.state, i)
+    // console.log(1234, this.state, i)
     reader.readAsDataURL(file);
   }
 
@@ -194,8 +195,8 @@ class Questions extends Component {
     const inputBoxes = this.state.answers.map((answer, i) => {
       return (
         <div key={i}>
-          <input type="text" placeholder={answer.answerName} onChange={(e) => this.updateAnswer(e.target.value, answer.answerName, answer.ans_img)} />
-          <input type="file" id="real" onChange={(e) => this.handlePhoto(e, i)} />
+          <input className="answer-text" type="text" placeholder={answer.answerName} onChange={(e) => this.updateAnswer(e.target.value, answer.answerName, answer.ans_img)} />
+          <input className="answer-image-file" type="file" id="real" onChange={(e) => this.handlePhoto(e, i)} />
         </div>
       )
     })
@@ -225,17 +226,17 @@ class Questions extends Component {
 
         </div>
         <Modal open={open} onClose={this.onCloseModal} center >
-          <div style={{ width: "80vw", height: "80vh" }}>
+          <div className="question-Modal-Wrapper">
             <h2>Add Your Question and Answers</h2>
-            <input placeholder="Question" type="text" onChange={(e) => { this.updateQuestion(e.target.value) }} />
-            Image:<input type="file" id="real" onChange={this.handlePhoto1} />
+            <input placeholder="Question" className="question-input" type="text" onChange={(e) => { this.updateQuestion(e.target.value) }} />
+            <input className="file-input" type="file" id="real" onChange={this.handlePhoto1} />
             {/* <div>
           <img src={this.state.img} alt="none" />
         </div> */}
             {inputBoxes}
-            <i class="fas fa-plus-circle fa-2x" onClick={this.buildAnswersJSX}></i>
+            <i className="fas fa-plus-circle fa-2x" onClick={this.buildAnswersJSX}></i>
+            <button type="submit" onClick={this.createNewQuestion}>Submit</button>
           </div>
-          <button type="submit" onClick={this.createNewQuestion}>Submit</button>
         </Modal>
         <div className=''>
 

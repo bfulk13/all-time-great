@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
-import Axios from 'axios'
+import axios from 'axios'
 import {connect} from 'react-redux'
 import {updateQuestion, updateAnsArray} from '../../redux/reducer'
 
@@ -11,6 +11,10 @@ class Search extends Component {
       
     }
   }
+  searchForStuff = () => {
+    let res = axios.post('/searchforquestions')
+  }
+
   
 
   render() {
@@ -18,7 +22,9 @@ class Search extends Component {
 
     return (
       <div className='Search'>
-       
+       <form action="">
+       <input type="text" placeholder="na"/></form>
+       <button onClick={this.searchForStuff()}>Seacrch</button>
       </div>
     )
   }

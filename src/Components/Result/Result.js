@@ -111,10 +111,8 @@ class Results extends Component {
         <h1>{this.props.question}</h1>
         <div className='TopHalfDiv'>
           <div className='ChartJsStuff'>
-            <img className='QuestionImg' src={winningansimg} alt="" />
-            <div className='DoughnutDiv'>
-            <Doughnut data={this.state.data} options={{legend: {display: true, position: 'left'}}}/>
-            </div>
+            <img className='QuestionImg' src={winningansimg} alt="" />          
+            <Doughnut data={this.state.data} options={{legend: {display: true, position: 'left'}}}/>            
           </div>
           <div className='AnswersDiv'>
           {answers}

@@ -17,7 +17,7 @@ module.exports = {
         res.status(200).send(response)
       })}catch(err){
         console.log(err)
-  }
+        }
     },
     getQ: (req, res) => {
       try{
@@ -27,7 +27,7 @@ module.exports = {
         res.status(200).send(response)
       })}catch(err){
         console.log(err)
-  }
+        }
     },
     
     addNewQ: (req, res) => {
@@ -45,6 +45,9 @@ module.exports = {
         res.status(500).send(err)
     })
     },
+    searchBarQuestions: (req, res) => {
+      const db = req.
+    }
     
-  
+    
 }

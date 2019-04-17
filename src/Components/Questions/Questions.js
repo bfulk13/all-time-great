@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Questions.css'
 import axios from 'axios';
-import { Link } from 'react-router-dom'
+import { updateQuestion, updateAnsArray } from '../../redux/reducer'
 import Modal from 'react-responsive-modal'
 import { connect } from 'react-redux';
 
@@ -86,7 +86,6 @@ class Questions extends Component {
   }
 
   updateQuestion = async (val) => {
-
     this.setState({
       question: val
     })
@@ -94,7 +93,7 @@ class Questions extends Component {
 
   createNewQuestion = async () => {
     // add in IF redundancy if q or qimg is blank
-    const { uid} = this.props.reduxState
+    const { uid } = this.props.reduxState
     const { question, q_img, answers } = this.state
     let body = { question, q_img, uid, answers }
     if (uid && question && answers) {
@@ -121,6 +120,7 @@ class Questions extends Component {
     }
   }
 
+
   // event handler for file input (s3)
   handlePhotoAnswers = async (event, i) => {
     const reader = new FileReader();
@@ -131,19 +131,17 @@ class Questions extends Component {
         filename: file.name,
         filetype: file.type,
         img: '',
-      }, )
+      })
       let ans_img = await this.sendPhoto()
-      console.log(3333, ans_img)
       let answersArrCopy = this.state.answers.slice()
       answersArrCopy[i].ans_img = ans_img
       this.setState({
         answers: answersArrCopy
       })
     };
-    console.log(this.state)
     reader.readAsDataURL(file);
   }
-  
+
   handlePhotoQuestion = async (event) => {
     const reader = new FileReader();
     const file = event.target.files[0];
@@ -179,7 +177,7 @@ class Questions extends Component {
       filetype: this.state.filetype
     }).then(response => {
       return response.data.Location
-      
+
     }).catch(err => console.log(err));
   }
 
@@ -193,25 +191,44 @@ class Questions extends Component {
     });
   }
 
-
-
+  CheckVotedOrNot = async (obj) => {
+    let body = { qid: obj.qid, uid: this.props.reduxState.uid }
+    let canVote = await axios.post('/api/ifVoted', body)
+    console.log('canvote', canVote)
+    if (canVote.data === true) {
+      let quest = await axios.get(`/api/question/${obj.qid}`)
+      let res = await axios.get(`/api/getanswersforquestion/${obj.qid}`)
+      this.props.updateQuestion(obj)
+      this.props.updateAnsArray(res.data)
+      this.setState({
+        question: quest.data[0],
+        answers: res.data,
+      })
+      this.props.history.push(`/Vote/${this.props.reduxState.qid}`)
+    } else if (canVote.data === false) {
+      this.setState({
+        question: this.props.question,
+        answers: this.props.answers,
+        qid: this.props.qid
+      })
+      this.props.history.push('/Result')
+    }
+  }
 
   render() {
-    const inputBoxes = this.state.answers.map((answer, i) => {
+    const inputBoxes = this.state.answers ? this.state.answers.map((answer, i) => {
       return (
         <div key={i}>
           <input className="answer-text" type="text" placeholder={answer.answerName} onChange={(e) => this.updateAnswer(e.target.value, answer.answerName, answer.ans_img)} />
           <input className="answer-image-file" type="file" id="real" onChange={(e) => this.handlePhotoAnswers(e, i)} />
         </div>
       )
-    })
+    }) : null
     const { open } = this.state
     const trendingQuestions = this.state.trendingQuestionsArr.map(obj => {
       return (
         <div className='SingleQuestionDiv' key={obj.qid}>
-          {/* Need to have redux update the question id on click so the render on /vote can pull the right question */}
-          {
-            <Link to={`/Vote/${obj.qid}`} id={obj.id}><h4>{obj.question}</h4></Link>}
+          {<div onClick={() => this.CheckVotedOrNot(obj)}><h4>{obj.question}</h4></div>}
           <img src={obj.q_img} alt="" className="QuestionImg" />
         </div>
       )
@@ -235,9 +252,6 @@ class Questions extends Component {
             <h2>Add Your Question and Answers</h2>
             <input placeholder="Question" className="question-input" type="text" onChange={(e) => { this.updateQuestion(e.target.value) }} />
             <input className="file-input" type="file" id="real" onChange={this.handlePhotoQuestion} />
-            {/* <div>
-          <img src={this.state.img} alt="none" />
-        </div> */}
             {inputBoxes}
             <i className="fas fa-plus-circle fa-2x" onClick={this.buildAnswersJSX}></i>
             <button type="submit" onClick={this.createNewQuestion}>Submit</button>
@@ -256,5 +270,9 @@ const mapStateToProps = (reduxState) => {
     reduxState
   }
 }
+const mapDispatchToProps = {
+  updateQuestion,
+  updateAnsArray
+}
 
-export default connect(mapStateToProps, null)(Questions);
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);

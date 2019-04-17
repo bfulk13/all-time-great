@@ -19,36 +19,19 @@ class Vote extends Component {
       qid: 0
     }
   }
-  componentDidMount = async () => {
-
-    await this.getQuestionAndAnswers()
-
+  componentDidMount = () => {
+    this.getQuestionAndAnswers()
   }
   getQuestionAndAnswers = async () => {
-    let body = { qid: this.props.qid, uid: this.props.uid }
-    let canVote = axios.post('/api/ifVoted', body)
-    if(canVote.body){
-    let quest = await axios.get(`/api/question/${this.props.match.params.id}`)
-    let res = await axios.get(`/api/getanswersforquestion/${this.props.match.params.id}`)
-    this.props.updateAnsArray(res.data)
-    this.setState({
-      question: quest.data[0],
-      answers: res.data,
-      qid: quest.data[0].qid
-    })
-  }else{
-    let res = await axios.
     this.setState({
       question: this.props.question,
       answers: this.props.answers,
-      qid: this.props.qid
-    })
-    this.props.history.push('/Result')
-  }
-  }
+      qid: this.props.qid 
+  })
+}
 
   Vote = async () => {
-    let qid = this.state.qid
+    let qid = this.props.qid
     let aid = this.state.aid
     let uid = this.props.uid
     let body = { qid: qid, uid: uid, aid: aid }
@@ -59,7 +42,6 @@ class Vote extends Component {
       qid: val,
       aid: val2
     })
-    this.props.updateQuestion({ qid: this.state.qid, question: this.state.question.question })
   }
 
   render() {

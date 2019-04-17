@@ -20,8 +20,10 @@ module.exports = {
   }
     },
     getQ: (req, res) => {
+      console.log(1111, req.params)
       try{
-        const {id} = req.params
+        let {id} = req.params
+        id = parseInt(id)
       const db = req.app.get('db')
       db.questions.get_question({id}).then(response => {
         res.status(200).send(response)

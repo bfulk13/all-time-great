@@ -9,6 +9,7 @@ class App extends Component {
       <div className="App">
       {/* Need to import Nav Barnpm */}
       <Nav />
+      
        {routes}
       </div>
     )

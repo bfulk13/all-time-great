@@ -14,9 +14,7 @@ class Profile extends Component{
   }
 
   viewProfile = async () => {
-    // console.log(this.props.match.params)
     let res = await axios.get(`/api/viewprofile/${this.props.match.params.owner_id}`)
-    // console.log(res)
     this.setState({
       user: res.data[0]
     })
@@ -28,7 +26,6 @@ class Profile extends Component{
 
   render(){
     const {user} = this.state
-    // console.log(user)
     return(
      <div className='Profile'> 
         <div >

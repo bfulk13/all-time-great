@@ -67,7 +67,6 @@ class Questions extends Component {
 
   getAllQuestions = async () => {
     let res = await axios.get('/api/getallquestions')
-    // console.log(res)
     this.setState({
       trendingQuestionsArr: res.data
     })
@@ -84,7 +83,6 @@ class Questions extends Component {
     this.setState(prevState => ({
       answers: newAnswers
     }))
-    // console.log(val, str)
   }
 
   updateQuestion = async (val) => {
@@ -135,7 +133,6 @@ class Questions extends Component {
         img: '',
       }, this.updateAnswerImg(i, file));
     };
-    // console.log(1234, this.state, i)
     reader.readAsDataURL(file);
   }
 
@@ -151,13 +148,11 @@ class Questions extends Component {
       });
     };
     reader.readAsDataURL(file);
-    console.log(file)
   }
 
   updateAnswerImg(index, filename) {
     let newans = [...this.state.answers]
     newans[index].ans_img = filename
-    console.log(123412341, filename)
     this.setState({
       answers: newans
     })
@@ -165,7 +160,6 @@ class Questions extends Component {
 
   // when clicked it upload
   sendPhoto = (event) => {
-    console.log(this.state)
     return axios.post('/api/s3', {
       file: this.state.file,
       filename: this.state.filename,

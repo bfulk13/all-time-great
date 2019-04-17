@@ -18,7 +18,6 @@ class Search extends Component {
       string: this.state.searchbar
     }
     let res = await axios.post('/api/searchforquestions', body)
-    console.log(12341234, res)
     this.setState({
       questions: res.data
     })

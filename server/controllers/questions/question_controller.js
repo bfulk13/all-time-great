@@ -35,7 +35,7 @@ module.exports = {
       const { body } = req.body
       db.questions.add_new_question(body.question, body.q_img, body.uid).then(questionInsert => {
         for(let i=0; i < body.answers.length; i++){
-          db.answers.add_new_answer(body.answers[i].text , body.answers.ans_img, questionInsert[0].qid )
+          db.answers.add_new_answer(body.answers[i].text , body.answers[i].ans_img, questionInsert[0].qid )
         }
         res.sendStatus(200)
       }).catch(err => {

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { updateQuestion, updateAnsArray } from '../../redux/reducer'
+import { CostExplorer } from 'aws-sdk';
 
 class Vote extends Component {
   constructor() {
@@ -19,24 +20,31 @@ class Vote extends Component {
     }
   }
   componentDidMount = async () => {
+
     await this.getQuestionAndAnswers()
 
   }
   getQuestionAndAnswers = async () => {
     let body = { qid: this.props.qid, uid: this.props.uid }
     let canVote = axios.post('/api/ifVoted', body)
-    if (canVote.body) {
-      let quest = await axios.get(`/api/question/${this.props.match.params.id}`)
-      let res = await axios.get(`/api/getanswersforquestion/${this.props.match.params.id}`)
-      this.props.updateAnsArray(res.data)
-      this.setState({
-        question: quest.data[0],
-        answers: res.data,
-        qid: quest.data[0].qid
-      })
-    } else {
-      this.props.history.push('/Result')
-    }
+    if(canVote.body){
+    let quest = await axios.get(`/api/question/${this.props.match.params.id}`)
+    let res = await axios.get(`/api/getanswersforquestion/${this.props.match.params.id}`)
+    this.props.updateAnsArray(res.data)
+    this.setState({
+      question: quest.data[0],
+      answers: res.data,
+      qid: quest.data[0].qid
+    })
+  }else{
+    let res = await axios.
+    this.setState({
+      question: this.props.question,
+      answers: this.props.answers,
+      qid: this.props.qid
+    })
+    this.props.history.push('/Result')
+  }
   }
 
   Vote = async () => {

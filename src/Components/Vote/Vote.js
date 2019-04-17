@@ -9,7 +9,7 @@ class Vote extends Component {
   constructor() {
     super()
     this.state = {
-      
+
       question: {},
       img: '',
       answers: [],
@@ -20,23 +20,23 @@ class Vote extends Component {
   }
   componentDidMount = async () => {
     await this.getQuestionAndAnswers()
-    
+
   }
   getQuestionAndAnswers = async () => {
-    let body = {qid: this.props.qid , uid: this.props.uid}
+    let body = { qid: this.props.qid, uid: this.props.uid }
     let canVote = axios.post('/api/ifVoted', body)
-    if(canVote.body){
-    let quest = await axios.get(`/api/question/${this.props.match.params.id}`)
-    let res = await axios.get(`/api/getanswersforquestion/${this.props.match.params.id}`)
-    this.props.updateAnsArray(res.data)
-    this.setState({
-      question: quest.data[0],
-      answers: res.data,
-      qid: quest.data[0].qid
-    })
-  }else{
-    this.props.history.push('/Result')
-  }
+    if (canVote.body) {
+      let quest = await axios.get(`/api/question/${this.props.match.params.id}`)
+      let res = await axios.get(`/api/getanswersforquestion/${this.props.match.params.id}`)
+      this.props.updateAnsArray(res.data)
+      this.setState({
+        question: quest.data[0],
+        answers: res.data,
+        qid: quest.data[0].qid
+      })
+    } else {
+      this.props.history.push('/Result')
+    }
   }
 
   Vote = async () => {
@@ -68,7 +68,7 @@ class Vote extends Component {
       <div className='Vote'>
         <h1>Cast Your Vote</h1>
         <div className='VotingDiv'>
-        <img src={this.props.q_img} alt="question pic"/>
+          <img src={this.props.q_img} alt="question pic" />
           <h2>{this.props.question}</h2>
           {answers}
           <div>
@@ -85,12 +85,12 @@ class Vote extends Component {
 }
 
 const mapStateToProps = (reduxState) => {
-  return{
-   uid: reduxState.uid,
-   qid: reduxState.qid,
-   q_img: reduxState.q_img,
-   question: reduxState.question,
-   ansArr: reduxState.ansArr
+  return {
+    uid: reduxState.uid,
+    qid: reduxState.qid,
+    q_img: reduxState.q_img,
+    question: reduxState.question,
+    ansArr: reduxState.ansArr
   }
 }
 

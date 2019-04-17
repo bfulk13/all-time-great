@@ -30,6 +30,7 @@ class Landing extends Component{
   }
   render() {
     const trendingQuestions = this.state.trendingQuestionsArr.map(obj => {
+      console.log(obj)
       return (
         <Link to={`/Vote/${obj.qid}`} style={{ textDecoration: 'none' }}>
           <div key={obj.qid} className='question'>

@@ -42,6 +42,7 @@ class Results extends Component {
   componentDidMount = async () => {
     await this.getResults()
     // this.buildChartData()
+    console.log(1234, this.props)
   }
 
   buildChartData() {

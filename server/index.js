@@ -76,7 +76,7 @@ app.post('/api/s3', (req, res) => {
         ACL: 'public-read'
     }
 
-    console.log(params)
+    // console.log(params)
 
     S3.upload(params, (err, data) => {
         // console.log(err, data)

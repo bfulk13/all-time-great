@@ -1,0 +1,20 @@
+.SearchMainDiv{
+  background-color: blanchedalmond;
+  min-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around
+}
+.BoxyBox{
+  margin: 10px;
+  width: 80%;
+  height: 125px;
+  background-color: orangered;
+  display: flex;
+  justify-content: space-between;
+  align-items: center
+}
+.SearchResultImage{
+height: 100px;
+width: 100px;
+}

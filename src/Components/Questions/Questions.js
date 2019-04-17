@@ -3,6 +3,9 @@ import './Questions.css'
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import Modal from 'react-responsive-modal'
+import { connect } from 'react-redux';
+
+
 
 
 class Questions extends Component {
@@ -10,7 +13,7 @@ class Questions extends Component {
     super()
     this.state = {
       trendingQuestionsArr: [],
-      getUservotes:[],
+      getUservotes: [],
       question: '',
       q_img: '',
       open: false,
@@ -48,14 +51,15 @@ class Questions extends Component {
   componentDidMount() {
     this.getAllQuestions()
     this.getUserVotes()
+    // console.log(this.props)
   }
   getUserVotes = () => {
-  axios.get('/api/getuservotes').then(res => {
-    this.setState({
-      getUserVotes: res.data
+    axios.get('/api/getuservotes').then(res => {
+      this.setState({
+        getUserVotes: res.data
+      })
     })
-  })
-}
+  }
 
   getVotedValues = async () => {
     let res = await axios.get('/api/get')
@@ -92,14 +96,15 @@ class Questions extends Component {
 
   createNewQuestion = async () => {
     // add in IF redundancy if q or qimg is blank
-    const { owner_id } = this.props
+    const { uid} = this.props.reduxState
     const { question, q_img, answers } = this.state
-    let body = { question, q_img, owner_id, answers }
-    if(this.props.owner_id){
-      let res = await axios.post('/api/addnewquestion', {body})
+    console.log(this.state)
+    let body = { question, q_img, uid, answers }
+    if (uid && question && answers) {
       this.sendPhoto()
+      let res = await axios.post('/api/addnewquestion', { body })
     } else {
-      alert('Please register or login to post a question.')
+      alert('Please login and post a question.')
     }
   }
 
@@ -128,9 +133,9 @@ class Questions extends Component {
         filename: file.name,
         filetype: file.type,
         img: '',
-      }, this.updateAnswerImg(i, file ));
+      }, this.updateAnswerImg(i, file));
     };
-    console.log(1234, this.state, i)
+    // console.log(1234, this.state, i)
     reader.readAsDataURL(file);
   }
 
@@ -149,7 +154,7 @@ class Questions extends Component {
     console.log(file)
   }
 
-  updateAnswerImg(index, filename){
+  updateAnswerImg(index, filename) {
     let newans = [...this.state.answers]
     newans[index].ans_img = filename
     console.log(123412341, filename)
@@ -162,11 +167,11 @@ class Questions extends Component {
   sendPhoto = (event) => {
     console.log(this.state)
     return axios.post('/api/s3', {
-      file: this.state.file, 
+      file: this.state.file,
       filename: this.state.filename,
       filetype: this.state.filetype
     }).then(response => {
-      this.setState({ 
+      this.setState({
         q_img: response.data.Location,
 
       });
@@ -177,21 +182,21 @@ class Questions extends Component {
     let newStateCopy = Object.assign({}, this.state)
     return axios.post('/api/s3', this.state).then(response => {
       newStateCopy.answers[i].ans_img = img
-      this.setState({ 
-       answers: newStateCopy.answers
+      this.setState({
+        answers: newStateCopy.answers
       });
     });
   }
-  
-  
-  
+
+
+
 
   render() {
     const inputBoxes = this.state.answers.map((answer, i) => {
       return (
         <div key={i}>
-          <input type="text" placeholder={answer.answerName} onChange={(e) => this.updateAnswer(e.target.value, answer.answerName, answer.ans_img)} />
-          <input type="file" id="real" onChange={(e) => this.handlePhoto(e, i)}/>
+          <input className="answer-text" type="text" placeholder={answer.answerName} onChange={(e) => this.updateAnswer(e.target.value, answer.answerName, answer.ans_img)} />
+          <input className="answer-image-file" type="file" id="real" onChange={(e) => this.handlePhoto(e, i)} />
         </div>
       )
     })
@@ -200,8 +205,8 @@ class Questions extends Component {
       return (
         <div className='SingleQuestionDiv' key={obj.qid}>
           {/* Need to have redux update the question id on click so the render on /vote can pull the right question */}
-          { 
-          <Link to={`/Vote/${obj.qid}`} id={obj.id}><h4>{obj.question}</h4></Link>}
+          {
+            <Link to={`/Vote/${obj.qid}`} id={obj.id}><h4>{obj.question}</h4></Link>}
           <img src={obj.q_img} alt="" className="QuestionImg" />
         </div>
       )
@@ -216,22 +221,22 @@ class Questions extends Component {
               <img className="PlusSign" src="http://pngimg.com/uploads/plus/plus_PNG122.png" alt="plus sign" />
             </div>
             <p>Add a new Question</p>
-          {trendingQuestions}
+            {trendingQuestions}
           </div>
 
         </div>
         <Modal open={open} onClose={this.onCloseModal} center >
-          <div style={{ width: "80vw", height: "80vh" }}>
+          <div className="question-Modal-Wrapper">
             <h2>Add Your Question and Answers</h2>
-            <input placeholder="Question" type="text" onChange={(e) => { this.updateQuestion(e.target.value) }} />
-            Image:<input type="file" id="real" onChange={this.handlePhoto1}/>
-        {/* <div>
+            <input placeholder="Question" className="question-input" type="text" onChange={(e) => { this.updateQuestion(e.target.value) }} />
+            <input className="file-input" type="file" id="real" onChange={this.handlePhoto1} />
+            {/* <div>
           <img src={this.state.img} alt="none" />
         </div> */}
             {inputBoxes}
-            <i class="fas fa-plus-circle fa-2x" onClick={this.buildAnswersJSX}></i>
+            <i className="fas fa-plus-circle fa-2x" onClick={this.buildAnswersJSX}></i>
+            <button type="submit" onClick={this.createNewQuestion}>Submit</button>
           </div>
-          <button type="submit" onClick={this.createNewQuestion}>Submit</button>
         </Modal>
         <div className=''>
 
@@ -241,4 +246,10 @@ class Questions extends Component {
   }
 }
 
-export default Questions;
+const mapStateToProps = (reduxState) => {
+  return {
+    reduxState
+  }
+}
+
+export default connect(mapStateToProps, null)(Questions);

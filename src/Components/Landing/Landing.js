@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 import Axios from 'axios';
 
 
-class Landing extends Component{
-  constructor(){
+class Landing extends Component {
+  constructor() {
     super()
     this.state = {
       trendingQuestionsArr: [],
@@ -16,16 +16,18 @@ class Landing extends Component{
     this.getTrendingQuestions()
     this.getPopularProfiles()
   }
-  getTrendingQuestions = async () => {
-    let res = await Axios.get('/api/questions')
-    this.setState({
-      trendingQuestionsArr: res.data
+  getTrendingQuestions = () => {
+    Axios.get('/api/questions').then(res => {
+      this.setState({
+        trendingQuestionsArr: res.data
+      })
     })
   }
-  getPopularProfiles = async () => {
-    let res = await Axios.get('/api/profiles')
-    this.setState({
-      popularProfilesArr: res.data
+  getPopularProfiles = () => {
+    Axios.get('/api/profiles').then(res => {
+      this.setState({
+        popularProfilesArr: res.data
+      })
     })
   }
   render() {
@@ -51,16 +53,16 @@ class Landing extends Component{
         </div>
       )
     })
-    return(
-     <div className='Landing'> 
-          <div className='landing-intro'>
-            <div className='thought-wrapper'>
-            <img src={require('./images/thought.png')} alt='thought bubble'className='thought-bubble'/>
+    return (
+      <div className='Landing'>
+        <div className='landing-intro'>
+          <div className='thought-wrapper'>
+            <img src={require('./images/thought.png')} alt='thought bubble' className='thought-bubble' />
             <p>Goat?</p>
-            </div>
-            <img src={require('./images/landingGoat.png')} alt='curious goat' className='goat-image'/>
           </div>
-          <Link to="/Questions" style={{textDecoration:'none'}}><p className='landing-title'>Trending Questions ?</p></Link>
+          <img src={require('./images/landingGoat.png')} alt='curious goat' className='goat-image' />
+        </div>
+        <Link to="/Questions" style={{ textDecoration: 'none' }}><p className='landing-title'>Trending Questions ?</p></Link>
         <div className='questions-wrapper'>
           {trendingQuestions}
         </div>
@@ -71,7 +73,7 @@ class Landing extends Component{
       </div>
     )
   }
-} 
+}
 
-//hope this works
+//hope this works!
 export default Landing;

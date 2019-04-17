@@ -110,6 +110,7 @@ app.post('/api/searchforquestions', qc.searchBarQuestions);
 app.get('/api/profiles', pc.getPsByLikes);
 app.get('/api/profile', pc.getProfile)
 app.get('/api/viewprofile/:id', pc.viewProfile)
+app.get('/api/allProfiles', pc.getAllProfiles)
 
 
 //// ANSWERS ENDPOINTS ////

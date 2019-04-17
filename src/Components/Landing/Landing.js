@@ -42,7 +42,6 @@ class Landing extends Component {
       )
     })
     const popularProfiles = this.state.popularProfilesArr.map(obj => {
-      // console.log(obj)
       return (
         <div key={obj.owner_id} className='pop-profile-wrapper'>
           <Link to={`/viewprofile/${obj.owner_id}`} style={{ textDecoration: 'none' }}>

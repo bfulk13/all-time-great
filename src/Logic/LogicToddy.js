@@ -21,5 +21,4 @@ export function getResults(){
     ans3: this.state.answersArr[2] ? this.state.answersArr[2].answer : null,
     ans4: this.state.answersArr[3] ? this.state.answersArr[3].answer : null
    })
-  // console.log(this.state.answersArr[0].ans_img)
 }

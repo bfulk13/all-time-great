@@ -214,7 +214,7 @@ class Questions extends Component {
 
     return (
       <div className='Questions'>
-        <h1>Trending Questions</h1>
+        <h1>Questions</h1>
         <div className='QuestionsDiv'>
           <div>
             <div className="PlusSignDiv" onClick={this.onOpenModal} >

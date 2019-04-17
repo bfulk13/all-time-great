@@ -31,8 +31,8 @@ module.exports = {
 
     viewProfile: async (req, res) => {
         const db = req.app.get('db');
-        const { id } = req.params;
-        let profile = await db.profiles.view_profile({ id }).then(resp => {
+        const { uid } = req.params;
+        let profile = await db.profiles.view_profile({ uid }).then(resp => {
             res.status(200).send(resp)
         }).catch(err => {
             console.log(err)

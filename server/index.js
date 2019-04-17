@@ -108,8 +108,8 @@ app.post('/api/searchforquestions', qc.searchBarQuestions);
 
 //// PROFILES ENDPOINTS ////
 app.get('/api/profiles', pc.getPsByLikes);
-app.get('/api/profile', pc.getProfile)
-app.get('/api/viewprofile/:uid', pc.viewProfile)
+app.get('/api/profile/:id', pc.getProfile)
+app.get('/api/viewprofile/:id', pc.viewProfile)
 app.get('/api/allProfiles', pc.getAllProfiles)
 
 

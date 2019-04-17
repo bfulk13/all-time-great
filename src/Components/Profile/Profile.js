@@ -10,11 +10,11 @@ class Profile extends Component{
   }
 
   componentDidMount(){
-    this.viewProfile()
+    this.getProfile()
   }
 
-  viewProfile = async () => {
-    let res = await axios.get(`/api/viewprofile/${this.props.match.params.uid}`)
+  getProfile = async () => {
+    let res = await axios.get(`/api/profile/${this.props.match.params.uid}`)
     this.setState({
       user: res.data[0]
     })

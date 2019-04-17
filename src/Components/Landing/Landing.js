@@ -65,7 +65,7 @@ class Landing extends Component {
           {trendingQuestions}
         </div>
         <div className='pop-profiles-wrapper'>
-          <p className='landing-title'>Popular Profiles</p>
+          <Link to="/Profiles" style={{ textDecoration: 'none' }}><p className='landing-title'>Popular Profiles</p></Link>
           {popularProfiles}
         </div>
       </div>

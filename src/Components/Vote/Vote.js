@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { updateQuestion, updateAnsArray } from '../../redux/reducer'
+import { CostExplorer } from 'aws-sdk';
 
 class Vote extends Component {
   constructor() {
@@ -19,6 +20,7 @@ class Vote extends Component {
     }
   }
   componentDidMount = async () => {
+
     await this.getQuestionAndAnswers()
     
   }
@@ -35,6 +37,12 @@ class Vote extends Component {
       qid: quest.data[0].qid
     })
   }else{
+    let res = await axios.
+    this.setState({
+      question: this.props.question,
+      answers: this.props.answers,
+      qid: this.props.qid
+    })
     this.props.history.push('/Result')
   }
   }

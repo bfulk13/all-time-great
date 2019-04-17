@@ -96,14 +96,14 @@ class Questions extends Component {
     // add in IF redundancy if q or qimg is blank
     const { uid} = this.props.reduxState
     const { question, q_img, answers } = this.state
-    console.log(this.state)
     let body = { question, q_img, uid, answers }
     if (uid && question && answers) {
-      this.sendPhoto()
       let res = await axios.post('/api/addnewquestion', { body })
+      console.log(res)
     } else {
       alert('Please login and post a question.')
     }
+    this.onCloseModal()
   }
 
   buildAnswersJSX = () => {
@@ -122,7 +122,7 @@ class Questions extends Component {
   }
 
   // event handler for file input (s3)
-  handlePhoto = async (event, i) => {
+  handlePhotoAnswers = async (event, i) => {
     const reader = new FileReader();
     const file = event.target.files[0];
     reader.onload = async photo => {
@@ -131,14 +131,23 @@ class Questions extends Component {
         filename: file.name,
         filetype: file.type,
         img: '',
-      }, this.updateAnswerImg(i, file));
+      }, )
+      let ans_img = await this.sendPhoto()
+      console.log(3333, ans_img)
+      let answersArrCopy = this.state.answers.slice()
+      answersArrCopy[i].ans_img = ans_img
+      this.setState({
+        answers: answersArrCopy
+      })
     };
+    console.log(this.state)
     reader.readAsDataURL(file);
   }
-
-  handlePhoto1 = async (event) => {
+  
+  handlePhotoQuestion = async (event) => {
     const reader = new FileReader();
     const file = event.target.files[0];
+    console.log(1234, file)
     reader.onload = async photo => {
       await this.setState({
         file: photo.target.result,
@@ -146,6 +155,10 @@ class Questions extends Component {
         filetype: file.type,
         img: '',
       });
+      let q_img = await this.sendPhoto()
+      this.setState({
+        q_img: q_img
+      })
     };
     reader.readAsDataURL(file);
   }
@@ -159,17 +172,15 @@ class Questions extends Component {
   }
 
   // when clicked it upload
-  sendPhoto = (event) => {
+  sendPhoto = () => {
     return axios.post('/api/s3', {
       file: this.state.file,
       filename: this.state.filename,
       filetype: this.state.filetype
     }).then(response => {
-      this.setState({
-        q_img: response.data.Location,
-
-      });
-    });
+      return response.data.Location
+      
+    }).catch(err => console.log(err));
   }
 
   updatePhotoOnState = (img, i) => {
@@ -190,7 +201,7 @@ class Questions extends Component {
       return (
         <div key={i}>
           <input className="answer-text" type="text" placeholder={answer.answerName} onChange={(e) => this.updateAnswer(e.target.value, answer.answerName, answer.ans_img)} />
-          <input className="answer-image-file" type="file" id="real" onChange={(e) => this.handlePhoto(e, i)} />
+          <input className="answer-image-file" type="file" id="real" onChange={(e) => this.handlePhotoAnswers(e, i)} />
         </div>
       )
     })
@@ -223,7 +234,7 @@ class Questions extends Component {
           <div className="question-Modal-Wrapper">
             <h2>Add Your Question and Answers</h2>
             <input placeholder="Question" className="question-input" type="text" onChange={(e) => { this.updateQuestion(e.target.value) }} />
-            <input className="file-input" type="file" id="real" onChange={this.handlePhoto1} />
+            <input className="file-input" type="file" id="real" onChange={this.handlePhotoQuestion} />
             {/* <div>
           <img src={this.state.img} alt="none" />
         </div> */}

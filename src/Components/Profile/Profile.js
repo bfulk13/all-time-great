@@ -14,7 +14,7 @@ class Profile extends Component{
   }
 
   viewProfile = async () => {
-    let res = await axios.get(`/api/viewprofile/${this.props.match.params.owner_id}`)
+    let res = await axios.get(`/api/viewprofile/${this.props.match.params.uid}`)
     this.setState({
       user: res.data[0]
     })

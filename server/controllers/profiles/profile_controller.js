@@ -11,17 +11,17 @@ module.exports = {
     },
     getAllProfiles: (req, res) => {
         const db = req.app.get('db')
-        console.log('hit')
+        // console.log('hit')
         db.profiles.getAll_profiles().then(resp => {
             res.status(200).send(resp)
+            // console.log(resp)
         })
     },
 
     getProfile: async (req, res) => {
         const db = req.app.get('db');
-        const { uid } = req.session.user;
-       
-        let profile = await db.profiles.get_profile({ uid }).then(resp => {
+        const { id } = req.params;
+        let profile = await db.profiles.get_profile({ id }).then(resp => {
             res.status(200).send(resp)
         }).catch(err => {
             console.log(err)

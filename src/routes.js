@@ -19,7 +19,6 @@ export default(
     <Route path='/profile/:uid' component={Profile}/>
     <Route path='/viewprofile/:uid' component={Profile}/> 
     <Route path='/viewprofile/:owner_id' component={Profile}/> 
->>>>>>> master
     <Route path='/Result' component={Result}/>
     <Route excact path='/' component={Landing}/>
   </Switch>

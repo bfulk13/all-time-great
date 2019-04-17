@@ -3,49 +3,59 @@ module.exports = {
   // ------------Vote Page---------------//
   getAnswers: (req, res) => {
     const db = req.app.get('db')
-    const {id} = req.params
-    db.answers.get_answers({id}).then(response => {
+    const { id } = req.params
+    db.answers.get_answers({ id }).then(response => {
       res.status(200).send(response)
     }).catch(err => {
       console.log(err)
       res.status(500).send(err)
-  })
+    })
   },
   incrementAnswer: async (req, res) => {
     console.log(req.body)
-    try{
+    const { aid, qid, uid } = req.body
     const db = req.app.get('db')
-    const {aid, qid, uid} = req.body
-    await db.answers.increment_vote({aid})
-    // db.answers.add_to_voted_table({qid, uid})
-    res.sendStatus(200)
-  } catch(err){
-    console.log(err)
-  }
-},
-
-  canVote: async (req, res) => {
-    const db = req.app.get('db')
-    const {uid, qid} = req.body
-    let canVote = await db.answers.already_answered({uid, qid})
-      if(canVote[0].count > 0){
-        res.status(200).send(false)
-      } else {
-        res.status(200).send(true)
+    try {
+      let canVote = await db.answers.already_answered({ uid, qid })
+      console.log(canVote)
+      if (+canVote[0].count < 1) {
+        await db.answers.increment_vote({ aid })
+        await db.answers.add_to_voted_table({ qid, uid })
+        res.sendStatus(200)
+      } else{
+        res.status(409).send('you already voted on dis one fool')
       }
+    } catch (err) {
+      console.log(err)
+    }
   },
 
-    // -----------Result Page--------------//
-    getAnswerResults: (req, res) => {
-      const db = req.app.get('db')
-      const {qid} = req.body
-      db.answers.get_answer_results({qid}).then(response => {
-        res.status(200).send(response)
-      }).catch(err => {
-        console.log(err)
-        res.status(500).send(err)
+  canVote: async (req, res) => {
+
+    const db = req.app.get('db')
+    const { uid, qid } = req.body
+    console.log(uid, qid)
+    let canVote = await db.answers.already_answered({
+      uid, qid
     })
+    if (+canVote[0].count < 1) {
+      res.status(200).send(true)
+    } else {
+      res.status(200).send(false)
     }
+  },
+
+  // -----------Result Page--------------//
+  getAnswerResults: (req, res) => {
+    const db = req.app.get('db')
+    const { qid } = req.body
+    db.answers.get_answer_results({ qid }).then(response => {
+      res.status(200).send(response)
+    }).catch(err => {
+      console.log(err)
+      res.status(500).send(err)
+    })
+  }
 
 
 }

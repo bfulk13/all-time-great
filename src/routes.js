@@ -15,7 +15,6 @@ export default(
     <Route path='/Search' component={Search}/>
     <Route path='/Vote/:id' component={Vote}/> 
     <Route path='/viewprofile/:owner_id' component={Profile}/> 
-    <Route exact path='/Profile' component={Profile}/>
     <Route path='/Result' component={Result}/>
     <Route excact path='/' component={Landing}/>
   </Switch>

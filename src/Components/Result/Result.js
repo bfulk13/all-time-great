@@ -41,11 +41,18 @@ class Results extends Component {
   }
   componentDidMount = async () => {
     await this.getResults()
-    console.log(this.props)
-    this.buildChartData()
+    // this.buildChartData()
+    console.log(1234, this.props)
   }
 
   buildChartData() {
+    // let data = this.state.data
+    // let innerData = data.datasets[0].data
+    // innerData[0] = this.state.ans1votes
+    // innerData[1] = this.state.ans2votes
+    // innerData[2] = this.state.ans3votes
+    // innerData[3] = this.state.ans4votes
+    // return data   
     let stateslice = Object.assign({}, this.state)
     stateslice.data.datasets[0].data[0] = this.state.ans4votes
     stateslice.data.datasets[0].data[1] = this.state.ans3votes
@@ -81,7 +88,6 @@ class Results extends Component {
       ans3: this.props.answersArr[2] ? this.props.answersArr[2].answer : null,
       ans4: this.props.answersArr[3] ? this.props.answersArr[3].answer : null
      })
-    // console.log(this.state.answersArr[0].ans_img)
   }
 
 

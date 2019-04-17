@@ -13,7 +13,7 @@ class Login extends Component {
         this.state = {
             username: '',
             password: '',
-            avatar: ''
+            avatar: '',
         }
     }
 
@@ -75,7 +75,7 @@ class Login extends Component {
             const { username, password } = this.state
             if(username){
                 const avatar = this.state.avatar ? this.state.avatar : `https://robohash.org/${username}`
-                let res = await axios.post(`/auth/register`, { username, password, avatar })
+                let res = await axios.post(`/auth/register`, { username, password, avatar})
                 this.props.updateUser(res.data)
             } else {
                 alert('Please enter a username and password.')

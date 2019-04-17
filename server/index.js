@@ -64,7 +64,6 @@ app.use(express.urlencoded({ limit: '50mb', extended: true}))
 
 //// AMAZON S3 ENDPOINT ////
 app.post('/api/s3', (req, res) => {
-    // console.log('hjgffhgjhfgdsgjyhg')
     const photo = req.body
     const file = photo.file.replace(/^data:image\/\w+;base64,/,'')
     const buf = new Buffer.from(file, 'base64')
@@ -76,10 +75,8 @@ app.post('/api/s3', (req, res) => {
         ACL: 'public-read'
     }
 
-    // console.log(params)
-
     S3.upload(params, (err, data) => {
-        // console.log(err, data)
+        console.log(11111, params, err)
         let response, code;
         if (err) {
             response = err;
@@ -113,6 +110,7 @@ app.post('/api/searchforquestions', qc.searchBarQuestions);
 app.get('/api/profiles', pc.getPsByLikes);
 app.get('/api/profile', pc.getProfile)
 app.get('/api/viewprofile/:id', pc.viewProfile)
+app.get('/api/allProfiles', pc.getAllProfiles)
 
 
 //// ANSWERS ENDPOINTS ////

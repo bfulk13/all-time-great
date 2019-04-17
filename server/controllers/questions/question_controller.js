@@ -35,7 +35,7 @@ module.exports = {
       const { body } = req.body
       db.questions.add_new_question(body.question, body.q_img, body.uid).then(questionInsert => {
         for(let i=0; i < body.answers.length; i++){
-          db.answers.add_new_answer(body.answers[i].text , body.answers.ans_img, questionInsert[0].qid )
+          db.answers.add_new_answer(body.answers[i].text , body.answers[i].ans_img, questionInsert[0].qid )
         }
         res.sendStatus(200)
       }).catch(err => {
@@ -55,7 +55,6 @@ module.exports = {
       const db = req.app.get('db')
       const {string} = req.body
       db.questions.get_search_bar_questions(string).then(response => {
-        console.log(response)
         res.status(200).send(response)
       }).catch(err => 
         console.log(err))

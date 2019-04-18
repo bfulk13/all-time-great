@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import axios from 'axios';
 import { Doughnut } from 'react-chartjs-2'
 import Comments from '../Comments/Comments'
-import {updateAnsArray} from '../../redux/reducer'
+import {updateAnsArray, updateQuestion} from '../../redux/reducer'
+// import { Redirect } from 'react-router-dom'
 
 class Results extends Component {
   constructor() {
@@ -34,17 +35,18 @@ class Results extends Component {
             hoverBackgroundColor: ['#ff6d83', '#65aeed', '#2fb77e', '#ffe566'],
             hoverBorderColor: '#444444',
             data: [1, 2, 3, 4]
-          },
-
+          }
         ]
-      }
-
+      },
+      toNextVote: false,
+      resultQid: 0
     }
   }
-  componentDidMount = async () => {
-    console.log(this.props)
-    await this.getResults()
+  componentDidMount(){
+    this.getResults()
     this.buildChartData()
+    this.setResultQid()
+    console.log(22222, this.props)
   }
 
   buildChartData() {
@@ -93,7 +95,37 @@ class Results extends Component {
      })
   }
 
+  setResultQid = () => {
+    this.setState({
+      resultQid: this.props.qid
+    })
+  }
 
+  handleClick = async () => {
+    const {resultQid} = this.state;
+    // console.log(resultQid)
+    await this.setState({
+      toNextVote: true,
+      resultQid: resultQid + 1
+    })
+    this.nextVote();
+  }
+
+  nextVote = () => {
+    if(this.state.toNextVote === true){
+      console.log(this.state.resultQid)
+      let questionObj = {
+        qid: this.state.resultQid,
+        question: '',
+        q_img: ''
+      }
+      
+      this.props.updateQuestion()
+      // return <Redirect to={`/Vote/${this.state.resultQid}`} />
+    } else {
+      // console.log('hit')
+    }
+  }
 
   render() {
     const winningansimg = this.props.answersArr[0] ? this.props.answersArr[0].ans_img : null
@@ -121,6 +153,9 @@ class Results extends Component {
               data={this.state.data}
               options={{ legend: false }}
             />
+          </div>
+          <div className="nextVote">
+    <i className="fas fa-chevron-right fa-5x" onClick={this.handleClick} style={{display: "absolute", float: "right", marginRight: "-40px"}}></i>
           </div>
           <div className='AnswersDiv'>
             {answers}
@@ -150,7 +185,8 @@ const mapStateToProps = (reduxState) => {
 }
 
 const mapDispatchToProps = {
-  updateAnsArray
+  updateAnsArray,
+  updateQuestion
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Results); 

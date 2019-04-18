@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import axios from 'axios';
 import { Doughnut } from 'react-chartjs-2'
 import Comments from '../Comments/Comments'
-import {updateAnsArray} from '../../redux/reducer'
-import { Redirect } from 'react-router-dom'
+import {updateAnsArray, updateQuestion} from '../../redux/reducer'
+// import { Redirect } from 'react-router-dom'
 
 class Results extends Component {
   constructor() {
@@ -114,7 +114,14 @@ class Results extends Component {
   nextVote = () => {
     if(this.state.toNextVote === true){
       console.log(this.state.resultQid)
-      return <Redirect to={`/Vote/${this.state.resultQid}`} />
+      let questionObj = {
+        qid: this.state.resultQid,
+        question: '',
+        q_img: ''
+      }
+      
+      this.props.updateQuestion()
+      // return <Redirect to={`/Vote/${this.state.resultQid}`} />
     } else {
       // console.log('hit')
     }
@@ -178,7 +185,8 @@ const mapStateToProps = (reduxState) => {
 }
 
 const mapDispatchToProps = {
-  updateAnsArray
+  updateAnsArray,
+  updateQuestion
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Results); 

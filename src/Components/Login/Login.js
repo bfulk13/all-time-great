@@ -98,6 +98,7 @@ class Login extends Component {
             this.props.reduxState.uid ? <div className='logout-wrapper'>
                 <div>
                     <p>Get Voting, {this.props.reduxState.username}!</p>
+                    {console.log(this.props)}
                     <Link to={'/Questions'} style={{ textDecoration: 'none' }} onClick={this.props.onClose}>
                         <div>Start Voting Now!</div>
                     </Link>

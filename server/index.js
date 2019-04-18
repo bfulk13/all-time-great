@@ -14,7 +14,7 @@ const ac = require('./controllers/auth_controller');
 const qc = require('./controllers/questions/question_controller');
 const pc = require('./controllers/profiles/profile_controller');
 const ansc = require('./controllers/answers/answers_controller');
-const co = require('./controllers/comments/comments_controller')
+const co = require('./controllers/comments/comments_controller');
 
 //// ENV ////
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING} = process.env;
@@ -121,5 +121,5 @@ app.post('/api/getanswerresults', ansc.getAnswerResults);
 app.post('/api/ifVoted', ansc.canVote)
 
 //// COMMENTS ENDPOINTS ////
-app.post('/api/addnewcomment', co.addNewComment);
-app.get('/api/getComments', co.getComments);
+// app.post('/api/addnewcomment', co.addNewComment);
+// app.get('/api/getComments', co.getComments);

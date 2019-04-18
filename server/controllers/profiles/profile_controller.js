@@ -38,6 +38,20 @@ module.exports = {
             console.log(err)
             res.status(500).send(err)
         })
+    },
+
+    updateAbout: (req, res) => {
+       const db = req.app.get('db')
+       const {about} = req.body
+       const {id} = req.params
+       console.log('hit')
+       console.log(req.body)
+       console.log(req.params)
+       db.profiles.update_about([about, id]).then(resp => {
+       res.status(200).send(resp)
+       }).catch(err => {
+         res.status(500).send(err)
+       })
     }
     
 }

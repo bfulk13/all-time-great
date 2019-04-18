@@ -1,16 +1,20 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {connect} from 'react-redux'
 
 class Profile extends Component{
   constructor(){
     super()
     this.state = {
-      user: {}
+      user: {},
+      about: '',
+      showAbout: true
     }
   }
 
   componentDidMount(){
     this.getProfile()
+    console.log(this.props)
   }
 
   getProfile = async () => {
@@ -25,6 +29,26 @@ class Profile extends Component{
 
   }
 
+  updateAbout = () => {
+    let body={about: this.state.about}
+    let id = this.props.reduxState.uid
+    axios.put(`/api/aboutMe/${id}`, body)
+    this.toggleShowAbout()
+  }
+
+  toggleShowAbout = () => {
+    this.setState({
+      showAbout: !this.state.showAbout
+    })
+  }
+
+  handleAbout = (e) => {
+    this.setState({
+      about: e
+    })
+  }
+
+
   render(){
     // console.log(this.state)
     const {user} = this.state
@@ -33,8 +57,19 @@ class Profile extends Component{
         <div >
           <h3>{user.username}</h3>
           <h3>{user.sum}</h3>
-          <img src={user.avatar} alt="avatar"/>
+          <img src={user.avatar} alt="avatar" style={{width:'300px', width:'300px'}} />
           <p>{user.about}</p>
+          {this.state.showAbout ? <div>
+            <button onClick={this.toggleShowAbout} style={{border:'1px solid black'}}>About Me</button>
+          </div> : 
+          <div>
+             <input
+               value={this.state.about}
+               onChange={(e)=>this.handleAbout(e.target.value)}/>
+              <button onClick={this.updateAbout} style={{border:'1px solid black'}}>Update</button>
+          </div>
+          }
+        
         </div>
         
       </div>
@@ -42,4 +77,10 @@ class Profile extends Component{
   }
 } 
 
-export default Profile;
+const mapStateToProps = (reduxState) => {
+    return {
+      reduxState
+    }
+}
+
+export default connect(mapStateToProps, null)(Profile)

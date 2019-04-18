@@ -3,6 +3,7 @@ import './Result.css'
 import { connect } from 'react-redux'
 import axios from 'axios';
 import { Doughnut } from 'react-chartjs-2'
+import Comments from '../Comments/Comments'
 import {updateAnsArray} from '../../redux/reducer'
 
 class Results extends Component {
@@ -123,6 +124,7 @@ class Results extends Component {
           </div>
           <div className='AnswersDiv'>
             {answers}
+            <Comments/>
           </div>
 
 

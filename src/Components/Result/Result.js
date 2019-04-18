@@ -77,7 +77,6 @@ class Results extends Component {
       uid: this.props.uid
     }
     let res = await axios.post('/api/getanswerresults', body)
-    // console.log(124, res)
     await this.setState({
       answersArr: res.data,
       question: this.props.question

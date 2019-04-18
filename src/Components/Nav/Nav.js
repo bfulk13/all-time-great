@@ -36,7 +36,6 @@ class Nav extends Component {
 
 
     render() {
-        console.log(this.props)
         const { open } = this.state
         return (
             <div className='nav-wrapper'>

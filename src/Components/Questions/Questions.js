@@ -119,6 +119,16 @@ class Questions extends Component {
       alert('Only four answers please!')
     }
   }
+  removeAnswerJSX = () => {
+    if (this.state.answers.length > 2) {
+      
+      this.setState(prevState => ({
+        answers: prevState.answers.slice(0, prevState.answers.length-1)
+      }))
+    } else {
+      alert('Needs at least 2 answers please')
+    }
+  }
 
 
   // event handler for file input (s3)
@@ -253,7 +263,11 @@ class Questions extends Component {
             <input placeholder="Question" className="question-input" type="text" onChange={(e) => { this.updateQuestion(e.target.value) }} />
             <input className="file-input" type="file" id="real" onChange={this.handlePhotoQuestion} />
             {inputBoxes}
-            <i className="fas fa-plus-circle fa-2x" onClick={this.buildAnswersJSX}></i>
+            <div>
+              <i className="fas fa-plus-circle fa-2x" onClick={this.buildAnswersJSX}></i>
+             <i className="fas fa-minus-circle fa-2x" onClick={this.removeAnswerJSX}></i>
+            </div>
+            
             <button type="submit" onClick={this.createNewQuestion}>Submit</button>
           </div>
         </Modal>

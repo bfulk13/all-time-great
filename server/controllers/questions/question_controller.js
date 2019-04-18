@@ -20,7 +20,7 @@ module.exports = {
   }
     },
     getQ: (req, res) => {
-      console.log(1111, req.params)
+      // console.log(1111, req.params)
       try{
         let {id} = req.params
         id = parseInt(id)

@@ -12,12 +12,12 @@ module.exports = {
     })
   },
   incrementAnswer: async (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
     const { aid, qid, uid } = req.body
     const db = req.app.get('db')
     try {
       let canVote = await db.answers.already_answered({ uid, qid })
-      console.log(canVote)
+      // console.log(canVote)
       if (+canVote[0].count < 1) {
         await db.answers.increment_vote({ aid })
         await db.answers.add_to_voted_table({ qid, uid })
@@ -34,7 +34,7 @@ module.exports = {
 
     const db = req.app.get('db')
     const { uid, qid } = req.body
-    console.log(uid, qid)
+    // console.log(uid, qid)
     let canVote = await db.answers.already_answered({
       uid, qid
     })

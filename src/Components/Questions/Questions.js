@@ -51,7 +51,7 @@ class Questions extends Component {
   componentDidMount() {
     this.getAllQuestions()
     this.getUserVotes()
-    // console.log(this.props)
+    console.log(33333, this.props)
   }
   getUserVotes = () => {
     axios.get('/api/getuservotes').then(res => {

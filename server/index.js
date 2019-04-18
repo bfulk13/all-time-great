@@ -77,7 +77,7 @@ app.post('/api/s3', (req, res) => {
     }
 
     S3.upload(params, (err, data) => {
-        console.log(11111, params, err)
+        // console.log(11111, params, err)
         let response, code;
         if (err) {
             response = err;

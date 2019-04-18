@@ -18,7 +18,6 @@ class Profiles extends Component {
 
     getAllProfiles = () => {
        axios.get('/api/allProfiles').then(res => {
-        //    console.log(res)
            this.setState({
                profiles: res.data
            })

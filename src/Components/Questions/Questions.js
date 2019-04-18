@@ -51,7 +51,6 @@ class Questions extends Component {
   componentDidMount() {
     this.getAllQuestions()
     this.getUserVotes()
-    // console.log(this.props)
   }
   getUserVotes = () => {
     axios.get('/api/getuservotes').then(res => {
@@ -155,7 +154,7 @@ class Questions extends Component {
   handlePhotoQuestion = async (event) => {
     const reader = new FileReader();
     const file = event.target.files[0];
-    console.log(1234, file)
+
     reader.onload = async photo => {
       await this.setState({
         file: photo.target.result,
@@ -216,6 +215,7 @@ class Questions extends Component {
       })
       this.props.history.push(`/Vote/${this.props.reduxState.qid}`)
     } else if (canVote.data === false) {
+      this.props.updateQuestion(obj)
       this.setState({
         question: this.props.question,
         answers: this.props.answers,

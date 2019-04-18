@@ -45,7 +45,7 @@ class Nav extends Component {
                     </Link>
                     <p className='logo'>G.O.A.T.</p>
                     <ul>
-                        <Link to={`/viewprofile/${this.props.reduxState.uid}`} style={{ textDecoration: 'none' }}>
+                        <Link to={`/profile/${this.props.reduxState.uid}`} style={{ textDecoration: 'none' }}>
                             <li><i className="far fa-user user-icon"></i></li>
                         </Link>
                         <li><Link to={'/Search'} style={{ textDecoration: 'none' }}><i className="fas fa-search search-icon"></i></Link></li>

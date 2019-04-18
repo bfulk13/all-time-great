@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './Landing.css'
 import { Link } from 'react-router-dom'
-import Axios from 'axios';
+import axios from 'axios';
+import {connect} from 'react-redux'
+import {updateQuestion, updateAnsArray} from '../../redux/reducer'
 
 
 class Landing extends Component {
@@ -15,30 +17,54 @@ class Landing extends Component {
   componentDidMount() {
     this.getTrendingQuestions()
     this.getPopularProfiles()
+    console.log(234, this.props)
   }
   getTrendingQuestions = () => {
-    Axios.get('/api/questions').then(res => {
+    axios.get('/api/questions').then(res => {
       this.setState({
         trendingQuestionsArr: res.data
       })
     })
   }
   getPopularProfiles = () => {
-    Axios.get('/api/profiles').then(res => {
+    axios.get('/api/profiles').then(res => {
       this.setState({
         popularProfilesArr: res.data
       })
     })
   }
+  CheckVotedOrNot = async (obj) => {
+    await this.props.updateQuestion(obj)
+    console.log(333, obj)
+    let body = { qid: obj.qid, uid: this.props.reduxState.uid }
+    let canVote = await axios.post('/api/ifVoted', body)
+    console.log('canvote', canVote)
+    if (canVote.data === true) {
+      let quest = await axios.get(`/api/question/${obj.qid}`)
+      let res = await axios.get(`/api/getanswersforquestion/${obj.qid}`)
+      this.props.updateAnsArray(res.data)
+      this.setState({
+        question: quest.data[0],
+        answers: res.data,
+      })
+      this.props.history.push(`/Vote/${this.props.reduxState.qid}`)
+    } else if (canVote.data === false) {
+      this.setState({
+        question: this.props.question,
+        answers: this.props.answers,
+        qid: this.props.qid
+      })
+      this.props.history.push('/Result')
+    }
+  }
   render() {
     const trendingQuestions = this.state.trendingQuestionsArr.map(obj => {
       return (
-        <Link to={`/Vote/${obj.qid}`} style={{ textDecoration: 'none' }}>
-          <div key={obj.qid} className='question'>
+          <div key={obj.qid} className='question' onClick={() => this.CheckVotedOrNot(obj)}>
             <img src={obj.q_img} alt="" />
             <p>{obj.question}</p>
           </div>
-        </Link>
+      
       )
     })
     const popularProfiles = this.state.popularProfilesArr.map(obj => {
@@ -65,7 +91,7 @@ class Landing extends Component {
           {trendingQuestions}
         </div>
         <div className='pop-profiles-wrapper'>
-          <p className='landing-title'>Popular Profiles</p>
+          <Link to="/Profiles" style={{ textDecoration: 'none' }}><p className='landing-title'>Popular Profiles</p></Link>
           {popularProfiles}
         </div>
       </div>
@@ -73,5 +99,15 @@ class Landing extends Component {
   }
 }
 
-//hope this works!
-export default Landing;
+const mapStateToProps = (reduxState) => {
+  return {
+    reduxState
+  }
+}
+const mapDispatchToProps = {
+  updateQuestion,
+  updateAnsArray
+ 
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Landing);

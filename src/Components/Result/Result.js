@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import axios from 'axios';
 import { Doughnut } from 'react-chartjs-2'
 import Comments from '../Comments/Comments'
+import {updateAnsArray} from '../../redux/reducer'
 
 class Results extends Component {
   constructor() {
@@ -42,8 +43,8 @@ class Results extends Component {
   }
   componentDidMount = async () => {
     await this.getResults()
-    // this.buildChartData()
-    console.log(1234, this.props)
+    this.buildChartData()
+    console.log(22222, this.props)
   }
 
   buildChartData() {
@@ -75,19 +76,21 @@ class Results extends Component {
       uid: this.props.uid
     }
     let res = await axios.post('/api/getanswerresults', body)
+    console.log(124, res)
     await this.setState({
       answersArr: res.data,
       question: this.props.question
     })
+    this.props.updateAnsArray(res.data)
     this.setState({
-      ans1votes: this.props.answersArr[0].vote,
-      ans2votes: this.props.answersArr[1].vote,
-      ans3votes: this.props.answersArr[2] ? this.props.answersArr[2].vote: null ,
-      ans4votes: this.props.answersArr[3] ? this.props.answersArr[3].vote: null,
-      ans1: this.props.answersArr[0].answer,
-      ans2: this.props.answersArr[1].answer,
-      ans3: this.props.answersArr[2] ? this.props.answersArr[2].answer : null,
-      ans4: this.props.answersArr[3] ? this.props.answersArr[3].answer : null
+      ans1votes: this.state.answersArr[0].vote,
+      ans2votes: this.state.answersArr[1].vote,
+      ans3votes: this.state.answersArr[2] ? this.state.answersArr[2].vote: null ,
+      ans4votes: this.state.answersArr[3] ? this.state.answersArr[3].vote: null,
+      ans1: this.state.answersArr[0].answer,
+      ans2: this.state.answersArr[1].answer,
+      ans3: this.state.answersArr[2] ? this.state.answersArr[2].answer : null,
+      ans4: this.state.answersArr[3] ? this.state.answersArr[3].answer : null
      })
   }
 
@@ -147,4 +150,8 @@ const mapStateToProps = (reduxState) => {
   }
 }
 
-export default connect(mapStateToProps)(Results); 
+const mapDispatchToProps = {
+  updateAnsArray
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Results); 

@@ -17,7 +17,6 @@ class Landing extends Component {
   componentDidMount() {
     this.getTrendingQuestions()
     this.getPopularProfiles()
-    console.log(234, this.props)
   }
   getTrendingQuestions = () => {
     axios.get('/api/questions').then(res => {
@@ -35,10 +34,8 @@ class Landing extends Component {
   }
   CheckVotedOrNot = async (obj) => {
     await this.props.updateQuestion(obj)
-    console.log(333, obj)
     let body = { qid: obj.qid, uid: this.props.reduxState.uid }
     let canVote = await axios.post('/api/ifVoted', body)
-    console.log('canvote', canVote)
     if (canVote.data === true) {
       let quest = await axios.get(`/api/question/${obj.qid}`)
       let res = await axios.get(`/api/getanswersforquestion/${obj.qid}`)

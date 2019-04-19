@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"version":3,"sourceRoot":"","sources":[],"names":[],"mappings":"","file":"Profile.css"}
+=======
+{"version":3,"sourceRoot":"","sources":["inputProfile.scss"],"names":[],"mappings":"AAEA;EACI;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AACA;EACI;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAEJ;EACI;EACA;EACA;EACA;EACA;EACA;;AAGJ;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;AAEF;EACI;EACA","file":"Profile.css"}
+>>>>>>> 7a8127cd30a7e9c9fcaa7ecda7b01c3abb0da14b

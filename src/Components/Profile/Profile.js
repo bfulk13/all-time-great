@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux'
-
+import './Profile.css'
 class Profile extends Component{
   constructor(){
     super()
@@ -44,7 +44,7 @@ class Profile extends Component{
 
   handleAbout = (e) => {
     this.setState({
-      about: e
+      about: e.target.value
     })
   }
 
@@ -62,11 +62,12 @@ class Profile extends Component{
           {this.state.showAbout ? <div>
             <button onClick={this.toggleShowAbout} style={{border:'1px solid black'}}>About Me</button>
           </div> : 
-          <div>
+          <div className='my-modal'>
+            <button className='close-x' onClick={this.toggleShowAbout}>X</button>
              <input
                value={this.state.about}
-               onChange={(e)=>this.handleAbout(e.target.value)}/>
-              <button onClick={this.updateAbout} style={{border:'1px solid black'}}>Update</button>
+               onChange={this.handleAbout}/>
+              <button className='update-btn' onClick={this.updateAbout}>Update</button>
           </div>
           }
         

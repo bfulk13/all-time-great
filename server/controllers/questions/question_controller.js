@@ -72,4 +72,28 @@ module.exports = {
     }).catch(err =>
       console.log(err))
   },
+  canLike: async (req, res) => {
+    const db = req.app.get('db')
+    const { uid, qid } = req.body
+    let canLike = await db.questions.already_liked({uid, qid})
+    console.log('hit', canLike)
+    if (+canLike[0].count < 1){
+      res.status(200).send(true)
+    } else{
+      res.status(200).send(false)
+    }
+  },
+  incrementLike: async (req, res) => {
+    const {qid, uid} = req.body
+    const db = req.app.get('db')
+    try {
+        await db.questions.increment_liked({qid})
+        await db.voted.add_to_voted({qid, uid})
+        res.sendStatus(200)
+      } catch (err) {
+      console.log(err)
+    }
+
+  }
 }
+

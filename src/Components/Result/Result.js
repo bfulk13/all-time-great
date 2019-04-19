@@ -46,10 +46,10 @@ class Results extends Component {
   async componentDidMount() {
     await this.getResults()
     this.buildChartData()
-    this.getUnansweredQs()
+    await this.getUnansweredQs()
     this.setResultQid()
     this.updateChartyChart()
-    // console.log(22222, this.state)
+    console.log(22222, this.state.unanswered)
   }
 
   buildChartData() {
@@ -114,7 +114,7 @@ class Results extends Component {
 
   getUnansweredQs = async () => {
     let res = await axios.get(`/api/unansweredQuestions`);
-    console.log(3434343, res)
+    console.log(3434343, res.data)
     await this.setState({
       unanswered: res.data
     })
@@ -127,16 +127,22 @@ class Results extends Component {
   }
 
   handleClick = async () => {
-    let {resultQid} = this.state;
-    
-    this.nextVote();
+    await this.getUnansweredQs();
+    if(this.state.unanswered.length > 0){
+      await this.setState({
+        toNextVote: true
+      })    
+      this.nextVote();
+    } else {
+      alert('There are no more questions to vote on at this time, go post some more!')
+    }
   }
 
   nextVote = async () => {
     if (this.state.toNextVote === true) {
-      // let res = await axios.get(`/api/question/${this.state.unanswered}`)
+      let res = await axios.get(`/api/question/${this.state.unanswered[0].qid}`)
       let body = {
-        // qid: this.state.resultQid,
+        qid: this.state.unanswered[0].qid,
         uid: this.props.uid
       }
       let resp = await axios.post('/api/getanswerresults', body)
@@ -146,12 +152,12 @@ class Results extends Component {
       })
       this.props.updateAnsArray(resp.data)
       let questionObj = {
-        // qid: this.state.resultQid,
-        // question: res.data[0].question,
-        // q_img: res.data[0].q_img
+        qid: this.state.unanswered[0].qid,
+        question: res.data[0].question,
+        q_img: res.data[0].q_img
       }
       this.props.updateQuestion(questionObj)
-      // this.props.history.push(`/Vote/${this.state.resultQid}`)
+      this.props.history.push(`/Vote/${this.state.unanswered[0].qid}`)
     }
   }
     render() {

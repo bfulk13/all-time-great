@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import './Result.css'
 import { connect } from 'react-redux'
 import axios from 'axios';
@@ -51,6 +51,7 @@ class Results extends Component {
     this.updateChartyChart()
     console.log(22222, this.state.unanswered)
   }
+
 
   buildChartData() {
     // let data = this.state.data

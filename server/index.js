@@ -123,5 +123,5 @@ app.post('/api/getanswerresults', ansc.getAnswerResults);
 app.post('/api/ifVoted', ansc.canVote)
 
 //// COMMENTS ENDPOINTS ////
-// app.post('/api/addnewcomment', co.addNewComment);
-// app.get('/api/getComments', co.getComments);
+app.post('/api/addnewcomment', co.addNewComment);
+app.post('/api/getComments', co.getComments);

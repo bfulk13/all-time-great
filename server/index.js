@@ -103,6 +103,7 @@ app.get('/api/questions', qc.getQsByVotes);
 app.get('/api/question/:id', qc.getQ);
 app.get('/api/getallquestions', qc.getAllQs);
 app.get('/api/getuservotes', qc.getUserVotes);
+app.get('/api/unansweredQuestions', qc.getUnansweredQuestions);
 app.post('/api/addnewquestion', qc.addNewQ);
 app.post('/api/searchforquestions', qc.searchBarQuestions);
 

@@ -32,6 +32,7 @@
   font-size: 22px;
   margin-left: 10px;
   cursor: pointer;
+  color: #66FCF1;
 }
 .nav-wrapper nav {
   display: flex;
@@ -50,7 +51,7 @@
 .nav-wrapper nav ul li .login-nav {
   display: flex;
   justify-content: center;
-  border: 3px solid #66FCF1;
+  border: 2px solid #66FCF1;
   border-radius: 50%;
   height: 30px;
   width: 54px;
@@ -61,11 +62,12 @@
   margin-left: 10px;
   margin-right: 10px;
   cursor: pointer;
+  letter-spacing: 1px;
 }
 .nav-wrapper nav ul li .logout-nav {
   display: flex;
   justify-content: center;
-  border: 3px solid #66FCF1;
+  border: 2px solid #66FCF1;
   border-radius: 50%;
   height: 30px;
   width: 54px;
@@ -76,6 +78,7 @@
   margin-left: 10px;
   margin-right: 10px;
   cursor: pointer;
+  letter-spacing: 1px;
 }
 .nav-wrapper .login-modal {
   background-color: #45A29E;

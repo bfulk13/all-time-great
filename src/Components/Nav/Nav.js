@@ -41,14 +41,14 @@ class Nav extends Component {
             <div className='nav-wrapper'>
                 <nav>
                     <Link to={'/'}>
-                        <img src='https://files.slack.com/files-pri/T039C2PUY-FHHBAQ5EV/goat.png' alt='dabbing-goat' />
+                        <img src={require('./images/goat.png')} alt='dabbing-goat' />
                     </Link>
                     <p className='logo'>G.O.A.T.</p>
                     <ul>
                         <Link to={`/profile/${this.props.reduxState.uid}`} style={{ textDecoration: 'none' }}>
                             <li><i className="far fa-user user-icon"></i></li>
                         </Link>
-                        <li><Link to={'/Search'} style={{ textDecoration: 'none' }}><i className="fas fa-search search-icon"></i></Link></li>
+                        <li><Link to={'/Search'} style={{ textDecoration:'none' }}><i className="fas fa-search search-icon"></i></Link></li>
                         <li>
                             {this.props.reduxState.uid ?
                                 <button onClick={this.logout} className='logout-nav'>Logout</button> :

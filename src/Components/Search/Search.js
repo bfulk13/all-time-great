@@ -42,7 +42,7 @@ class Search extends Component {
     return (
       <div className='Search'>
         <form action="">
-            <input type="text" placeholder="Search For Me" onChange={(e) => this.updateSearchBar(e.target.value)}/></form>
+            <input type="text" placeholder="Search A Question" onChange={(e) => this.updateSearchBar(e.target.value)}/></form>
             <button onClick={() => this.searchForStuff(this.state.searchbar)}>Search</button>
         <div className='SearchMainDiv'>
               

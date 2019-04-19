@@ -77,7 +77,7 @@ app.post('/api/s3', (req, res) => {
     }
 
     S3.upload(params, (err, data) => {
-        console.log(11111, params, err)
+        // console.log(11111, params, err)
         let response, code;
         if (err) {
             response = err;
@@ -103,6 +103,7 @@ app.get('/api/questions', qc.getQsByVotes);
 app.get('/api/question/:id', qc.getQ);
 app.get('/api/getallquestions', qc.getAllQs);
 app.get('/api/getuservotes', qc.getUserVotes);
+app.get('/api/unansweredQuestions', qc.getUnansweredQuestions);
 app.post('/api/addnewquestion', qc.addNewQ);
 app.post('/api/searchforquestions', qc.searchBarQuestions);
 
@@ -112,6 +113,7 @@ app.get('/api/profiles', pc.getPsByLikes);
 app.get('/api/profile/:id', pc.getProfile)
 app.get('/api/viewprofile/:id', pc.viewProfile)
 app.get('/api/allProfiles', pc.getAllProfiles)
+app.put('/api/aboutMe/:id', pc.updateAbout)
 
 
 //// ANSWERS ENDPOINTS ////

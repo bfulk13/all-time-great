@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import axios from 'axios';
 import { Doughnut } from 'react-chartjs-2'
 import Comments from '../Comments/Comments'
-import {updateAnsArray} from '../../redux/reducer'
+import { updateAnsArray, updateQuestion } from '../../redux/reducer'
+import { arrayParser } from 'pg-types';
 
 class Results extends Component {
   constructor() {
@@ -22,7 +23,7 @@ class Results extends Component {
       data: {
         labels: ['', '', '', ''],
         options: [
-          {legend: {display: true, position: 'left'}},  
+          { legend: { display: true, position: 'left' } },
 
         ],
         datasets: [
@@ -34,17 +35,21 @@ class Results extends Component {
             hoverBackgroundColor: ['#ff6d83', '#65aeed', '#2fb77e', '#ffe566'],
             hoverBorderColor: '#444444',
             data: [1, 2, 3, 4]
-          },
-
+          }
         ]
-      }
-
+      },
+      toNextVote: false,
+      resultQid: 0,
+      unanswered: []
     }
   }
-  componentDidMount = async () => {
-    console.log(this.props)
+  async componentDidMount() {
     await this.getResults()
     this.buildChartData()
+    await this.getUnansweredQs()
+    this.setResultQid()
+    this.updateChartyChart()
+    console.log(22222, this.state.unanswered)
   }
 
 
@@ -71,6 +76,20 @@ class Results extends Component {
     })
   }
 
+  updateChartyChart = async () => {
+    let arrCopy = Object.assign([], this.state.data.datasets[0].data)
+    let biggerArrCopy = Object.assign([], this.state.data)
+    // console.log(9999, this.props)
+    arrCopy[0] = this.props.answersArr[0].vote
+    arrCopy[1] = this.props.answersArr[1].vote
+    arrCopy[2] = this.props.answersArr[2] ? this.props.answersArr[2].vote : null
+    arrCopy[3] = this.props.answersArr[3] ? this.props.answersArr[3].vote : null
+    biggerArrCopy.datasets.data = arrCopy
+    this.setState({
+      data: biggerArrCopy
+    })
+  }
+
   getResults = async () => {
     let body = {
       qid: this.props.qid,
@@ -81,77 +100,126 @@ class Results extends Component {
       answersArr: res.data,
       question: this.props.question
     })
-    this.props.updateAnsArray(res.data)
+   await this.props.updateAnsArray(res.data)
     this.setState({
       ans1votes: this.state.answersArr[0].vote,
       ans2votes: this.state.answersArr[1].vote,
-      ans3votes: this.state.answersArr[2] ? this.state.answersArr[2].vote: null ,
-      ans4votes: this.state.answersArr[3] ? this.state.answersArr[3].vote: null,
+      ans3votes: this.state.answersArr[2] ? this.state.answersArr[2].vote : null,
+      ans4votes: this.state.answersArr[3] ? this.state.answersArr[3].vote : null,
       ans1: this.state.answersArr[0].answer,
       ans2: this.state.answersArr[1].answer,
       ans3: this.state.answersArr[2] ? this.state.answersArr[2].answer : null,
       ans4: this.state.answersArr[3] ? this.state.answersArr[3].answer : null
-     })
+    })
   }
 
+  getUnansweredQs = async () => {
+    let res = await axios.get(`/api/unansweredQuestions`);
+    console.log(3434343, res.data)
+    await this.setState({
+      unanswered: res.data
+    })
+  }
 
+  setResultQid = async () => {
+    this.setState({
+      resultQid: this.props.qid
+    })
+  }
 
-  render() {
-    const winningansimg = this.props.answersArr[0] ? this.props.answersArr[0].ans_img : null
-    const answers = this.props.answersArr.map(ans => {
-    
+  handleClick = async () => {
+    await this.getUnansweredQs();
+    if(this.state.unanswered.length > 0){
+      await this.setState({
+        toNextVote: true
+      })    
+      this.nextVote();
+    } else {
+      alert('There are no more questions to vote on at this time, go post some more!')
+    }
+  }
+
+  nextVote = async () => {
+    if (this.state.toNextVote === true) {
+      let res = await axios.get(`/api/question/${this.state.unanswered[0].qid}`)
+      let body = {
+        qid: this.state.unanswered[0].qid,
+        uid: this.props.uid
+      }
+      let resp = await axios.post('/api/getanswerresults', body)
+      await this.setState({
+        answersArr: resp.data,
+        question: this.props.question
+      })
+      this.props.updateAnsArray(resp.data)
+      let questionObj = {
+        qid: this.state.unanswered[0].qid,
+        question: res.data[0].question,
+        q_img: res.data[0].q_img
+      }
+      this.props.updateQuestion(questionObj)
+      this.props.history.push(`/Vote/${this.state.unanswered[0].qid}`)
+    }
+  }
+    render() {
+      const winningansimg = this.props.answersArr[0] ? this.props.answersArr[0].ans_img : null
+      const answers = this.props.answersArr.map(ans => {
+        return (
+          <div className='Answers'>
+            <img src={ans.ans_img} alt="" className='ResultImg' />
+            <div className='paragraph'>
+              <p>{ans.vote}</p>
+              <p>{ans.answer}</p>
+            </div>
+          </div>
+        )
+      })
       return (
-        <div className='Answers'>
-          <img src={ans.ans_img} alt="" className='ResultImg' />
-          <div className='paragraph'>
-            <p>{ans.vote}</p>
-            <p>{ans.answer}</p>
+
+        <div className='Results'>
+          <h1>{this.props.question}</h1>
+          <div className='TopHalfDiv'>
+            <div className='ChartJsStuff'>
+              <img className='QuestionImage' src={winningansimg} alt="" />
+              <Doughnut
+                className='Chart'
+                data={this.state.data}
+                options={{ legend: false }}
+              />
+            </div>
+            <div className="nextVote">
+              <i className="fas fa-chevron-right fa-5x" onClick={this.handleClick} style={{ display: "absolute", float: "right", marginRight: "-40px" }}></i>
+            </div>
+            <div className='AnswersDiv'>
+              {answers}
+              <Comments />
+            </div>
+
+
+
+          </div>
+
+          <div className='ResponsesDiv'>
+
           </div>
         </div>
       )
-    })
-    return (
-
-      <div className='Results'>
-        <h1>{this.props.question}</h1>
-        <div className='TopHalfDiv'>
-          <div className='ChartJsStuff'>
-            <img className='QuestionImage' src={winningansimg} alt="" />
-            <Doughnut
-              className='Chart'
-              data={this.state.data}
-              options={{ legend: false }}
-            />
-          </div>
-          <div className='AnswersDiv'>
-            {answers}
-            <Comments/>
-          </div>
-
-
-
-        </div>
-
-        <div className='ResponsesDiv'>
-
-        </div>
-      </div>
-    )
+    }
   }
-}
 
-const mapStateToProps = (reduxState) => {
-  return {
-    qid: reduxState.qid,
-    uid: reduxState.uid,
-    q_img: reduxState.q_img,
-    question: reduxState.question,
-    answersArr: reduxState.ansArr
+  const mapStateToProps = (reduxState) => {
+    return {
+      qid: reduxState.qid,
+      uid: reduxState.uid,
+      q_img: reduxState.q_img,
+      question: reduxState.question,
+      answersArr: reduxState.ansArr
+    }
   }
-}
 
-const mapDispatchToProps = {
-  updateAnsArray
-}
+  const mapDispatchToProps = {
+    updateAnsArray,
+    updateQuestion
+  }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Results); 
+  export default connect(mapStateToProps, mapDispatchToProps)(Results); 

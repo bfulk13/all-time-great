@@ -1,5 +1,5 @@
 body {
-  background: grey;
+  background: #0B0C10;
 }
 
 .landing-intro {
@@ -41,23 +41,23 @@ body {
   margin: 20px auto;
   padding: 20px;
   font-family: "Permanent Marker", cursive;
-  border: 3px solid white;
+  border: 3px solid #C5C6C7;
   border-radius: 5px;
-  background: black;
+  background: #0B0C10;
   width: 200px;
   height: 30px;
   color: white;
   letter-spacing: 1px;
   font-size: 16px;
   text-decoration: none;
-  box-shadow: 0px 0px 4px 4px black;
-  text-shadow: 2px 2px 10px #95f931;
+  box-shadow: 1px 2px 5px 2px #66FCF1;
+  text-shadow: 1px 2px 10px #66FCF1;
 }
 
 .questions-wrapper {
-  background-color: black;
-  border-top: 4px ridge white;
-  border-bottom: 4px ridge white;
+  background-color: #0B0C10;
+  border-top: 4px ridge #C5C6C7;
+  border-bottom: 4px ridge #C5C6C7;
   height: 150px;
   margin-left: 0px auto;
   display: flex;
@@ -65,21 +65,21 @@ body {
 }
 
 .question {
-  background-color: black;
-  border: 2px solid white;
+  background-color: #0B0C10;
+  border: 2px solid #C5C6C7;
   border-radius: 5px;
   display: flex;
-  width: 250px;
+  width: 300px;
   height: 75px;
   padding: 10px;
   margin: 25px;
   align-items: center;
-  box-shadow: 0px 0px 8px 8px #95f931;
+  box-shadow: 0px 0px 8px 8px #66FCF1;
 }
 .question img {
   width: 80px;
   height: 80px;
-  border: 2px solid white;
+  border: 2px solid #C5C6C7;
   border-radius: 100%;
   margin-left: 5px;
 }
@@ -96,32 +96,34 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  width: 350px;
+  margin: 0px auto;
 }
 
 .pop-profile-wrapper {
-  border: 3px solid white;
+  border: 3px solid #C5C6C7;
   border-radius: 10px;
   width: 120px;
   height: 150px;
   justify-content: center;
-  background-color: black;
+  background-color: #0B0C10;
   margin: 20px;
-  box-shadow: 0px 0px 5px 5px black;
+  box-shadow: 1px 1px 5px 2px #66FCF1;
 }
 .pop-profile-wrapper img {
   margin-top: 10px;
   width: 50px;
   height: 50px;
-  border: 3px solid white;
+  border: 3px solid #C5C6C7;
   border-radius: 100%;
-  background-color: #95f931;
+  background-color: #66FCF1;
 }
 .pop-profile-wrapper p {
   font-family: "Permanent Marker", cursive;
   color: white;
   font-size: 15px;
   letter-spacing: 1px;
-  text-shadow: 1px 1px 5px #95f931;
+  text-shadow: 1px 1px 5px #66FCF1;
 }
 
-/* # sourceMappingURL=Landing.css.map */
+/*# sourceMappingURL=Landing.css.map */

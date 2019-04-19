@@ -54,13 +54,13 @@ class Profile extends Component{
     const {user} = this.state
     return(
      <div className='Profile'> 
-        <div >
-          <h3>{user.username}</h3>
-          <h3>{user.sum}</h3>
-          <img src={user.avatar} alt="avatar" style={{width:'300px', width:'300px'}} />
-          <p>{user.about}</p>
+        <div className='user-info'>
+          <h3 className='user-username'>{user.username}</h3>
+          <h3 className='user-votes'>{user.sum}</h3>
+          <img src={user.avatar} alt="avatar" className='user-avatar' />
+          <p className='user-about'>{user.about}</p>
           {this.state.showAbout ? <div>
-            <button onClick={this.toggleShowAbout} style={{border:'1px solid black'}}>About Me</button>
+            <button onClick={this.toggleShowAbout} className='about-btn'>About Me</button>
           </div> : 
           <div className='my-modal'>
             <button className='close-x' onClick={this.toggleShowAbout}>X</button>

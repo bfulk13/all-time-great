@@ -42,8 +42,8 @@ class Results extends Component {
       resultQid: 0
     }
   }
-  componentDidMount() {
-    this.getResults()
+  async componentDidMount() {
+    await this.getResults()
     this.buildChartData()
     this.setResultQid()
     this.updateChartyChart()
@@ -75,13 +75,13 @@ class Results extends Component {
   }
 
   updateChartyChart = async () => {
-    let arrCopy = {...this.state.data.datasets.data }
-    let biggerArrCopy = {...this.state.data}
-    // console.log(9999, arrCopy)
-    arrCopy[0] = this.props.arrCopy[0].vote
-    arrCopy[1] = this.props.arrCopy[1].vote
-    arrCopy[2] = this.props.arrCopy[2].vote
-    arrCopy[3] = this.props.arrCopy[3].vote
+    let arrCopy = Object.assign([], this.state.data.datasets[0].data)
+    let biggerArrCopy = Object.assign([], this.state.data)
+    console.log(9999, this.props)
+    arrCopy[0] = this.props.answersArr[0].vote
+    arrCopy[1] = this.props.answersArr[1].vote
+    arrCopy[2] = this.props.answersArr[2] ? this.props.answersArr[2].vote : null
+    arrCopy[3] = this.props.answersArr[3] ? this.props.answersArr[3].vote : null
     biggerArrCopy.datasets.data = arrCopy
     this.setState({
       data: biggerArrCopy
@@ -98,7 +98,7 @@ class Results extends Component {
       answersArr: res.data,
       question: this.props.question
     })
-    this.props.updateAnsArray(res.data)
+   await this.props.updateAnsArray(res.data)
     this.setState({
       ans1votes: this.state.answersArr[0].vote,
       ans2votes: this.state.answersArr[1].vote,

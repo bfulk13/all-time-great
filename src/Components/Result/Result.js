@@ -39,16 +39,17 @@ class Results extends Component {
         ]
       },
       toNextVote: false,
-      resultQid: 0
+      resultQid: 0,
+      unanswered: []
     }
   }
   async componentDidMount() {
     await this.getResults()
     this.buildChartData()
+    this.getUnansweredQs()
     this.setResultQid()
     this.updateChartyChart()
-    console.log(22222, this.state)
-
+    // console.log(22222, this.state)
   }
 
   buildChartData() {
@@ -77,7 +78,7 @@ class Results extends Component {
   updateChartyChart = async () => {
     let arrCopy = Object.assign([], this.state.data.datasets[0].data)
     let biggerArrCopy = Object.assign([], this.state.data)
-    console.log(9999, this.props)
+    // console.log(9999, this.props)
     arrCopy[0] = this.props.answersArr[0].vote
     arrCopy[1] = this.props.answersArr[1].vote
     arrCopy[2] = this.props.answersArr[2] ? this.props.answersArr[2].vote : null
@@ -111,28 +112,31 @@ class Results extends Component {
     })
   }
 
-  setResultQid = () => {
+  getUnansweredQs = async () => {
+    let res = await axios.get(`/api/unansweredQuestions`);
+    console.log(3434343, res)
+    await this.setState({
+      unanswered: res.data
+    })
+  }
+
+  setResultQid = async () => {
     this.setState({
       resultQid: this.props.qid
     })
   }
 
   handleClick = async () => {
-    const { resultQid } = this.state;
-    let res = await axios.get(`/api/unansweredQuestions`);
-    console.log(res)
-    await this.setState({
-      toNextVote: true,
-      resultQid: ++this.state.resultQid
-    })
+    let {resultQid} = this.state;
+    
     this.nextVote();
   }
 
   nextVote = async () => {
     if (this.state.toNextVote === true) {
-      let res = await axios.get(`/api/question/${this.state.resultQid}`)
+      // let res = await axios.get(`/api/question/${this.state.unanswered}`)
       let body = {
-        qid: this.state.resultQid,
+        // qid: this.state.resultQid,
         uid: this.props.uid
       }
       let resp = await axios.post('/api/getanswerresults', body)
@@ -142,12 +146,12 @@ class Results extends Component {
       })
       this.props.updateAnsArray(resp.data)
       let questionObj = {
-        qid: this.state.resultQid,
-        question: res.data[0].question,
-        q_img: res.data[0].q_img
+        // qid: this.state.resultQid,
+        // question: res.data[0].question,
+        // q_img: res.data[0].q_img
       }
       this.props.updateQuestion(questionObj)
-      this.props.history.push(`/Vote/${this.state.resultQid}`)
+      // this.props.history.push(`/Vote/${this.state.resultQid}`)
     }
   }
     render() {

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Doughnut } from 'react-chartjs-2'
 import Comments from '../Comments/Comments'
 import { updateAnsArray, updateQuestion } from '../../redux/reducer'
+import { arrayParser } from 'pg-types';
 
 class Results extends Component {
   constructor() {
@@ -45,7 +46,9 @@ class Results extends Component {
     this.getResults()
     this.buildChartData()
     this.setResultQid()
-    console.log(22222, this.props)
+    this.updateChartyChart()
+    console.log(22222, this.state)
+
   }
 
   buildChartData() {
@@ -68,6 +71,20 @@ class Results extends Component {
 
     this.setState({
       data: stateslice.data
+    })
+  }
+
+  updateChartyChart = async () => {
+    let arrCopy = {...this.state.data.datasets.data }
+    let biggerArrCopy = {...this.state.data}
+    // console.log(9999, arrCopy)
+    arrCopy[0] = this.props.arrCopy[0].vote
+    arrCopy[1] = this.props.arrCopy[1].vote
+    arrCopy[2] = this.props.arrCopy[2].vote
+    arrCopy[3] = this.props.arrCopy[3].vote
+    biggerArrCopy.datasets.data = arrCopy
+    this.setState({
+      data: biggerArrCopy
     })
   }
 
@@ -136,7 +153,6 @@ class Results extends Component {
     render() {
       const winningansimg = this.props.answersArr[0] ? this.props.answersArr[0].ans_img : null
       const answers = this.props.answersArr.map(ans => {
-
         return (
           <div className='Answers'>
             <img src={ans.ans_img} alt="" className='ResultImg' />

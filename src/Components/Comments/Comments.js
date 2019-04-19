@@ -39,7 +39,6 @@ class Comments extends Component {
   }
 
   getAllComments = () => {
-    console.log(this.props)
     let body = { qid: this.props.qid}
     axios.post('/api/getcomments', body).then(res => {
       this.setState({
@@ -56,7 +55,6 @@ class Comments extends Component {
     let avatar = this.props.avatar
     let username = this.props.username
     let comment = this.state.Forum.Comments[0].comment
-    console.log(comment)
     const body = {uid, qid, avatar, username, comment}
     axios.post('/api/addnewcomment', body).then(res => {
       this.getAllComments()
@@ -66,24 +64,27 @@ class Comments extends Component {
   }
 
   render(){
-    console.log(this)
     const mappedComments = this.state.Forum.Comments.map((comment) => {
-      let img = <img src={comment.user_avatar} alt=""/>  ?  <img src={comment.user_avatar} alt=""/> : <h4>No image</h4>
+      let img = <img src={comment.user_avatar} alt=""/>  ?  <img className='ProfileImage' src={comment.user_avatar} alt=""/> : <h4>No image</h4>
       let date = comment.date ? comment.date.split("").slice(0, 10).join("").split("-") : null
       let vat = date ? date.shift().toString() : null
       var fish = vat ? date.push(vat) : null
       date = date ? date.join("-") : null
       return(
         <div key={comment.cid} className='Comments'>
-          <h3>{comment.comments}</h3>
-          <h6>{date}</h6>
+        <div className="Diveydiv">
           {img}
-          <h6>{comment.user_username}</h6>
+          <h6 className="Username">{comment.user_username}</h6>
+          <h6>{date}</h6>
+        </div>
+          <div>
+            <p>{comment.comments}</p>
+          </div>
         </div>
       )
     })
     return(
-      <div>
+      <div className='AllComments'>
       {mappedComments}
       <input placeholder='Add a comment!' onChange={(e) => this.updateComments(e.target.value)}></input>
       <button onClick={() => this.addNewComment()}>Post</button>

@@ -38,7 +38,7 @@ module.exports = {
     const db = req.app.get('db');
     const {uid} = req.session.user;
     db.questions.get_unanswered_questions({uid}).then(resp => {
-      console.log(resp)
+      // console.log(resp)
       res.status(200).send(resp)
     })
   },

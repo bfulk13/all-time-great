@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Doughnut } from 'react-chartjs-2'
 import Comments from '../Comments/Comments'
 import { updateAnsArray, updateQuestion } from '../../redux/reducer'
+import { arrayParser } from 'pg-types';
 
 class Results extends Component {
   constructor() {
@@ -41,11 +42,13 @@ class Results extends Component {
       resultQid: 0
     }
   }
-  componentDidMount() {
-    this.getResults()
+  async componentDidMount() {
+    await this.getResults()
     this.buildChartData()
     this.setResultQid()
-    console.log(22222, this.props)
+    this.updateChartyChart()
+    console.log(22222, this.state)
+
   }
 
   buildChartData() {
@@ -71,6 +74,20 @@ class Results extends Component {
     })
   }
 
+  updateChartyChart = async () => {
+    let arrCopy = Object.assign([], this.state.data.datasets[0].data)
+    let biggerArrCopy = Object.assign([], this.state.data)
+    console.log(9999, this.props)
+    arrCopy[0] = this.props.answersArr[0].vote
+    arrCopy[1] = this.props.answersArr[1].vote
+    arrCopy[2] = this.props.answersArr[2] ? this.props.answersArr[2].vote : null
+    arrCopy[3] = this.props.answersArr[3] ? this.props.answersArr[3].vote : null
+    biggerArrCopy.datasets.data = arrCopy
+    this.setState({
+      data: biggerArrCopy
+    })
+  }
+
   getResults = async () => {
     let body = {
       qid: this.props.qid,
@@ -81,7 +98,7 @@ class Results extends Component {
       answersArr: res.data,
       question: this.props.question
     })
-    this.props.updateAnsArray(res.data)
+   await this.props.updateAnsArray(res.data)
     this.setState({
       ans1votes: this.state.answersArr[0].vote,
       ans2votes: this.state.answersArr[1].vote,
@@ -136,7 +153,6 @@ class Results extends Component {
     render() {
       const winningansimg = this.props.answersArr[0] ? this.props.answersArr[0].ans_img : null
       const answers = this.props.answersArr.map(ans => {
-
         return (
           <div className='Answers'>
             <img src={ans.ans_img} alt="" className='ResultImg' />

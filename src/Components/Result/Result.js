@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import './Result.css'
 import { connect } from 'react-redux'
 import axios from 'axios';
@@ -46,6 +46,7 @@ class Results extends Component {
     await this.getResults()
     this.buildChartData()
   }
+
 
   buildChartData() {
     // let data = this.state.data

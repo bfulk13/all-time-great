@@ -1,41 +1,108 @@
 import React, {Component} from 'react'
 import './Comments.css'
+import axios from 'axios'
+import { connect } from 'react-redux'
 
 class Comments extends Component {
   constructor(){
     super()
     this.state = {
       Forum: {
-        Comments: []
+        Comments: [
+          {
+          comment: ''
+          }
+        ]
       }
     }
   }
 
-  updateComments = (val, i) => {
+  componentDidMount(){
+    this.getAllComments()
+  }
+
+  // componentDidUpdate(prevState){
+  //   if(prevState !== this.state){
+  //     this.fetchData(this.state)
+  //   }
+  // }
+
+  updateComments = (val) => {
     let Forum = this.state.Forum
-    Forum.Comments[i].comment = val
+    let comment = Forum.Comments[0].comment
+    comment = val
+    Forum.Comments[0].comment = comment
     this.setState({
-      Forum
+      Forum: Forum
     })
-    console.log(this.state)
+    console.log(this.state.Forum.Comments[0].comment)
+  }
+
+  getAllComments = () => {
+    console.log(this.props)
+    let body = { qid: this.props.qid}
+    axios.post('/api/getcomments', body).then(res => {
+      this.setState({
+        Forum: {
+          Comments: res.data
+        }
+      })
+    })
+  }
+
+  addNewComment =  () => {
+    let uid = this.props.uid
+    let qid = this.props.qid
+    let avatar = this.props.avatar
+    let username = this.props.username
+    let comment = this.state.Forum.Comments[0].comment
+    console.log(comment)
+    const body = {uid, qid, avatar, username, comment}
+    axios.post('/api/addnewcomment', body).then(res => {
+      this.getAllComments()
+    }).catch(err => {
+      console.log(err)
+    })
   }
 
   render(){
+    console.log(this)
     const mappedComments = this.state.Forum.Comments.map((comment) => {
+      let img = <img src={comment.user_avatar} alt=""/>  ?  <img src={comment.user_avatar} alt=""/> : <h4>No image</h4>
+      let date = comment.date ? comment.date.split("").slice(0, 10).join("").split("-") : null
+      let vat = date ? date.shift().toString() : null
+      var fish = vat ? date.push(vat) : null
+      date = date ? date.join("-") : null
       return(
-        <div key={comment.id} className='Comments'>
-          
+        <div key={comment.cid} className='Comments'>
+          <h3>{comment.comments}</h3>
+          <h6>{date}</h6>
+          {img}
+          <h6>{comment.user_username}</h6>
         </div>
       )
     })
     return(
       <div>
+      {mappedComments}
       <input placeholder='Add a comment!' onChange={(e) => this.updateComments(e.target.value)}></input>
-      <button>Post</button>
-        {/* {mappedComments} */}
+      <button onClick={() => this.addNewComment()}>Post</button>
       </div>
     )
   }
 }
 
-export default Comments;
+const mapStateToProps = (reduxState) => {
+  return {
+    qid: reduxState.qid,
+    uid: reduxState.uid,
+    q_img: reduxState.q_img,
+    question: reduxState.question,
+    answersArr: reduxState.ansArr,
+    username: reduxState.username,
+    avatar: reduxState.avatar
+  }
+}
+
+
+export default connect(mapStateToProps)(Comments);

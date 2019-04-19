@@ -45,7 +45,7 @@ class Results extends Component {
   }
   async componentDidMount() {
     await this.getResults()
-    this.buildChartData()
+    await this.buildChartData()
     await this.getUnansweredQs()
     this.setResultQid()
     this.updateChartyChart()
@@ -161,6 +161,19 @@ class Results extends Component {
       this.props.history.push(`/Vote/${this.state.unanswered[0].qid}`)
     }
   }
+      incrementLike = async () => {
+      
+          let body = { qid: this.props.qid, uid: this.props.uid }
+          let canLike = await axios.post('/api/canLike', body)
+          console.log('canvote', canLike)
+          if (canLike.data === true) {
+           axios.post('/api/incrementLike', body)
+          
+          } else if (canLike.data === false) {
+           alert('you cant like it twice foo')
+          }
+        }
+      
     render() {
       const winningansimg = this.props.answersArr[0] ? this.props.answersArr[0].ans_img : null
       const answers = this.props.answersArr.map(ans => {
@@ -190,6 +203,7 @@ class Results extends Component {
             <div className="nextVote">
               <i className="fas fa-chevron-right fa-5x" onClick={this.handleClick} style={{ display: "absolute", float: "right", marginRight: "-40px" }}></i>
             </div>
+              <i className="fas fa-thumbs-up fa-5x" onClick={() => this.incrementLike()} style={{ display: "absolute", float: "left", marginLeft: "-40px" }}></i>
             <div className='AnswersDiv'>
               {answers}
               <Comments />

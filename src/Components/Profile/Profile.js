@@ -22,7 +22,7 @@ class Profile extends Component{
 
   getProfile = async () => {
     let res = await axios.get(`/api/profile/${this.props.match.params.uid}`)
-    // console.log(res.data)
+    console.log(res.data)
     this.setState({
       user: res.data[0]
     })
@@ -92,11 +92,13 @@ class Profile extends Component{
 
       )
     })
+    // console.log(this.state)
+    let username = this.state.user ? this.state.user.username : 'Wrong'
     const {user} = this.state
     return(
      <div className='Profile'>
         <div className='user-info'>
-          <h3 className='user-username'>{user.username}</h3>
+          <h3 className='user-username'>{username}</h3>
           <h3 className='user-votes'>{user.sum}</h3>
           <img src={user.avatar} alt="avatar" className='user-avatar' />
           <p className='user-about'>{user.about}</p>

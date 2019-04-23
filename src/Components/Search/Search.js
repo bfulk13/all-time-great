@@ -28,11 +28,35 @@ class Search extends Component {
       searchbar: val
     })
   }
+  CheckVotedOrNot = async (obj) => {
+    console.log(obj)
+    await this.props.updateQuestion(obj)
+    let body = { qid: obj.qid, uid: this.props.uid }
+    let canVote = await axios.post('/api/ifVoted', body)
+    console.log(canVote)
+    if (canVote.data === true) {
+      let quest = await axios.get(`/api/question/${obj.qid}`)
+      let res = await axios.get(`/api/getanswersforquestion/${obj.qid}`)
+      this.props.updateAnsArray(res.data)
+      this.setState({
+        question: quest.data[0],
+        answers: res.data,
+      })
+      this.props.history.push(`/Vote/${this.props.qid}`)
+    } else if (canVote.data === false) {
+      this.setState({
+        question: this.props.question,
+        answers: this.props.answers,
+        qid: this.props.qid
+      })
+      this.props.history.push('/Result')
+    }
+  }
 
   render() {
     const questions = this.state.questions ? this.state.questions.map( question => {
       return(
-        <div className='BoxyBox'>
+        <div className='BoxyBox' onClick={() => this.CheckVotedOrNot(question)}>
           {question.question}
           <img src={question.q_img} alt="" className='SearchResultImage'/>
         </div>

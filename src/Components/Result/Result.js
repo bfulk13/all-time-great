@@ -168,6 +168,7 @@ class Results extends Component {
           console.log('canvote', canLike)
           if (canLike.data === true) {
            axios.post('/api/incrementLike', body)
+           alert('you like this question!!:)')
           
           } else if (canLike.data === false) {
            alert('you cant like it twice foo')

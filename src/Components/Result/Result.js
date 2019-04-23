@@ -179,45 +179,39 @@ class Results extends Component {
       const winningansimg = this.props.answersArr[0] ? this.props.answersArr[0].ans_img : null
       const answers = this.props.answersArr.map(ans => {
         return (
-          <div className='Answers'>
-            <img src={ans.ans_img} alt="" className='ResultImg' />
+          <div className='answers'>
+            <img src={ans.ans_img} alt="" className='result-img' />
             <div className='paragraph'>
-              <p>{ans.vote}</p>
               <p>{ans.answer}</p>
+              <p>{ans.vote}</p>
             </div>
+
           </div>
         )
       })
-      return (
+      return ( 
 
         <div className='Results'>
           <h1>{this.props.question}</h1>
-          <div className='TopHalfDiv'>
-            <div className='ChartJsStuff'>
-              <img className='QuestionImage' src={winningansimg} alt="" />
+            <div className='chart-js'>
+              <img className='winning-img' src={winningansimg} alt="" />
               <Doughnut
-                className='Chart'
+                className='chart'
                 data={this.state.data}
-                options={{ legend: false }}
+                width={250}
+                height={250}
+                options={{ legend: false, maintainAspectRatio:false }}
               />
             </div>
             <div className="nextVote">
-              <i className="fas fa-chevron-right fa-5x" onClick={this.handleClick} style={{ display: "absolute", float: "right", marginRight: "-40px" }}></i>
+              <i className="fas fa-chevron-right fa-5x" onClick={this.handleClick} style={{ display: "absolute", float: "right", marginRight: "10px", color:'white', opacity:'.3' }}></i>
             </div>
-              <i className="fas fa-thumbs-up fa-5x" onClick={() => this.incrementLike()} style={{ display: "absolute", float: "left", marginLeft: "-40px" }}></i>
-            <div className='AnswersDiv'>
+              <i className="fas fa-thumbs-up fa-5x" onClick={() => this.incrementLike()} style={{ display: "absolute", float: "left", marginLeft: "40px", color:'white' }}></i>
+            <div className='answers-div'>
               {answers}
               <Comments />
             </div>
-
-
-
-          </div>
-
-          <div className='ResponsesDiv'>
-
-          </div>
-        </div>
+            </div>
       )
     }
   }

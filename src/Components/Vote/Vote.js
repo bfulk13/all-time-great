@@ -58,7 +58,7 @@ class Vote extends Component {
       <div className='Vote'>
         <h1>Cast Your Vote</h1>
         <div className='VotingDiv'>
-          <img src={this.props.q_img} alt="question pic" className='question-img' />
+          <img src={this.props.q_img} alt="question pic" className='question-img'/>
           <h2>{this.props.question}</h2>
           {answers}
           <div>

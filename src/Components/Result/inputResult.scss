@@ -1,0 +1,56 @@
+@import '../Sass/colors';
+@import '../Sass/fonts';
+
+
+.Results {
+    display: flex;
+    flex-direction: column;
+    margin: 0px auto;
+    
+    h1 {
+        font-family: $main-font;
+        letter-spacing: 1.5px;
+        text-shadow: 1px 1px 3px $main-color4;
+        color: white;
+        
+    }
+    .chart-js {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .winning-img {
+            width: 125px;
+            height: 125px;
+            position: absolute;
+            z-index: -1;
+            border-radius: 50%
+        }
+    }
+}
+
+.answers {
+    display: flex;
+    align-items: center;
+    width: 90%;
+    margin: 10px auto;
+    border: 1px solid $main-color3;
+    .result-img {
+        width: 100px;
+        height: 100px;
+        border: 2px solid $main-color3;
+        border-radius: 50%;
+    }
+    .paragraph {
+        width: 100%;
+        p {
+            color: white;
+            font-family: $main-font;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+   }
+}
+
+.answers-div {
+    margin-top: 20px;
+}

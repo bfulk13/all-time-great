@@ -8,7 +8,7 @@ class Comments extends Component {
     super()
     this.state = {
       commentsArr: [
-       
+
       ]
     }
   }
@@ -30,13 +30,13 @@ class Comments extends Component {
   getAllComments = async () => {
     let body = { qid: this.props.qid }
     let res = await axios.post('/api/getcomments', body)
-    console.log(res.data)
+    // console.log(res.data)
     this.setState({
       commentsArr: res.data
     })
-      
-    
-    console.log(this.state.commentsArr)
+
+
+    // console.log(this.state.commentsArr)
   }
 
   addNewComment = async () => {
@@ -49,7 +49,7 @@ class Comments extends Component {
     console.log(1111, body)
     try {
       let res = await axios.post('/api/addnewcomment', body)
-      console.log(res)
+      // console.log(res)
       this.getAllComments()
     } catch (err) {
       console.log(err)

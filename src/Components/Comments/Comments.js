@@ -1,93 +1,87 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import './Comments.css'
 import axios from 'axios'
 import { connect } from 'react-redux'
 
 class Comments extends Component {
-  constructor(){
+  constructor() {
     super()
     this.state = {
-      Forum: {
-        Comments: [
-          {
-          comment: ''
-          }
-        ]
-      }
+      commentsArr: [
+       
+      ]
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getAllComments()
   }
 
-  // componentDidUpdate(prevState){
-  //   if(prevState !== this.state){
-  //     this.fetchData(this.state)
-  //   }
-  // }
-
   updateComments = (val) => {
-    let Forum = this.state.Forum
-    let comment = Forum.Comments[0].comment
+    let commentsArr = this.state.commentsArr
+    let comment = commentsArr.comment
     comment = val
-    Forum.Comments[0].comment = comment
+    commentsArr.comment = comment
     this.setState({
-      Forum: Forum
-    })
-    console.log(this.state.Forum.Comments[0].comment)
-  }
-
-  getAllComments = () => {
-    let body = { qid: this.props.qid}
-    axios.post('/api/getcomments', body).then(res => {
-      this.setState({
-        Forum: {
-          Comments: res.data
-        }
-      })
+      commentsArr: commentsArr
     })
   }
 
-  addNewComment =  () => {
+  getAllComments = async () => {
+    let body = { qid: this.props.qid }
+    let res = await axios.post('/api/getcomments', body)
+    console.log(res.data)
+    this.setState({
+      commentsArr: res.data
+    })
+      
+    
+    console.log(this.state.commentsArr)
+  }
+
+  addNewComment = async () => {
     let uid = this.props.uid
     let qid = this.props.qid
     let avatar = this.props.avatar
     let username = this.props.username
-    let comment = this.state.Forum.Comments[0].comment
-    const body = {uid, qid, avatar, username, comment}
-    axios.post('/api/addnewcomment', body).then(res => {
+    let comment = this.state.commentsArr.comment
+    const body = { uid, qid, avatar, username, comment }
+    console.log(1111, body)
+    try {
+      let res = await axios.post('/api/addnewcomment', body)
+      console.log(res)
       this.getAllComments()
-    }).catch(err => {
+    } catch (err) {
       console.log(err)
-    })
+    }
+
   }
 
-  render(){
-    const mappedComments = this.state.Forum.Comments.map((comment) => {
-      let img = <img src={comment.user_avatar} alt=""/>  ?  <img className='ProfileImage' src={comment.user_avatar} alt=""/> : <h4>No image</h4>
+  render() {
+    const mappedComments = this.state.commentsArr.map((comment) => {
+      let img = <img src={comment.user_avatar} alt="" /> ? <img className='ProfileImage' src={comment.user_avatar} alt="" /> : <h4>No image</h4>
       let date = comment.date ? comment.date.split("").slice(0, 10).join("").split("-") : null
       let vat = date ? date.shift().toString() : null
       var fish = vat ? date.push(vat) : null
       date = date ? date.join("-") : null
-      return(
+      return (
         <div key={comment.cid} className='Comments'>
-        <div className="Diveydiv">
-          {img}
-          <h6 className="Username">{comment.user_username}</h6>
-          <h6>{date}</h6>
-        </div>
+          <div className="Diveydiv">
+            {img}
+            <h6 className="Username">{comment.user_username}</h6>
+            <h6>{date}</h6>
+          </div>
           <div>
             <p>{comment.comments}</p>
           </div>
         </div>
       )
     })
-    return(
+    return (
       <div className='AllComments'>
-      {mappedComments}
-      <input placeholder='Add a comment!' onChange={(e) => this.updateComments(e.target.value)}></input>
-      <button onClick={() => this.addNewComment()}>Post</button>
+        {mappedComments}
+        <input placeholder='Add a comment!' onChange={(e) => this.updateComments(e.target.value)}></input>
+        <button onClick={() => this.addNewComment()}>Post</button>
       </div>
     )
   }

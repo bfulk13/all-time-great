@@ -8,13 +8,15 @@ module.exports = {
       })
   },
 
-  addNewComment: (req, res) => {
+  addNewComment: async (req, res) => {
     const db = req.app.get('db')
     const body = req.body
     let date = new Date()
-    db.comments.add_new_comment(body.comment, body.uid, body.qid, date, body.avatar, body.username).then(dbRes => {
+    console.log(body)
+     await db.comments.add_new_comment(body.comment, body.uid, body.qid, date, body.avatar, body.username)
       res.sendStatus(200)
-    })
-
   }
+
+
+
 }

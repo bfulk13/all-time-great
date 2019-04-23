@@ -50,12 +50,13 @@ class Profile extends Component{
 
 
   render(){
-    // console.log(this.state)
+    console.log(this.state)
+    let username = this.state.user ? this.state.user.username : 'Wrong'
     const {user} = this.state
     return(
      <div className='Profile'> 
         <div className='user-info'>
-          <h3 className='user-username'>{user.username}</h3>
+          <h3 className='user-username'>{username}</h3>
           <h3 className='user-votes'>{user.sum}</h3>
           <img src={user.avatar} alt="avatar" className='user-avatar' />
           <p className='user-about'>{user.about}</p>

@@ -1,7 +1,7 @@
 module.exports = {
     getPsByLikes: async (req, res) => {
         const db = req.app.get('db');
-        
+
         db.profiles.get_ps_by_likes().then(resp => {
             res.status(200).send(resp)
         }).catch(err => {
@@ -21,12 +21,13 @@ module.exports = {
     getProfile: async (req, res) => {
         const db = req.app.get('db');
         const { id } = req.params;
-        let profile = await db.profiles.get_profile( id ).then(resp => {
-            res.status(200).send(resp)
-        }).catch(err => {
-            console.log(err)
-            res.status(500).send(err)
-        })
+        let resp = await db.profiles.get_profile( id )
+            // console.log(resp)
+        let res2 = await db.profiles.get_all_likes_user(id)
+            res2 ? res2 : 0
+            // console.log(res2)
+        res.status(200).send({resp, res2})
+
     },
 
     viewProfile: async (req, res) => {
@@ -44,9 +45,9 @@ module.exports = {
        const db = req.app.get('db')
        const {about} = req.body
        const {id} = req.params
-       console.log('hit')
-       console.log(req.body)
-       console.log(req.params)
+    //    console.log('hit')
+    //    console.log(req.body)
+    //    console.log(req.params)
        db.profiles.update_about([about, id]).then(resp => {
        res.status(200).send(resp)
        }).catch(err => {
@@ -56,9 +57,9 @@ module.exports = {
 
     // getAllUserLikes: (req, res) => {
     //     const db = req.app.get('db')
-    //     const 
+    //     const
     // }
-    
+
 }
 
 /* #026670, #9FEDD7, #FEF9C7, #FCE181, #EDEAE5 */

@@ -121,9 +121,10 @@ app.put('/api/aboutMe/:id', pc.updateAbout)
 
 //// ANSWERS ENDPOINTS ////
 app.get('/api/getanswersforquestion/:id', ansc.getAnswers);
+app.get('/api/getLiked/:id', ansc.getLiked);
 app.post('/api/sendselectedanswer', ansc.incrementAnswer);
 app.post('/api/getanswerresults', ansc.getAnswerResults);
-app.post('/api/ifVoted', ansc.canVote)
+app.post('/api/ifVoted', ansc.canVote);
 
 //// COMMENTS ENDPOINTS ////
 app.post('/api/addnewcomment', co.addNewComment);

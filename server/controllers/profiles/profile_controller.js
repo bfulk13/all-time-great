@@ -52,7 +52,12 @@ module.exports = {
        }).catch(err => {
          res.status(500).send(err)
        })
-    }
+    },
+
+    // getAllUserLikes: (req, res) => {
+    //     const db = req.app.get('db')
+    //     const 
+    // }
     
 }
 

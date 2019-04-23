@@ -48,8 +48,8 @@ class Vote extends Component {
     const answers = this.props.ansArr.map(ans => {
       return (
         <div className='SingleAnswerDiv' onClick={() => this.updateQidAid(ans.q_id, ans.aid)} key={ans.aid}>
+          <img src={ans.ans_img} alt="" className='answer-img'/>
           <h4>{ans.answer}</h4>
-          <img src={ans.ans_img} alt="" className="AnswerImg" />
         </div>
       )
     })
@@ -58,15 +58,12 @@ class Vote extends Component {
       <div className='Vote'>
         <h1>Cast Your Vote</h1>
         <div className='VotingDiv'>
-          <img src={this.props.q_img} alt="question pic" />
+          <img src={this.props.q_img} alt="question pic" className='question-img' />
           <h2>{this.props.question}</h2>
           {answers}
           <div>
             <Link to='/Result'><button onClick={() => this.Vote(this.state.anwser)}>Submit Vote</button></Link>
           </div>
-
-        </div>
-        <div className=''>
 
         </div>
       </div>

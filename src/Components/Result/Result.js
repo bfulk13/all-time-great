@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import './Result.css'
 import { connect } from 'react-redux'
 import axios from 'axios';
@@ -39,17 +39,19 @@ class Results extends Component {
         ]
       },
       toNextVote: false,
-      resultQid: 0
+      resultQid: 0,
+      unanswered: []
     }
   }
   async componentDidMount() {
     await this.getResults()
-    this.buildChartData()
+    await this.buildChartData()
+    await this.getUnansweredQs()
     this.setResultQid()
     this.updateChartyChart()
-    console.log(22222, this.state)
-
+    console.log(22222, this.state.unanswered)
   }
+
 
   buildChartData() {
     // let data = this.state.data
@@ -77,7 +79,7 @@ class Results extends Component {
   updateChartyChart = async () => {
     let arrCopy = Object.assign([], this.state.data.datasets[0].data)
     let biggerArrCopy = Object.assign([], this.state.data)
-    console.log(9999, this.props)
+    // console.log(9999, this.props)
     arrCopy[0] = this.props.answersArr[0].vote
     arrCopy[1] = this.props.answersArr[1].vote
     arrCopy[2] = this.props.answersArr[2] ? this.props.answersArr[2].vote : null
@@ -111,28 +113,37 @@ class Results extends Component {
     })
   }
 
-  setResultQid = () => {
+  getUnansweredQs = async () => {
+    let res = await axios.get(`/api/unansweredQuestions`);
+    console.log(3434343, res.data)
+    await this.setState({
+      unanswered: res.data
+    })
+  }
+
+  setResultQid = async () => {
     this.setState({
       resultQid: this.props.qid
     })
   }
 
   handleClick = async () => {
-    const { resultQid } = this.state;
-    let res = await axios.get(`/api/unansweredQuestions`);
-    console.log(res)
-    await this.setState({
-      toNextVote: true,
-      resultQid: ++this.state.resultQid
-    })
-    this.nextVote();
+    await this.getUnansweredQs();
+    if(this.state.unanswered.length > 0){
+      await this.setState({
+        toNextVote: true
+      })    
+      this.nextVote();
+    } else {
+      alert('There are no more questions to vote on at this time, go post some more!')
+    }
   }
 
   nextVote = async () => {
     if (this.state.toNextVote === true) {
-      let res = await axios.get(`/api/question/${this.state.resultQid}`)
+      let res = await axios.get(`/api/question/${this.state.unanswered[0].qid}`)
       let body = {
-        qid: this.state.resultQid,
+        qid: this.state.unanswered[0].qid,
         uid: this.props.uid
       }
       let resp = await axios.post('/api/getanswerresults', body)
@@ -142,14 +153,28 @@ class Results extends Component {
       })
       this.props.updateAnsArray(resp.data)
       let questionObj = {
-        qid: this.state.resultQid,
+        qid: this.state.unanswered[0].qid,
         question: res.data[0].question,
         q_img: res.data[0].q_img
       }
       this.props.updateQuestion(questionObj)
-      this.props.history.push(`/Vote/${this.state.resultQid}`)
+      this.props.history.push(`/Vote/${this.state.unanswered[0].qid}`)
     }
   }
+      incrementLike = async () => {
+      
+          let body = { qid: this.props.qid, uid: this.props.uid }
+          let canLike = await axios.post('/api/canLike', body)
+          console.log('canvote', canLike)
+          if (canLike.data === true) {
+           axios.post('/api/incrementLike', body)
+           alert('you like this question!!:)')
+          
+          } else if (canLike.data === false) {
+           alert('you cant like it twice foo')
+          }
+        }
+      
     render() {
       const winningansimg = this.props.answersArr[0] ? this.props.answersArr[0].ans_img : null
       const answers = this.props.answersArr.map(ans => {
@@ -179,6 +204,7 @@ class Results extends Component {
             <div className="nextVote">
               <i className="fas fa-chevron-right fa-5x" onClick={this.handleClick} style={{ display: "absolute", float: "right", marginRight: "-40px" }}></i>
             </div>
+              <i className="fas fa-thumbs-up fa-5x" onClick={() => this.incrementLike()} style={{ display: "absolute", float: "left", marginLeft: "-40px" }}></i>
             <div className='AnswersDiv'>
               {answers}
               <Comments />

@@ -34,7 +34,7 @@ module.exports = {
 
     const db = req.app.get('db')
     const { uid, qid } = req.body
-    // console.log(uid, qid)
+    // console.log(7777, uid, qid)
     let canVote = await db.answers.already_answered({
       uid, qid
     })

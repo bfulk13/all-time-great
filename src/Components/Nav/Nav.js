@@ -48,7 +48,7 @@ class Nav extends Component {
                         <Link to={`/profile/${this.props.reduxState.uid}`} style={{ textDecoration: 'none' }}>
                             <li><i className="far fa-user user-icon"></i></li>
                         </Link>
-                        <li><Link to={'/Search'} style={{ textDecoration:'none' }}><i className="fas fa-search search-icon"></i></Link></li>
+                        <li><Link to={'/Search'} style={{ textDecoration: 'none' }}><i className="fas fa-search search-icon"></i></Link></li>
                         <li>
                             {this.props.reduxState.uid ?
                                 <button onClick={this.logout} className='logout-nav'>Logout</button> :
@@ -59,7 +59,7 @@ class Nav extends Component {
                 </nav>
                 <div className='login-modal'>
                     <Modal open={open} onClose={this.closeModal} center>
-                        <Login 
+                        <Login
                             onClose={this.closeModal}
                         />
                     </Modal>

@@ -1,0 +1,76 @@
+@import '../Sass/colors';
+@import '../Sass/fonts';
+
+
+.SingleAnswerDiv {
+    display: flex;
+    margin: 10px auto;
+    border: 1px solid $main-color3;
+    border-radius: 10px 30px 10px 30px;;
+    width: 80%;
+    h4 {
+       display: flex;
+       color: white;
+       align-items: center;
+       margin-left: 10px;
+       font-family: $main-font;
+       letter-spacing: 1px;
+       font-size: 16px;
+       
+    }
+    .answer-img {
+        width: 100px;
+        height: 100px;
+        border: 1px solid $main-color3;
+        border-radius: 50%;
+   }
+}
+.SingleAnswerDiv:hover {
+    background-color: $main-color5;
+}
+
+
+
+.Vote {
+    h1 {
+        color: white;
+        font-family: $main-font;
+        letter-spacing: 1.5px;
+        text-shadow: 1px 1px 5px $main-color4;
+    }
+    .VotingDiv {
+        display: flex;
+        flex-direction: column;
+        margin: 0px auto;
+        .question-img {
+          width: 200px;
+          height: 200px;
+          margin: 20px auto;
+          border-radius: 10px;
+          border: 2px solid $main-color3;
+        }
+        h2 {
+            color: white;
+            font-family: $main-font;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 5px  $main-color4;
+        }
+        button {
+            border: 1px solid $main-color3;
+            background-color: $main-color1;
+            width: 100px;
+            height: 30px;
+            margin: 20px;
+            color: white;
+            font-family: $main-font;
+            letter-spacing: 1px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 0px white;
+        }
+        button:active {
+           box-shadow: 0px 1px 0px $main-color3;
+           transform: translateY(1px)
+        }
+    }
+}
+

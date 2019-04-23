@@ -102,6 +102,7 @@ class Questions extends Component {
       alert('Please login and post a question.')
     }
     this.onCloseModal()
+    this.getAllQuestions()
   }
 
   buildAnswersJSX = () => {

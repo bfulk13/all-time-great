@@ -48,7 +48,7 @@ module.exports = {
   getLiked: (req,res) => {
     const db = req.app.get('db')
     const { id } = req.params;
-    console.log(id)
+    // console.log(id)
     db.answers.get_liked({ id }).then(resp => {
       res.status(200).send(resp)
     }).catch(err => {

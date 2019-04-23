@@ -10,21 +10,24 @@ class Profile extends Component{
       user: {},
       about: '',
       showAbout: true,
-      likedQs: []
+      likedQs: [],
+      likes: 0
     }
   }
 
-  componentDidMount(){
-    this.getProfile()
+  async componentDidMount(){
+    await this.getProfile()
     this.getFollowing()
     console.log(this.props)
   }
 
   getProfile = async () => {
+    console.log(this.props.match.params)
     let res = await axios.get(`/api/profile/${this.props.match.params.uid}`)
-    console.log(res.data)
+    console.log(11111, res)
     this.setState({
-      user: res.data[0]
+      user: res.data.resp[0],
+      likes: res.data.res2[0].sum
     })
   }
 
@@ -92,16 +95,19 @@ class Profile extends Component{
 
       )
     })
-    // console.log(this.state)
-    let username = this.state.user ? this.state.user.username : 'Wrong'
+    console.log(this.state)
+    let username = this.state.user ? this.state.user.username : ''
+    let sum = this.state.likes ? this.state.likes : 0
+    let avatar = this.state.user ? this.state.user.avatar : ''
+    let about = this.state.user ? this.state.user.about : 'About Me'
     const {user} = this.state
     return(
      <div className='Profile'>
         <div className='user-info'>
           <h3 className='user-username'>{username}</h3>
-          <h3 className='user-votes'>{user.sum}</h3>
-          <img src={user.avatar} alt="avatar" className='user-avatar' />
-          <p className='user-about'>{user.about}</p>
+          <h3 className='user-votes'>{sum}</h3>
+          <img src={avatar} alt="avatar" className='user-avatar' />
+          <p className='user-about'>{about}</p>
           {this.state.showAbout ? <div>
             <button onClick={this.toggleShowAbout} className='about-btn'>About Me</button>
           </div> :

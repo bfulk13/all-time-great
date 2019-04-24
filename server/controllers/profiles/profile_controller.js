@@ -18,10 +18,11 @@ module.exports = {
         })
     },
 
-    getProfile: async (req, res) => {
+    getProfile:  (req, res) => {
         const db = req.app.get('db');
         const { id } = req.params;
-        let profile = await db.profiles.get_profile( id ).then(resp => {
+        db.profiles.get_profile( id ).then(resp => {
+            console.log(resp)
             res.status(200).send(resp)
         }).catch(err => {
             console.log(err)

@@ -116,13 +116,15 @@ app.get('/api/profile/:id', pc.getProfile)
 app.get('/api/viewprofile/:id', pc.viewProfile)
 app.get('/api/allProfiles', pc.getAllProfiles)
 app.put('/api/aboutMe/:id', pc.updateAbout)
+// app.get('/api/getalluserlikes', pc.getAllUserLikes)
 
 
 //// ANSWERS ENDPOINTS ////
 app.get('/api/getanswersforquestion/:id', ansc.getAnswers);
+app.get('/api/getLiked/:id', ansc.getLiked);
 app.post('/api/sendselectedanswer', ansc.incrementAnswer);
 app.post('/api/getanswerresults', ansc.getAnswerResults);
-app.post('/api/ifVoted', ansc.canVote)
+app.post('/api/ifVoted', ansc.canVote);
 
 //// COMMENTS ENDPOINTS ////
 app.post('/api/addnewcomment', co.addNewComment);

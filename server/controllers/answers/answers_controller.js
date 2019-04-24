@@ -44,6 +44,18 @@ module.exports = {
       res.status(200).send(false)
     }
   },
+  // -----------Profile Page--------------//
+  getLiked: (req,res) => {
+    const db = req.app.get('db')
+    const { id } = req.params;
+    // console.log(id)
+    db.answers.get_liked({ id }).then(resp => {
+      res.status(200).send(resp)
+    }).catch(err => {
+      console.log(err)
+      res.status(500).send(err)
+    })
+  },
 
   // -----------Result Page--------------//
   getAnswerResults: (req, res) => {
@@ -56,6 +68,4 @@ module.exports = {
       res.status(500).send(err)
     })
   }
-
-
 }

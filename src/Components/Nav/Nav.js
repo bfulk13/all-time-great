@@ -37,6 +37,7 @@ class Nav extends Component {
 
     render() {
         const { open } = this.state
+        console.log(this.props.reduxState.uid)
         return (
             <div className='nav-wrapper'>
                 <nav>

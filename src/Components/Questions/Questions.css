@@ -3,25 +3,61 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  box-shadow: 0px 0px 80px 80px #FCE181;
-  background-color: #9FEDD7;
-  border: 2px solid #9FEDD7;
+  box-shadow: 0px 0px 80px 80px #66FCF1;
+  background-color: #1F2833;
+  border: 2px solid #C5C6C7;
   border-radius: 65px;
 }
+.question-Modal-Wrapper h2 {
+  color: white;
+  margin: 15px auto;
+}
 .question-Modal-Wrapper .question-input {
-  width: 80%;
-  margin-top: 20px;
+  margin: 10px auto;
+  width: 90%;
 }
 .question-Modal-Wrapper .file-input {
-  width: 80%;
+  margin: 10px auto;
+  background-color: #45A29E;
+  color: white;
 }
-.question-Modal-Wrapper .answer-text {
-  width: 80%;
-  margin-top: 20px;
+.question-Modal-Wrapper i {
+  color: #66FCF1;
+  margin-top: 10px;
 }
-.question-Modal-Wrapper .answer-image-file {
-  width: 80%;
+.question-Modal-Wrapper .plus-circle {
+  margin-right: 10px;
 }
+.question-Modal-Wrapper button {
+  border: 1px solid #66FCF1;
+  margin-top: 10px;
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  box-shadow: 0px 3px 0px white;
+  color: #66FCF1;
+  background-color: #1F2833;
+}
+.question-Modal-Wrapper button:active {
+  box-shadow: 0px 1px 0px #C5C6C7;
+}
+
+.addAnswer-div {
+  display: flex;
+  flex-direction: column;
+}
+.addAnswer-div .answer-input {
+  color: white;
+  border: 1px solid green;
+  margin: 10px auto;
+  width: 100%;
+}
+.addAnswer-div .answer-image-file {
+  margin: 5px auto;
+  color: white;
+  background-color: #45A29E;
+}
+
 .QuestionsDiv {
   background-color: gray;
   min-height: 100vh;

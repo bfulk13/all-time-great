@@ -83,6 +83,7 @@ class Landing extends Component {
           </div>
           <img src={require('./images/landingGoat.png')} alt='curious goat' className='goat-image' />
         </div>
+        <h1>Who Is The Greatest Of All Time?</h1>
         <Link to="/Questions" style={{ textDecoration: 'none' }}><p className='landing-title'>Trending Questions ?</p></Link>
         <div className='questions-wrapper'>
           {trendingQuestions}

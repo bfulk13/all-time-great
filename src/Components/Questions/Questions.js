@@ -229,8 +229,8 @@ class Questions extends Component {
   render() {
     const inputBoxes = this.state.answers ? this.state.answers.map((answer, i) => {
       return (
-        <div key={i}>
-          <input className="answer-text" type="text" placeholder={answer.answerName} onChange={(e) => this.updateAnswer(e.target.value, answer.answerName, answer.ans_img)} />
+        <div key={i} className='addAnswer-div'>
+          <input className="answer-input" type="text" placeholder={answer.answerName} onChange={(e) => this.updateAnswer(e.target.value, answer.answerName, answer.ans_img)} />
           <input className="answer-image-file" type="file" id="real" onChange={(e) => this.handlePhotoAnswers(e, i)} />
         </div>
       )
@@ -260,13 +260,13 @@ class Questions extends Component {
         </div>
         <Modal open={open} onClose={this.onCloseModal} center >
           <div className="question-Modal-Wrapper">
-            <h2>Add Your Question and Answers</h2>
+            <h2>Add Your Question</h2>
             <input placeholder="Question" className="question-input" type="text" onChange={(e) => { this.updateQuestion(e.target.value) }} />
             <input className="file-input" type="file" id="real" onChange={this.handlePhotoQuestion} />
-            {inputBoxes}
+            <div>{inputBoxes}</div>
             <div>
-              <i className="fas fa-plus-circle fa-2x" onClick={this.buildAnswersJSX}></i>
-             <i className="fas fa-minus-circle fa-2x" onClick={this.removeAnswerJSX}></i>
+              <i className="fas fa-plus-circle fa-2x plus-circle" onClick={this.buildAnswersJSX}></i>
+              <i className="fas fa-minus-circle fa-2x" onClick={this.removeAnswerJSX}></i>
             </div>
             
             <button type="submit" onClick={this.createNewQuestion}>Submit</button>

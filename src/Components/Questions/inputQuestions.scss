@@ -1,14 +1,6 @@
-@import "../Sass/colors2";
+@import "../Sass/colors";
 
-@mixin imageInput(){
-    width: 80%;
 
-}
-
-@mixin textInput(){
-    width: 80%;
-    margin-top: 20px;
-}
 
 .question-Modal-Wrapper {
 
@@ -20,34 +12,64 @@
     background-color: $main-color2;
     border: 2px solid $main-color3;
     border-radius: 65px;
-
+    
     h2{
-
+      color: white;
+      margin: 15px auto;
     }
 
     .question-input{
-       @include textInput();
+       margin: 10px auto;
+       width: 90%;
     }
 
     .file-input{
-        @include imageInput();
-    }
+        margin: 10px auto;
+        background-color: $main-color5;
+        color: white;
 
-    .answer-text{
-        @include textInput();
     }
-
-    .answer-image-file{
-        @include imageInput();
-    }
+    
 
     i{
-
+      color: $main-color4;
+      margin-top: 10px;
+    }
+    .plus-circle {
+        margin-right: 10px;
     }
 
     button{
-
+       border: 1px solid $main-color4;
+       margin-top: 10px;
+       width: 100px;
+       height: 30px;
+       border-radius: 5px;
+       box-shadow: 0px 3px 0px white;
+       color: $main-color4;
+       background-color: $main-color2;
     }
+    button:active {
+        box-shadow: 0px 1px 0px $main-color3;
+    }
+}
+
+.addAnswer-div {
+    display: flex;
+    flex-direction: column;
+   .answer-input{
+       color: white;
+       border: 1px solid green;
+       margin: 10px auto;
+       width: 100%;
+
+   }
+
+   .answer-image-file{
+      margin: 5px auto;
+      color: white;
+      background-color: $main-color5;
+   }
 }
 
 .QuestionsDiv{

@@ -18,7 +18,7 @@ module.exports = {
         })
     },
 
-    getProfile:  (req, res) => {
+    getProfile: async (req, res) => {
         const db = req.app.get('db');
         const { id } = req.params;
         let resp = await db.profiles.get_profile( id )

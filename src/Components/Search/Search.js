@@ -57,8 +57,8 @@ class Search extends Component {
     const questions = this.state.questions ? this.state.questions.map( question => {
       return(
         <div className='BoxyBox' onClick={() => this.CheckVotedOrNot(question)}>
-          {question.question}
           <img src={question.q_img} alt="" className='SearchResultImage'/>
+          {question.question}
         </div>
       ) 
     }) : <div>'no results :('</div>

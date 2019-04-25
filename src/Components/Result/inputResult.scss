@@ -28,26 +28,71 @@
     }
 }
 
+.answers-div {
+
+}
+
 .answers {
     display: flex;
     align-items: center;
-    width: 90%;
-    margin: 10px auto;
+    width: 80%;
+    height: 150px;
+    margin: 30px auto;
     border: 1px solid $main-color3;
+    border-radius: 5px;
+    box-shadow: 0px 0px 8px 8px $main-color4;
+
     .result-img {
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
         border: 2px solid $main-color3;
         border-radius: 50%;
     }
     .paragraph {
         width: 100%;
-        p {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    
+        .answer-text {
             color: white;
             font-family: $main-font;
-            font-size: 12px;
+            font-size: 14px;
             letter-spacing: 1px;
+            margin-top: 20px;
         }
+        .vote-num {
+            font-size: 25px;
+            font-family: $main-font;
+            color: white;
+            margin-top: 5px;
+        }
+   }
+}
+
+.like-next-div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .next-text{
+      color: white;
+      font-family: $main-font;
+      letter-spacing: 2px;
+      font-size: 35px;
+      margin: 5px;
+      .next-arrow {
+        color: $main-color4;
+        font-size: 40px;
+        margin: 0px 5px 0px 10px;
+      }
+    } 
+    .like-text {
+      .like-icon {
+        color: $main-color4;
+        font-size: 40px;
+      }
    }
 }
 

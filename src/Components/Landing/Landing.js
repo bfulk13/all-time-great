@@ -84,12 +84,16 @@ class Landing extends Component {
           <img src={require('./images/landingGoat.png')} alt='curious goat' className='goat-image' />
         </div>
         <h1>Who Is The Greatest Of All Time?</h1>
-        <Link to="/Questions" style={{ textDecoration: 'none' }}><p className='landing-title'>Trending Questions ?</p></Link>
+        <div className='all-div'>
+        <Link to="/Questions" style={{ textDecoration: 'none' }}><p className='all-questions'>All Questions</p></Link>
+        <Link to="/Profiles" style={{ textDecoration: 'none' }}><p className='all-profiles'>All Profiles</p></Link>
+        </div>
+        <p className='landing-title'>Trending Questions</p>
         <div className='questions-wrapper'>
           {trendingQuestions}
         </div>
         <div className='pop-profiles-wrapper'>
-          <Link to="/Profiles" style={{ textDecoration: 'none' }}><p className='landing-title'>Popular Profiles</p></Link>
+          <p className='landing-title'>Popular Profiles</p>
           {popularProfiles}
         </div>
       </div>

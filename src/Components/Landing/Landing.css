@@ -70,7 +70,7 @@ body {
   border-radius: 5px;
   display: flex;
   width: 400px;
-  height: 100pxpx;
+  height: 100px;
   margin: 25px;
   align-items: center;
   box-shadow: 0px 0px 8px 8px #66FCF1;
@@ -96,7 +96,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 100%;
+  width: 80%;
   margin: 0px auto;
 }
 
@@ -105,7 +105,7 @@ h1 {
   width: 80%;
   font-family: "Permanent Marker", cursive;
   letter-spacing: 1px;
-  margin: 0px auto;
+  margin: 10px auto;
   text-shadow: 1px 1px 5px #66FCF1;
 }
 

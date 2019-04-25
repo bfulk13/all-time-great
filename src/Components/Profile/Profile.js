@@ -27,7 +27,7 @@ class Profile extends Component{
     console.log(11111, res)
     this.setState({
       user: res.data.resp[0],
-      likes: res.data.res2[0].sum
+      likes: res.data.res2[0] ? res.data.res2[0].sum : 0
     })
   }
 

@@ -67,5 +67,11 @@
   transform: translateY(1px);
 }
 
+.Image-Modal-Wrapper .Modal-Image {
+  box-shadow: 0px 0px 100px 100px #66FCF1;
+  border-radius: 60px;
+  width: 300px;
+  height: 300px;
+}
 
 /*# sourceMappingURL=Vote.css.map */

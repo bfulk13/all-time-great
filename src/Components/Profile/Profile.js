@@ -104,6 +104,7 @@ class Profile extends Component{
     }).catch(err => console.log(err));
   }
   updateProfilePic = async () => {   
+    setTimeout( async () => {
     let {newProfilePic: pic} = this.state    
     let {uid: id} = this.props.reduxState    
     let body = { pic, id }
@@ -116,6 +117,8 @@ class Profile extends Component{
     }
     this.onCloseModal()
     this.getProfile()
+    }, 500)
+   
   }
 
   checkVotedOrNot = async (question) => {

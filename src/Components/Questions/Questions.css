@@ -69,11 +69,13 @@
   border-radius: 10px;
   box-shadow: 0px 0px 8px 8px #66FCF1;
   width: 80%;
-  height: img;
-  height-width: 100px;
-  height-height: 100px;
-  height-border: 1px solid #C5C6C7;
-  height-border-radius: 50%;
+  height: 125px;
+}
+.single-question img {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #C5C6C7;
+  border-radius: 50%;
 }
 .single-question p {
   height: auto;

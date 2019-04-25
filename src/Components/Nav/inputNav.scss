@@ -11,10 +11,9 @@
     background-color: $main-color1;
     color: $main-color4;
     font-family: 'Permanent Marker', cursive;
-    margin-left: 10px;
-    margin-right: 10px;
     cursor: pointer;
     letter-spacing: 1px;
+    margin-left: 20px;
 }
 
 .nav-wrapper {
@@ -37,24 +36,14 @@
     }
     p {
         color: white;
-        font-size: 30px;
+        font-size: 32px;
+        margin-left: 10px;
         font-family: 'Permanent Marker', cursive;
         margin-left: 10px;
         text-shadow: 2px 2px 2px $main-color4;
     }
 
-    .user-icon {
-        font-size: 22px;
-        cursor: pointer;
-        margin-top: 5px;
-    }
-
-    .search-icon {
-        font-size: 22px;
-        margin-left: 10px;
-        cursor: pointer;
-        color: $main-color4;
-    }
+    
     
     nav {
         display: flex;
@@ -62,11 +51,26 @@
         ul {
             list-style-type: none;
             display: flex;
-            margin-left: -15px;
+            width: 200px;
+            padding: 0px;
             li {
                 color: $main-color4;
                 display: flex;
                 align-items: center;
+                .user-icon {
+                    font-size: 22px;
+                    cursor: pointer;
+                    margin-top: 5px;
+                    margin-left: 50px;
+                }
+            
+                .search-icon {
+                    font-size: 22px;
+                    cursor: pointer;
+                    color: $main-color4;
+                    margin-left: 20px;
+                }
+
                 .login-nav {
                    @include Login();
                 }

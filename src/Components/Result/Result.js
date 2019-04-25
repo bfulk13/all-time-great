@@ -176,6 +176,7 @@ class Results extends Component {
         }
       
     render() {
+      console.log(this.props)
       const winningansimg = this.props.answersArr[0] ? this.props.answersArr[0].ans_img : null
       const answers = this.props.answersArr.map(ans => {
         return (

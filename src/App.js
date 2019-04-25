@@ -7,9 +7,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      {/* Need to import Nav Barnpm */}
-      <Nav />
-      
+      <Nav />      
        {routes}
       </div>
     )

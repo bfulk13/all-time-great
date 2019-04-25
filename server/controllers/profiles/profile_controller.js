@@ -11,10 +11,8 @@ module.exports = {
     },
     getAllProfiles: (req, res) => {
         const db = req.app.get('db')
-        // console.log('hit')
         db.profiles.getAll_profiles().then(resp => {
             res.status(200).send(resp)
-            // console.log(resp)
         })
     },
 
@@ -22,10 +20,8 @@ module.exports = {
         const db = req.app.get('db');
         const { id } = req.params;
         let resp = await db.profiles.get_profile( id )
-            // console.log(resp)
         let res2 = await db.profiles.get_all_likes_user(id)
             res2 ? res2 : 0
-            // console.log(res2)
         res.status(200).send({resp, res2})
 
     },
@@ -61,11 +57,6 @@ module.exports = {
          res.status(500).send(err)
        })
     },
-
-    // getAllUserLikes: (req, res) => {
-    //     const db = req.app.get('db')
-    //     const
-    // }
 
 }
 

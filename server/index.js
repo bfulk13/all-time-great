@@ -116,6 +116,7 @@ app.get('/api/profile/:id', pc.getProfile)
 app.get('/api/viewprofile/:id', pc.viewProfile)
 app.get('/api/allProfiles', pc.getAllProfiles)
 app.put('/api/aboutMe/:id', pc.updateAbout)
+app.put('/api/changeprofilepic', pc.updateProfilePic)
 // app.get('/api/getalluserlikes', pc.getAllUserLikes)
 
 

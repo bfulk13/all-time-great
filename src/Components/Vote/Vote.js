@@ -25,22 +25,31 @@ class Vote extends Component {
     this.setState({
       question: this.props.question,
       answers: this.props.answers,
-      qid: this.props.qid 
+      qid: this.props.qid
   })
 }
 
   Vote = async () => {
-    let qid = this.props.qid
-    let aid = this.state.aid
-    let uid = this.props.uid
-    let body = { qid: qid, uid: uid, aid: aid }
-    await axios.post('/api/sendselectedanswer', body)
+    if(!this.props.uid){
+      alert('Please login or register first.')
+    } else {
+      let qid = this.props.qid
+      let aid = this.state.aid
+      let uid = this.props.uid
+      let body = { qid: qid, uid: uid, aid: aid }
+      await axios.post('/api/sendselectedanswer', body)
+    }
   }
+
   updateQidAid = async (val, val2) => {
-    await this.setState({
-      qid: val,
-      aid: val2
-    })
+    if(!this.props.uid){
+      alert('Please login or register first')
+    } else {
+      await this.setState({
+        qid: val,
+        aid: val2
+      })
+    }
   }
 
   render() {

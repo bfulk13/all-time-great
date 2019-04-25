@@ -7,19 +7,23 @@ import './Search.css'
 class Search extends Component {
   constructor() {
     super()
-    this.state = {  
+    this.state = {
       searchbar: '',
       questions: []
     }
   }
   searchForStuff = async () => {
-    let body = {
-      string: this.state.searchbar
+    if(!this.props.uid){
+      alert('Please login or register first')
+    } else {
+      let body = {
+        string: this.state.searchbar
+      }
+      let res = await axios.post('/api/searchforquestions', body)
+      this.setState({
+        questions: res.data
+      })
     }
-    let res = await axios.post('/api/searchforquestions', body)
-    this.setState({
-      questions: res.data
-    })
   }
 
   updateSearchBar(val){
@@ -57,7 +61,7 @@ class Search extends Component {
           <img src={question.q_img} alt="" className='SearchResultImage'/>
           <p>{question.question}</p>
         </div>
-      ) 
+      )
     }) : <div>'no results :('</div>
 
     return (
@@ -66,12 +70,12 @@ class Search extends Component {
             <input className="SearchInput" type="text" placeholder="Search A Question" onChange={(e) => this.updateSearchBar(e.target.value)}/></form>
             <button className="SearchButton" onClick={() => this.searchForStuff(this.state.searchbar)}>Search</button>
         <div className='SearchMainDiv'>
-              
+
             <div>
               {questions}
             </div>
         </div>
-        
+
       </div>
     )
   }

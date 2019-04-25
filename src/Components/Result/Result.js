@@ -184,8 +184,8 @@ class Results extends Component {
           <div className='answers' key={ans.aid}>
             <img src={ans.ans_img} alt="" className='result-img' />
             <div className='paragraph'>
-              <p>{ans.answer}</p>
-              <p>{ans.vote}</p>
+              <p className='answer-text'>{ans.answer}</p>
+              <p className='vote-num'>{ans.vote}</p>
             </div>
 
           </div>
@@ -205,10 +205,10 @@ class Results extends Component {
                 options={{ legend: false, maintainAspectRatio:false }}
               />
             </div>
-            <div className="nextVote">
-              <i className="fas fa-chevron-right fa-5x" onClick={this.handleClick} style={{ display: "absolute", float: "right", marginRight: "10px", color:'white', opacity:'.3' }}></i>
+            <div className="like-next-div">
+              <p className='like-text'>Like<i className="fas fa-thumbs-up fa-3x like-icon" onClick={() => this.incrementLike()}></i></p>
+              <p className='next-text'>Next<i className="fas fa-chevron-right fa-5x next-arrow" onClick={this.handleClick} ></i></p>
             </div>
-              <i className="fas fa-thumbs-up fa-5x" onClick={() => this.incrementLike()} style={{ display: "absolute", float: "left", marginLeft: "40px", color:'white' }}></i>
             <div className='answers-div'>
               {answers}
               <Comments />

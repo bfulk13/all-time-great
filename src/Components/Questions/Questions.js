@@ -201,6 +201,9 @@ class Questions extends Component {
   }
 
   CheckVotedOrNot = async (obj) => {
+    if(!this.props.uid){
+      alert('Please Register A Login First')
+    } else {
     let body = { qid: obj.qid, uid: this.props.reduxState.uid }
     let canVote = await axios.post('/api/ifVoted', body)
     if (canVote.data === true) {
@@ -222,7 +225,9 @@ class Questions extends Component {
       })
       this.props.history.push('/Result')
     }
+   }
   }
+
 
   render() {
     const inputBoxes = this.state.answers ? this.state.answers.map((answer, i) => {
@@ -236,9 +241,9 @@ class Questions extends Component {
     const { open } = this.state
     const trendingQuestions = this.state.trendingQuestionsArr.map(obj => {
       return (
-        <div className='SingleQuestionDiv' key={obj.qid}>
-          {<div onClick={() => this.CheckVotedOrNot(obj)}><h4>{obj.question}</h4></div>}
+        <div className='single-question' onClick={() => this.CheckVotedOrNot(obj)} key={obj.qid}>
           <img src={obj.q_img} alt="" className="QuestionImg" />
+          <p>{obj.question}</p>
         </div>
       )
     })
@@ -248,11 +253,11 @@ class Questions extends Component {
         <h1>Questions</h1>
         <div className='QuestionsDiv'>
           <div>
-            <div className="PlusSignDiv" onClick={this.onOpenModal} >
-              <img className="PlusSign" src="http://pngimg.com/uploads/plus/plus_PNG122.png" alt="plus sign" />
-            </div>
-            <p>Add a new Question</p>
             {trendingQuestions}
+          </div>
+          <div className='addQuestion-footer'>
+            <i className="fas fa-plus-circle fa-2x footer-add" onClick={this.onOpenModal}></i>
+            <p>Add A New Question</p>
           </div>
 
         </div>
@@ -270,9 +275,7 @@ class Questions extends Component {
             <button type="submit" onClick={this.createNewQuestion}>Submit</button>
           </div>
         </Modal>
-        <div className=''>
-
-        </div>
+       
       </div>
     )
   }

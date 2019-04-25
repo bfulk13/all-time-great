@@ -1,8 +1,9 @@
 .SingleAnswerDiv {
   display: flex;
-  margin: 10px auto;
+  margin: 20px auto;
   border: 1px solid #C5C6C7;
-  border-radius: 10px 30px 10px 30px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 8px 8px #66FCF1;
   width: 80%;
 }
 .SingleAnswerDiv h4 {
@@ -50,16 +51,16 @@
   text-shadow: 1px 1px 5px #66FCF1;
 }
 .Vote .VotingDiv button {
-  border: 1px solid #C5C6C7;
+  border: 1px solid #45A29E;
   background-color: #0B0C10;
-  width: 100px;
+  width: 150px;
   height: 30px;
   margin: 20px;
   color: white;
   font-family: "Permanent Marker", cursive;
   letter-spacing: 1px;
   border-radius: 5px;
-  box-shadow: 0px 2px 0px white;
+  box-shadow: 0px 2px 0px #C5C6C7;
 }
 .Vote .VotingDiv button:active {
   box-shadow: 0px 1px 0px #C5C6C7;

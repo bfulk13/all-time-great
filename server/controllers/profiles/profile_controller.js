@@ -45,11 +45,18 @@ module.exports = {
        const db = req.app.get('db')
        const {about} = req.body
        const {id} = req.params
-    //    console.log('hit')
-    //    console.log(req.body)
-    //    console.log(req.params)
        db.profiles.update_about([about, id]).then(resp => {
        res.status(200).send(resp)
+       }).catch(err => {
+         res.status(500).send(err)
+       })
+    },
+    updateProfilePic: (req, res) => {
+        console.log(req.body)
+       const db = req.app.get('db')
+       const {pic, id} = req.body
+       db.profiles.change_profile_pick({pic, id}).then(() => {
+       res.sendStatus(200)
        }).catch(err => {
          res.status(500).send(err)
        })

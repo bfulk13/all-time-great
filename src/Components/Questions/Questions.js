@@ -97,7 +97,6 @@ class Questions extends Component {
     let body = { question, q_img, uid, answers }
     if (uid && question && answers) {
       let res = await axios.post('/api/addnewquestion', { body })
-      console.log(res)
     } else {
       alert('Please login and post a question.')
     }
@@ -207,7 +206,6 @@ class Questions extends Component {
     } else {
     let body = { qid: obj.qid, uid: this.props.reduxState.uid }
     let canVote = await axios.post('/api/ifVoted', body)
-    console.log('canvote', canVote)
     if (canVote.data === true) {
       let quest = await axios.get(`/api/question/${obj.qid}`)
       let res = await axios.get(`/api/getanswersforquestion/${obj.qid}`)

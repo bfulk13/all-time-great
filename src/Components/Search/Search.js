@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
 import axios from 'axios'
 import {connect} from 'react-redux'
 import {updateQuestion, updateAnsArray} from '../../redux/reducer'
@@ -33,11 +32,9 @@ class Search extends Component {
     })
   }
   CheckVotedOrNot = async (obj) => {
-    // console.log(obj)
     await this.props.updateQuestion(obj)
     let body = { qid: obj.qid, uid: this.props.uid }
     let canVote = await axios.post('/api/ifVoted', body)
-    // console.log(canVote)
     if (canVote.data === true) {
       let quest = await axios.get(`/api/question/${obj.qid}`)
       let res = await axios.get(`/api/getanswersforquestion/${obj.qid}`)

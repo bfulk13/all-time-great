@@ -27,7 +27,7 @@ class Profile extends Component{
     console.log(11111, res)
     this.setState({
       user: res.data.resp[0],
-      likes: res.data.res2[0].sum
+      likes: res.data.res2[0] ? res.data.res2[0].sum : 0
     })
   }
 
@@ -88,7 +88,7 @@ class Profile extends Component{
     // console.log(this.state)
     const likedQs = this.state.likedQs.map( question => {
       return(
-        <div key={question.qid} className='question' onClick={ () => this.checkVotedOrNot(question) }>
+        <div key={question.qid} className='ProfileLikedQuestions' onClick={ () => this.checkVotedOrNot(question) }>
           <img src={question.q_img} alt="" />
           <p>{question.question}</p>
         </div>

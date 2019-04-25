@@ -6,11 +6,11 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { clearUser } from '../../redux/reducer'
 import axios from 'axios'
+import {withRouter} from 'react-router-dom'
 
 class Nav extends Component {
     constructor(props) {
         super(props)
-
         this.state = {
             open: false
         }
@@ -33,11 +33,16 @@ class Nav extends Component {
         axios.post(`/auth/logout`)
         this.props.clearUser()
     }
+    handleIsLoggedIn(){
+        if(this.props.reduxState.uid){
+            this.props.history.push(`/profile/${this.props.reduxState.uid}`)
+        }else{alert('please login')}
+    }
 
 
     render() {
+    
         const { open } = this.state
-        console.log(this.props.reduxState.uid)
         return (
             <div className='nav-wrapper'>
                 <nav>
@@ -46,9 +51,9 @@ class Nav extends Component {
                     </Link>
                     <p className='logo'>G.O.A.T.</p>
                     <ul>
-                        <Link to={`/profile/${this.props.reduxState.uid}`} style={{ textDecoration: 'none' }}>
+                        <div onClick={() =>this.handleIsLoggedIn()}>
                             <li><i className="far fa-user user-icon"></i></li>
-                        </Link>
+                        </div>
                         <li><Link to={'/Search'} style={{ textDecoration: 'none' }}><i className="fas fa-search search-icon"></i></Link></li>
                         <li>
                             {this.props.reduxState.uid ?
@@ -81,4 +86,4 @@ const mappedStateToProps = (reduxState) => {
 
 
 
-export default connect(mappedStateToProps, { clearUser })(Nav)
+export default withRouter(connect(mappedStateToProps, { clearUser })(Nav))

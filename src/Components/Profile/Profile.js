@@ -18,13 +18,10 @@ class Profile extends Component{
   async componentDidMount(){
     await this.getProfile()
     this.getFollowing()
-    console.log(this.props)
   }
 
   getProfile = async () => {
-    console.log(this.props.match.params)
     let res = await axios.get(`/api/profile/${this.props.match.params.uid}`)
-    console.log(11111, res)
     this.setState({
       user: res.data.resp[0],
       likes: res.data.res2[0] ? res.data.res2[0].sum : 0
@@ -33,7 +30,6 @@ class Profile extends Component{
 
   getFollowing = async () => {
     let res = await axios.get(`/api/getLiked/${this.props.match.params.uid}`)
-    // console.log(res.data)
     await this.setState({
       likedQs: res.data
     })
@@ -61,7 +57,6 @@ class Profile extends Component{
   checkVotedOrNot = async (question) => {
     let body = { qid: question.qid, uid: this.props.reduxState.uid }
     let canVote = await axios.post('/api/ifVoted', body)
-    // console.log('canvote', canVote)
     if (canVote.data === true) {
       let quest = await axios.get(`/api/question/${question.qid}`)
       let res = await axios.get(`/api/getanswersforquestion/${question.qid}`)
@@ -85,7 +80,6 @@ class Profile extends Component{
 
 
   render(){
-    // console.log(this.state)
     const likedQs = this.state.likedQs.map( question => {
       return(
         <div key={question.qid} className='ProfileLikedQuestions' onClick={ () => this.checkVotedOrNot(question) }>
@@ -95,7 +89,6 @@ class Profile extends Component{
 
       )
     })
-    console.log(this.state)
     let username = this.state.user ? this.state.user.username : ''
     let sum = this.state.likes ? this.state.likes : 0
     let avatar = this.state.user ? this.state.user.avatar : ''

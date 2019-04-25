@@ -1,11 +1,10 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 import './Result.css'
 import { connect } from 'react-redux'
 import axios from 'axios';
 import { Doughnut } from 'react-chartjs-2'
 import Comments from '../Comments/Comments'
 import { updateAnsArray, updateQuestion } from '../../redux/reducer'
-import { arrayParser } from 'pg-types';
 
 class Results extends Component {
   constructor() {
@@ -49,7 +48,6 @@ class Results extends Component {
     await this.getUnansweredQs()
     this.setResultQid()
     this.updateChartyChart()
-    console.log(22222, this.state.unanswered)
   }
 
 
@@ -79,7 +77,6 @@ class Results extends Component {
   updateChartyChart = async () => {
     let arrCopy = Object.assign([], this.state.data.datasets[0].data)
     let biggerArrCopy = Object.assign([], this.state.data)
-    // console.log(9999, this.props)
     arrCopy[0] = this.props.answersArr[0].vote
     arrCopy[1] = this.props.answersArr[1].vote
     arrCopy[2] = this.props.answersArr[2] ? this.props.answersArr[2].vote : null
@@ -115,7 +112,6 @@ class Results extends Component {
 
   getUnansweredQs = async () => {
     let res = await axios.get(`/api/unansweredQuestions`);
-    // console.log(3434343, res.data)
     await this.setState({
       unanswered: res.data
     })
@@ -171,7 +167,6 @@ class Results extends Component {
         } else {
           let body = { qid: this.props.qid, uid: this.props.uid }
           let canLike = await axios.post('/api/canLike', body)
-          // console.log('canvote', canLike)
           if (canLike.data === true) {
             axios.post('/api/incrementLike', body)
             alert('you like this question!!:)')
@@ -183,11 +178,10 @@ class Results extends Component {
       }
 
     render() {
-      console.log(this.props)
       const winningansimg = this.props.answersArr[0] ? this.props.answersArr[0].ans_img : null
-      const answers = this.props.answersArr.map(ans => {
+      const answers = this.props.answersArr.map((ans) => {
         return (
-          <div className='answers'>
+          <div className='answers' key={ans.aid}>
             <img src={ans.ans_img} alt="" className='result-img' />
             <div className='paragraph'>
               <p>{ans.answer}</p>

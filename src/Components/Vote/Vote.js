@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { updateQuestion, updateAnsArray } from '../../redux/reducer'
-import { CostExplorer } from 'aws-sdk';
 
 class Vote extends Component {
   constructor() {

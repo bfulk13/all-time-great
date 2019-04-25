@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  box-shadow: 0px 0px 8px 8px #66FCF1;
+  box-shadow: 0px 0px 80px 80px #66FCF1;
   background-color: #1F2833;
   border: 2px solid #C5C6C7;
   border-radius: 65px;
@@ -69,12 +69,11 @@
   border-radius: 10px;
   box-shadow: 0px 0px 8px 8px #66FCF1;
   width: 80%;
-}
-.single-question img {
-  width: 100px;
-  height: 100px;
-  border: 1px solid #C5C6C7;
-  border-radius: 50%;
+  height: img;
+  height-width: 100px;
+  height-height: 100px;
+  height-border: 1px solid #C5C6C7;
+  height-border-radius: 50%;
 }
 .single-question p {
   height: auto;
@@ -84,10 +83,6 @@
   margin: 2px;
   align-items: center;
   text-align: center;
-}
-
-.single-question:hover {
-  position: absolute;
 }
 
 .addQuestion-footer {

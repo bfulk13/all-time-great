@@ -18,21 +18,11 @@
 }
 .nav-wrapper p {
   color: white;
-  font-size: 30px;
+  font-size: 32px;
+  margin-left: 10px;
   font-family: "Permanent Marker", cursive;
   margin-left: 10px;
   text-shadow: 2px 2px 2px #66FCF1;
-}
-.nav-wrapper .user-icon {
-  font-size: 22px;
-  cursor: pointer;
-  margin-top: 5px;
-}
-.nav-wrapper .search-icon {
-  font-size: 22px;
-  margin-left: 10px;
-  cursor: pointer;
-  color: #66FCF1;
 }
 .nav-wrapper nav {
   display: flex;
@@ -41,12 +31,25 @@
 .nav-wrapper nav ul {
   list-style-type: none;
   display: flex;
-  margin-left: -15px;
+  width: 200px;
+  padding: 0px;
 }
 .nav-wrapper nav ul li {
   color: #66FCF1;
   display: flex;
   align-items: center;
+}
+.nav-wrapper nav ul li .user-icon {
+  font-size: 22px;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-left: 50px;
+}
+.nav-wrapper nav ul li .search-icon {
+  font-size: 22px;
+  cursor: pointer;
+  color: #66FCF1;
+  margin-left: 20px;
 }
 .nav-wrapper nav ul li .login-nav {
   display: flex;
@@ -59,10 +62,9 @@
   background-color: #0B0C10;
   color: #66FCF1;
   font-family: "Permanent Marker", cursive;
-  margin-left: 10px;
-  margin-right: 10px;
   cursor: pointer;
   letter-spacing: 1px;
+  margin-left: 20px;
 }
 .nav-wrapper nav ul li .logout-nav {
   display: flex;
@@ -75,10 +77,9 @@
   background-color: #0B0C10;
   color: #66FCF1;
   font-family: "Permanent Marker", cursive;
-  margin-left: 10px;
-  margin-right: 10px;
   cursor: pointer;
   letter-spacing: 1px;
+  margin-left: 20px;
 }
 .nav-wrapper .login-modal {
   background-color: #45A29E;

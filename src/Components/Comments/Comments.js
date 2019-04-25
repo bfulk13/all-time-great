@@ -51,6 +51,12 @@ class Comments extends Component {
       let res = await axios.post('/api/addnewcomment', body)
       // console.log(res)
       this.getAllComments()
+      let commentsArr = this.state.commentsArr
+      let comment = commentsArr.comment
+      commentsArr.comment = ''
+      this.setState({
+        commentsArr: commentsArr
+      })
     } catch (err) {
       console.log(err)
     }
@@ -68,10 +74,12 @@ class Comments extends Component {
         <div key={comment.cid} className='Comments'>
           <div className="Diveydiv">
             {img}
+            <div className="UserAndDate">
             <h6 className="Username">{comment.user_username}</h6>
-            <h6>{date}</h6>
+            <h6 className="Date">{date}</h6>
           </div>
-          <div>
+          </div>
+          <div className="Text">
             <p>{comment.comments}</p>
           </div>
         </div>
@@ -79,9 +87,9 @@ class Comments extends Component {
     })
     return (
       <div className='AllComments'>
+        <input value={this.state.commentsArr.comment} maxLength="100" className="CommentInput" placeholder='Add a comment! (limit 100)' onChange={(e) => this.updateComments(e.target.value)}></input>
+        <button className="AddNewCommentButton" onClick={() => this.addNewComment()}>Post</button>
         {mappedComments}
-        <input placeholder='Add a comment!' onChange={(e) => this.updateComments(e.target.value)}></input>
-        <button onClick={() => this.addNewComment()}>Post</button>
       </div>
     )
   }

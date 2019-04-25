@@ -1,6 +1,6 @@
 .AllComments{
-  min-width: 80%;
-  min-height: 550px;
+  width: 100%;
+  height: auto;
   display: flex; 
   flex-direction: column;
   justify-content: space-between;
@@ -10,7 +10,7 @@
 }
 
 .Comments{
-  background-color: white;
+  background-color: rgb(145, 136, 136);
   border-radius: 20px;
   margin: 3px;
   height: 90px;
@@ -40,20 +40,22 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  /* overflow-y: hidden; */
 }
 
 .ProfileImage {
   width: 35px;
   height: 35px;
   border-radius: 50%;
-
+  border: 1px solid black;
 }
 
 .AddNewCommentButton{
   color: black;
   background: aqua;
   height: 25px;
-  width: 50px;
+  margin: 15px;
+  width: 70px;
   border-radius: 20px;
   border: 1px solid black;
 }
@@ -78,10 +80,11 @@
 .Username{
   margin: 0px;
   font-size: 20px;
+  font-family: "Permanent Marker", cursive;
 }
 
 .Date{
-  font-size: 8px;
+  font-size: 6px;
   margin: 0px;
 }
 

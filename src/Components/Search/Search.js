@@ -58,7 +58,7 @@ class Search extends Component {
       return(
         <div className='BoxyBox' onClick={() => this.CheckVotedOrNot(question)}>
           <img src={question.q_img} alt="" className='SearchResultImage'/>
-          {question.question}
+          <p>{question.question}</p>
         </div>
       ) 
     }) : <div>'no results :('</div>
@@ -66,8 +66,8 @@ class Search extends Component {
     return (
       <div className='Search'>
         <form action="">
-            <input type="text" placeholder="Search A Question" onChange={(e) => this.updateSearchBar(e.target.value)}/></form>
-            <button onClick={() => this.searchForStuff(this.state.searchbar)}>Search</button>
+            <input className="SearchInput" type="text" placeholder="Search A Question" onChange={(e) => this.updateSearchBar(e.target.value)}/></form>
+            <button className="SearchButton" onClick={() => this.searchForStuff(this.state.searchbar)}>Search</button>
         <div className='SearchMainDiv'>
               
             <div>

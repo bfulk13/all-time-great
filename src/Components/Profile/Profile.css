@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 .user-info .user-username {
   color: white;
@@ -101,6 +102,35 @@
   transform: translateY(2px);
 }
 
+.ProfileLikedQuestions{
+  background-color: #0B0C10;
+  border: 2px solid #C5C6C7;
+  border-radius: 5px;
+  display: flex;
+  width: 80%;
+  height: 100px;
+  margin: 25px;
+  align-items: center;
+  box-shadow: 0px 0px 8px 8px #66FCF1;
+}
+
+.ProfileLikedQuestions img{
+  width: 80px;
+  height: 80px;
+  border: 2px solid #C5C6C7;
+  border-radius: 100%;
+  margin-left: 5px;
+}
+
+.ProfileLikedQuestions p{
+  font-size: 12px;
+  margin-left: 5px;
+  width: 175px;
+  text-decoration: none;
+  color: white;
+  font-family: "Permanent Marker", cursive;
+  letter-spacing: 1px;
+}
 
 
 /*# sourceMappingURL=Profile.css.map */

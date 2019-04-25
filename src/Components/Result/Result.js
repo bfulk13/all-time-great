@@ -5,12 +5,14 @@ import axios from 'axios';
 import { Doughnut } from 'react-chartjs-2'
 import Comments from '../Comments/Comments'
 import { updateAnsArray, updateQuestion } from '../../redux/reducer'
+import Modal from 'react-responsive-modal'
 
 class Results extends Component {
   constructor() {
     super()
     this.state = {
-
+      modalImage: '',
+      open: false,
       ans1votes: 0,
       ans2votes: 0,
       ans3votes: 0,
@@ -50,6 +52,18 @@ class Results extends Component {
     this.updateChartyChart()
   }
 
+  onOpenModal = (img) => {
+    this.setState({
+      modalImage: img,
+      open: true
+    })
+  }
+  
+  onCloseModal = () => {
+    this.setState({
+      open: false
+    })
+  }
 
   buildChartData() {
     // let data = this.state.data
@@ -182,7 +196,7 @@ class Results extends Component {
       const answers = this.props.answersArr.map((ans) => {
         return (
           <div className='answers' key={ans.aid}>
-            <img src={ans.ans_img} alt="" className='result-img' />
+            <img src={ans.ans_img} alt="" className='result-img' onClick={() => this.onOpenModal(ans.ans_img)} />
             <div className='paragraph'>
               <p className='answer-text'>{ans.answer}</p>
               <p className='vote-num'>{ans.vote}</p>
@@ -213,6 +227,11 @@ class Results extends Component {
               {answers}
               <Comments />
             </div>
+            <Modal open={this.state.open} onClose={() => this.onCloseModal()} center >
+              <div className="Image-Modal-Wrapper">
+                <img src={this.state.modalImage} alt="modal" className="Modal-Image"/>
+              </div>
+            </Modal>
             </div>
       )
     }

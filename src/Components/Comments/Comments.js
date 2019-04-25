@@ -87,9 +87,10 @@ class Comments extends Component {
     })
     return (
       <div className='AllComments'>
+      {mappedComments}
         <input value={this.state.commentsArr.comment} maxLength="100" className="CommentInput" placeholder='Add a comment! (limit 100)' onChange={(e) => this.updateComments(e.target.value)}></input>
         <button className="AddNewCommentButton" onClick={() => this.addNewComment()}>Post</button>
-        {mappedComments}
+        
       </div>
     )
   }

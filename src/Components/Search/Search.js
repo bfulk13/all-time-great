@@ -20,6 +20,10 @@ class Search extends Component {
         string: this.state.searchbar
       }
       let res = await axios.post('/api/searchforquestions', body)
+      console.log(res.data)
+      if(!res.data[0]){
+       alert('sorry no results')
+      }
       this.setState({
         questions: res.data
       })

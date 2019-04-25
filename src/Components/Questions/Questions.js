@@ -201,8 +201,8 @@ class Questions extends Component {
   }
 
   CheckVotedOrNot = async (obj) => {
-    if(!this.props.uid){
-      alert('Please Register A Login First')
+    if(!this.props.reduxState.uid){
+      alert('Please Register or Login First')
     } else {
     let body = { qid: obj.qid, uid: this.props.reduxState.uid }
     let canVote = await axios.post('/api/ifVoted', body)

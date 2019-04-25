@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './Vote.css'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import Modal from 'react-responsive-modal'
 import { connect } from 'react-redux'
 import { updateQuestion, updateAnsArray } from '../../redux/reducer'
 
@@ -15,7 +16,9 @@ class Vote extends Component {
       answers: [],
       anwser: '',
       aid: 0,
-      qid: 0
+      qid: 0,
+      modalImage: '',
+      open: false
     }
   }
   componentDidMount = () => {
@@ -26,6 +29,19 @@ class Vote extends Component {
       question: this.props.question,
       answers: this.props.answers,
       qid: this.props.qid
+  })
+}
+
+onOpenModal = (img) => {
+  this.setState({
+    modalImage: img,
+    open: true
+  })
+}
+
+onCloseModal = () => {
+  this.setState({
+    open: false
   })
 }
 
@@ -53,10 +69,11 @@ class Vote extends Component {
   }
 
   render() {
+    console.log(this.state)
     const answers = this.props.ansArr.map(ans => {
       return (
         <div className='SingleAnswerDiv' onClick={() => this.updateQidAid(ans.q_id, ans.aid)} key={ans.aid}>
-          <img src={ans.ans_img} alt="" className='answer-img'/>
+          <img src={ans.ans_img} alt="" className='answer-img' onClick={() => this.onOpenModal(ans.ans_img)}/>
           <h4>{ans.answer}</h4>
         </div>
       )
@@ -74,6 +91,11 @@ class Vote extends Component {
           </div>
 
         </div>
+        <Modal open={this.state.open} onClose={() => this.onCloseModal()} center >
+          <div className="Image-Modal-Wrapper">
+            <img src={this.state.modalImage} alt="modal" className="Modal-Image"/>
+          </div>
+        </Modal>
       </div>
     )
   }

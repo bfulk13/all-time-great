@@ -8,6 +8,9 @@
   border: 2px solid #C5C6C7;
   border-radius: 65px;
 }
+.question-Modal-Wrapper h1 {
+  color: white;
+}
 .question-Modal-Wrapper h2 {
   color: white;
   margin: 15px auto;
@@ -58,36 +61,57 @@
   background-color: #45A29E;
 }
 
-.QuestionsDiv {
-  background-color: gray;
-  min-height: 100vh;
-  width: 100%;
-  overflow: auto;
+.single-question {
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  align-items: center;
+  margin: 30px auto;
+  border: 1px solid #C5C6C7;
+  border-radius: 10px;
+  box-shadow: 0px 0px 8px 8px #66FCF1;
+  width: 80%;
 }
-
-.SingleQuestionDiv {
-  display: flex;
-  margin: 10%;
-}
-
-.QuestionImg {
-  height: 100px;
+.single-question img {
   width: 100px;
+  height: 100px;
+  border: 1px solid #C5C6C7;
   border-radius: 50%;
 }
-
-.PlusSignDiv {
-  background-color: white;
-  border-radius: 10px;
-  padding: 10px;
+.single-question p {
+  height: auto;
+  width: 100%;
+  color: white;
+  font-family: "Permanent Marker", cursive;
+  margin: 2px;
+  align-items: center;
+  text-align: center;
 }
 
-.PlusSign {
-  height: 80px;
-  width: 80px;
+.single-question:hover {
+  position: absolute;
+}
+
+.addQuestion-footer {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  height: 55px;
+  width: 100%;
+  background: rgba(11, 12, 16, 0.6);
+  border-top: 1px solid #C5C6C7;
+  border-bottom: 1px solid #C5C6C7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.addQuestion-footer .footer-add {
+  color: #66FCF1;
+  font-size: 40px;
+  margin-right: 20px;
+}
+.addQuestion-footer p {
+  color: white;
+  font-family: "Permanent Marker", cursive;
+  letter-spacing: 1px;
 }
 
 /*# sourceMappingURL=Questions.css.map */

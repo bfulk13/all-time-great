@@ -60,7 +60,7 @@ class Results extends Component {
     // innerData[1] = this.state.ans2votes
     // innerData[2] = this.state.ans3votes
     // innerData[3] = this.state.ans4votes
-    // return data   
+    // return data
     let stateslice = Object.assign({}, this.state)
     stateslice.data.datasets[0].data[0] = this.state.ans4votes
     stateslice.data.datasets[0].data[1] = this.state.ans3votes
@@ -115,7 +115,7 @@ class Results extends Component {
 
   getUnansweredQs = async () => {
     let res = await axios.get(`/api/unansweredQuestions`);
-    console.log(3434343, res.data)
+    // console.log(3434343, res.data)
     await this.setState({
       unanswered: res.data
     })
@@ -128,14 +128,18 @@ class Results extends Component {
   }
 
   handleClick = async () => {
-    await this.getUnansweredQs();
-    if(this.state.unanswered.length > 0){
-      await this.setState({
-        toNextVote: true
-      })    
-      this.nextVote();
+    if(!this.props.uid){
+      alert('Please Register or Login first.')
     } else {
-      alert('There are no more questions to vote on at this time, go post some more!')
+      await this.getUnansweredQs();
+      if(this.state.unanswered.length > 0){
+        await this.setState({
+          toNextVote: true
+        })
+        this.nextVote();
+      } else {
+        alert('There are no more questions to vote on at this time, go post some more!')
+      }
     }
   }
 
@@ -162,19 +166,22 @@ class Results extends Component {
     }
   }
       incrementLike = async () => {
-      
+        if(!this.props.uid){
+          alert('Please register or login first.')
+        } else {
           let body = { qid: this.props.qid, uid: this.props.uid }
           let canLike = await axios.post('/api/canLike', body)
-          console.log('canvote', canLike)
+          // console.log('canvote', canLike)
           if (canLike.data === true) {
-           axios.post('/api/incrementLike', body)
-           alert('you like this question!!:)')
-          
+            axios.post('/api/incrementLike', body)
+            alert('you like this question!!:)')
+
           } else if (canLike.data === false) {
-           alert('you cant like it twice foo')
+            alert('you cannot like this question twice')
           }
         }
-      
+      }
+
     render() {
       console.log(this.props)
       const winningansimg = this.props.answersArr[0] ? this.props.answersArr[0].ans_img : null
@@ -190,7 +197,7 @@ class Results extends Component {
           </div>
         )
       })
-      return ( 
+      return (
 
         <div className='Results'>
           <h1>{this.props.question}</h1>
@@ -232,4 +239,4 @@ class Results extends Component {
     updateQuestion
   }
 
-  export default connect(mapStateToProps, mapDispatchToProps)(Results); 
+  export default connect(mapStateToProps, mapDispatchToProps)(Results);

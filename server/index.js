@@ -5,6 +5,8 @@ const session = require('express-session');
 const massive = require('massive');
 const bodyParser = require('body-parser')
 
+const path = require('path')
+
 const pg = require('pg');
 const pgSession = require('connect-pg-simple')(session)
 const AWS = require('aws-sdk');
@@ -32,6 +34,8 @@ AWS.config.update({
 
 //// MIDDLEWARE ////
 const app = express();
+
+app.use( express.static( `${__dirname}/../build` ) );
 
 const S3 = new AWS.S3();
 
@@ -131,3 +135,6 @@ app.post('/api/ifVoted', ansc.canVote);
 app.post('/api/addnewcomment', co.addNewComment);
 app.post('/api/getComments', co.getComments);
 
+app.get('*', (req, res)=>{
+    res.sendFile(path.join(__dirname, '../build/index.html'));
+});
